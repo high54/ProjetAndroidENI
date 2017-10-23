@@ -5,4 +5,7 @@
     <string name="txt_telephone_client">Telephone :</string>
     <string name="txt_date_de_naissance_client">Date de naissance :</string>
     <string name="txt_adresse_client">Adresse :</string>
+    <string name="txt_code_postal_client">Code postal :</string>
+    <string name="txt_ville_client">Ville :</string>
+    <string name="enregistrer">Enregistrer</string>
 </resources>

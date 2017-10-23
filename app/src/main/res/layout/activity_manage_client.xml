@@ -42,7 +42,7 @@
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/txt_date_client"
-        android:layout_below="@id/ed_prenom_client"
+        android:layout_below="@id/ed_telephone_client"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/txt_date_de_naissance_client"/>
@@ -52,15 +52,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <TextView
-        android:id="@+id/txt_adresse_client"
-        android:layout_below="@id/ed_prenom_client"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_adresse_client"/>
+    android:id="@+id/txt_adresse_client"
+    android:layout_below="@id/ed_date_client"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/txt_adresse_client"/>
     <EditText
         android:id="@+id/ed_adresse_client"
         android:layout_below="@id/txt_adresse_client"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txt_codepostal_client"
+        android:layout_below="@id/ed_adresse_client"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_code_postal_client"/>
+    <EditText
+        android:id="@+id/ed_codepostal_client"
+        android:layout_below="@id/txt_codepostal_client"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txt_ville_client"
+        android:layout_below="@id/ed_codepostal_client"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_ville_client"/>
+    <EditText
+        android:id="@+id/ed_ville_client"
+        android:layout_below="@id/txt_ville_client"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/bt_save_client"
+        android:layout_below="@+id/ed_ville_client"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/enregistrer"
+        android:onClick="onClickSaveClient"/>
+
 
 </RelativeLayout>

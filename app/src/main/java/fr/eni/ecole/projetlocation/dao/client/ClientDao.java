@@ -64,7 +64,7 @@ public class ClientDao {
         values.put(COLUMN_ADRESSE_CLIENTS, client.getAdresse());
         values.put(COLUMN_CODE_POSTAL_CLIENTS, client.getCodePostal());
         values.put(COLUMN_VILLE_CLIENT, client.getVille());
-        values.put(COLUMN_DATE_NAISSANCE_CLIENT, client.getDateNaissance().toString());
+        values.put(COLUMN_DATE_NAISSANCE_CLIENT, new  java.sql.Date(client.getDateNaissance().getTime()).toString());
 
 
         long insertId = database.insert(TABLE_CLIENTS, null,

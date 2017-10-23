@@ -34,7 +34,7 @@ public class IContract {
             + " integer not null, "+ COLUMN_ADRESSE_CLIENTS
             + " text, "+ COLUMN_CODE_POSTAL_CLIENTS
             + " integer, "+ COLUMN_VILLE_CLIENT
-            + " text"+ COLUMN_DATE_NAISSANCE_CLIENT
+            + " text, "+ COLUMN_DATE_NAISSANCE_CLIENT
             +" date not null "
             + ");";
 
