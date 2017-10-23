@@ -9,17 +9,23 @@ public class ModelVehicule {
     private int id;
     private int prix;
     private String immatriculation;
-    private String type;
+    private int type;
+    private String marque;
+    private String model;
+    private String carburant;
+
 
     public ModelVehicule() {
     }
 
-    public ModelVehicule(int id, int prix, String immatriculation, String type) {
+    public ModelVehicule(int id, int prix, String immatriculation, int type, String marque, String model, String carburant) {
         this.id = id;
         this.prix = prix;
         this.immatriculation = immatriculation;
         this.type = type;
-
+        this.marque = marque;
+        this.model = model;
+        this.carburant = carburant;
     }
 
     public int getId() {
@@ -46,14 +52,37 @@ public class ModelVehicule {
         this.immatriculation = immatriculation;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
+    public String getMarque() {
+        return marque;
+    }
+
+    public void setMarque(String marque) {
+        this.marque = marque;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getCarburant() {
+        return carburant;
+    }
+
+    public void setCarburant(String carburant) {
+        this.carburant = carburant;
+    }
 
     @Override
     public String toString() {
@@ -61,7 +90,10 @@ public class ModelVehicule {
                 "id=" + id +
                 ", prix=" + prix +
                 ", immatriculation='" + immatriculation + '\'' +
-                ", type='" + type + '\'' +
+                ", type=" + type +
+                ", marque='" + marque + '\'' +
+                ", model='" + model + '\'' +
+                ", carburant='" + carburant + '\'' +
                 '}';
     }
 }
