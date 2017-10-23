@@ -5,16 +5,16 @@ import java.util.ArrayList;
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class ModelEDL {
+public class EDL {
     private int id;
     private String date;
-    private ArrayList<ModelPhoto> photos;
-    private ModelLocation location;
+    private ArrayList<Photo> photos;
+    private Location location;
 
-    public ModelEDL() {
+    public EDL() {
     }
 
-    public ModelEDL(int id, String date, ArrayList<ModelPhoto> photos, ModelLocation location) {
+    public EDL(int id, String date, ArrayList<Photo> photos, Location location) {
         this.id = id;
         this.date = date;
         this.photos = photos;
@@ -37,25 +37,25 @@ public class ModelEDL {
         this.date = date;
     }
 
-    public ArrayList<ModelPhoto> getPhotos() {
+    public ArrayList<Photo> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(ArrayList<ModelPhoto> photos) {
+    public void setPhotos(ArrayList<Photo> photos) {
         this.photos = photos;
     }
 
-    public ModelLocation getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(ModelLocation location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
     @Override
     public String toString() {
-        return "ModelEDL{" +
+        return "EDL{" +
                 "id=" + id +
                 ", date='" + date + '\'' +
                 ", photos=" + photos +

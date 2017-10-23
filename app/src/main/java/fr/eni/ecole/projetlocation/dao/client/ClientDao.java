@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.ecole.projetlocation.dao.SQLiteHelper;
-import fr.eni.ecole.projetlocation.models.ModelClient;
+import fr.eni.ecole.projetlocation.models.Client;
 
 import static fr.eni.ecole.projetlocation.dao.client.IContract.*;
 
@@ -55,7 +55,7 @@ public class ClientDao {
      * @return client
      * Retourne un objet client avec l'ID
      */
-    public ModelClient insertClient(ModelClient client) {
+    public Client insertClient(Client client) {
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_NOM_CLIENTS, client.getNom());
@@ -73,7 +73,7 @@ public class ClientDao {
                 allColumns, COLUMN_ID_CLIENTS + " = " + insertId, null,
                 null, null, null);
         cursor.moveToFirst();
-        ModelClient newClient = mappage(cursor);
+        Client newClient = mappage(cursor);
         cursor.close();
 
         return newClient;
@@ -87,7 +87,7 @@ public class ClientDao {
      * @return client
      * Retourne un objet client
      */
-    public ModelClient updateClient(ModelClient client) {
+    public Client updateClient(Client client) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NOM_CLIENTS, client.getNom());
         values.put(COLUMN_PRENOM_CLIENTS, client.getPrenom());
@@ -108,7 +108,7 @@ public class ClientDao {
      *
      * @param client
      */
-    public void deleteClient(ModelClient client) {
+    public void deleteClient(Client client) {
         database.delete(TABLE_CLIENTS, COLUMN_ID_CLIENTS
                 + " = " + client.getId(), null);
     }
@@ -116,18 +116,18 @@ public class ClientDao {
     /**
      * Retourne une liste de client
      *
-     * @return List<ModelClient> clients
+     * @return List<Client> clients
      */
-    public List<ModelClient> getClients() {
+    public List<Client> getClients() {
 
-        List<ModelClient> clients = new ArrayList<ModelClient>();
+        List<Client> clients = new ArrayList<Client>();
 
         Cursor cursor = database.query(TABLE_CLIENTS,
                 allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            ModelClient client = mappage(cursor);
+            Client client = mappage(cursor);
             clients.add(client);
             cursor.moveToNext();
         }
@@ -142,16 +142,16 @@ public class ClientDao {
      * @param prenom
      * @return clients
      */
-    public List<ModelClient> getClientsByNomPrenom(String nom, String prenom) {
+    public List<Client> getClientsByNomPrenom(String nom, String prenom) {
 
-        List<ModelClient> clients = new ArrayList<ModelClient>();
+        List<Client> clients = new ArrayList<Client>();
 
         Cursor cursor = database.query(TABLE_CLIENTS,
                 allColumns, " nom =" + nom + " AND prenom =" + prenom, null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            ModelClient client = mappage(cursor);
+            Client client = mappage(cursor);
             clients.add(client);
             cursor.moveToNext();
         }
@@ -164,7 +164,7 @@ public class ClientDao {
      * @param client
      * @return
      */
-    public ModelClient getClientsById(ModelClient client) {
+    public Client getClientsById(Client client) {
 
 
         Cursor cursor = database.query(TABLE_CLIENTS,
@@ -174,8 +174,8 @@ public class ClientDao {
         return client;
     }
 
-    public ModelClient mappage(Cursor cursor) {
-        ModelClient client = new ModelClient();
+    public Client mappage(Cursor cursor) {
+        Client client = new Client();
         client.setId(cursor.getInt(NUM_COL_ID_CLIENTS));
         client.setNom(cursor.getString(NUM_COL_NOM_CLIENTS));
         client.setPrenom(cursor.getString(NUM_COL_PRENOM_CLIENTS));

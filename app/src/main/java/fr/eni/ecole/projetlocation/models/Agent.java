@@ -3,15 +3,15 @@ package fr.eni.ecole.projetlocation.models;
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class ModelAgent {
+public class Agent {
     private int id;
     private String login;
     private String password;
 
-    public ModelAgent() {
+    public Agent() {
     }
 
-    public ModelAgent(int id, String login, String password) {
+    public Agent(int id, String login, String password) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -44,7 +44,7 @@ public class ModelAgent {
     }
     @Override
     public String toString() {
-        return "ModelAgent{" +
+        return "Agent{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
                 '}';

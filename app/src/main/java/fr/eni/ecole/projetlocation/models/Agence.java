@@ -3,13 +3,13 @@ package fr.eni.ecole.projetlocation.models;
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class ModelAgence {
+public class Agence {
     private String nom;
 
-    public ModelAgence() {
+    public Agence() {
     }
 
-    public ModelAgence(String nom) {
+    public Agence(String nom) {
         this.nom = nom;
     }
 
@@ -23,7 +23,7 @@ public class ModelAgence {
 
     @Override
     public String toString() {
-        return "ModelAgence{" +
+        return "Agence{" +
                 "nom='" + nom + '\'' +
                 '}';
     }

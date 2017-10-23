@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class ModelVehicule {
+public class Vehicule {
     private int id;
     private int prix;
     private String immatriculation;
@@ -15,10 +15,10 @@ public class ModelVehicule {
     private String carburant;
 
 
-    public ModelVehicule() {
+    public Vehicule() {
     }
 
-    public ModelVehicule(int id, int prix, String immatriculation, int type, String marque, String model, String carburant) {
+    public Vehicule(int id, int prix, String immatriculation, int type, String marque, String model, String carburant) {
         this.id = id;
         this.prix = prix;
         this.immatriculation = immatriculation;
@@ -86,7 +86,7 @@ public class ModelVehicule {
 
     @Override
     public String toString() {
-        return "ModelVehicule{" +
+        return "Vehicule{" +
                 "id=" + id +
                 ", prix=" + prix +
                 ", immatriculation='" + immatriculation + '\'' +

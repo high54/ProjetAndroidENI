@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class ModelClient {
+public class Client {
     private int id;
     private String nom;
     private String prenom;
@@ -16,10 +16,10 @@ public class ModelClient {
     private Date dateNaissance;
 
 
-    public ModelClient() {
+    public Client() {
     }
 
-    public ModelClient(int id, String nom, String prenom, int telephone, String adresse, int codePostal, String ville, Date dateNaissance) {
+    public Client(int id, String nom, String prenom, int telephone, String adresse, int codePostal, String ville, Date dateNaissance) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -96,7 +96,7 @@ public class ModelClient {
 
     @Override
     public String toString() {
-        return "ModelClient{" +
+        return "Client{" +
                 "id=" + id +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +

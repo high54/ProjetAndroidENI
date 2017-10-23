@@ -3,16 +3,16 @@ package fr.eni.ecole.projetlocation.models;
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class ModelPhoto {
+public class Photo {
     private int id;
     private String date;
     private String uri;
-    private ModelEDL edl;
+    private EDL edl;
 
-    public ModelPhoto() {
+    public Photo() {
     }
 
-    public ModelPhoto(int id, String date, String uri, ModelEDL edl) {
+    public Photo(int id, String date, String uri, EDL edl) {
         this.id = id;
         this.date = date;
         this.uri = uri;
@@ -43,17 +43,17 @@ public class ModelPhoto {
         this.uri = uri;
     }
 
-    public ModelEDL getEdl() {
+    public EDL getEdl() {
         return edl;
     }
 
-    public void setEdl(ModelEDL edl) {
+    public void setEdl(EDL edl) {
         this.edl = edl;
     }
 
     @Override
     public String toString() {
-        return "ModelPhoto{" +
+        return "Photo{" +
                 "id=" + id +
                 ", date='" + date + '\'' +
                 ", uri='" + uri + '\'' +

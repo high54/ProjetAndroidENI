@@ -10,7 +10,7 @@ import fr.eni.ecole.projetlocation.dao.client.IContract;
 import fr.eni.ecole.projetlocation.dao.icontract.IEDLDao;
 import fr.eni.ecole.projetlocation.dao.icontract.ILocationDao;
 import fr.eni.ecole.projetlocation.dao.icontract.IPhotoDao;
-import fr.eni.ecole.projetlocation.dao.icontract.IVehiculeDao;
+import fr.eni.ecole.projetlocation.dao.vehicule.IVehiculeContract;
 
 /**
  * Created by Administrateur on 20/10/2017.
@@ -36,7 +36,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(IEDLDao.CREATE_TABLE_EDLS);
         sqLiteDatabase.execSQL(ILocationDao.CREATE_TABLE_LOCATIONS);
         sqLiteDatabase.execSQL(IPhotoDao.CREATE_TABLE_PHOTOS);
-        sqLiteDatabase.execSQL(IVehiculeDao.CREATE_TABLE_VEHICULES);
+        sqLiteDatabase.execSQL(IVehiculeContract.CREATE_TABLE_VEHICULES);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IEDLDao.TABLE_EDLS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ILocationDao.TABLE_LOCATIONS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IPhotoDao.TABLE_PHOTOS);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IVehiculeDao.TABLE_VEHICULES);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IVehiculeContract.TABLE_VEHICULES);
         onCreate(sqLiteDatabase);
     }
 }

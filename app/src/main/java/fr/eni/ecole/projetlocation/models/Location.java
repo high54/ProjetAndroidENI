@@ -5,19 +5,19 @@ import java.util.ArrayList;
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class ModelLocation {
+public class Location {
     private int id;
-    private ModelClient client;
+    private Client client;
     private String depart;
     private String retour;
-    private ModelVehicule vehicule;
-    private ArrayList<ModelEDL> edls;
+    private Vehicule vehicule;
+    private ArrayList<EDL> edls;
 
 
-    public ModelLocation() {
+    public Location() {
     }
 
-    public ModelLocation(int id, ModelClient client, String depart, String retour, ModelVehicule vehicule, ArrayList<ModelEDL> edls) {
+    public Location(int id, Client client, String depart, String retour, Vehicule vehicule, ArrayList<EDL> edls) {
         this.id = id;
         this.client = client;
         this.depart = depart;
@@ -34,11 +34,11 @@ public class ModelLocation {
         this.id = id;
     }
 
-    public ModelClient getClient() {
+    public Client getClient() {
         return client;
     }
 
-    public void setClient(ModelClient client) {
+    public void setClient(Client client) {
         this.client = client;
     }
 
@@ -58,25 +58,25 @@ public class ModelLocation {
         this.retour = retour;
     }
 
-    public ModelVehicule getVehicule() {
+    public Vehicule getVehicule() {
         return vehicule;
     }
 
-    public void setVehicule(ModelVehicule vehicule) {
+    public void setVehicule(Vehicule vehicule) {
         this.vehicule = vehicule;
     }
 
-    public ArrayList<ModelEDL> getEdls() {
+    public ArrayList<EDL> getEdls() {
         return edls;
     }
 
-    public void setEdls(ArrayList<ModelEDL> edls) {
+    public void setEdls(ArrayList<EDL> edls) {
         this.edls = edls;
     }
 
     @Override
     public String toString() {
-        return "ModelLocation{" +
+        return "Location{" +
                 "id=" + id +
                 ", client=" + client +
                 ", depart='" + depart + '\'' +

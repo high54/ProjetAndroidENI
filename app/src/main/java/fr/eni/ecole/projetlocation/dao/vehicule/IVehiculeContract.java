@@ -1,9 +1,9 @@
-package fr.eni.ecole.projetlocation.dao.icontract;
+package fr.eni.ecole.projetlocation.dao.vehicule;
 
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class IVehiculeDao {
+public class IVehiculeContract {
     public static final String TABLE_VEHICULES = "vehicules";
     public static final String COLUMN_ID_VEHICULES = "id";
     public static final String COLUMN_PRIX_VEHICULES = "prix";
@@ -25,4 +25,8 @@ public class IVehiculeDao {
             + " text not null, "+ COLUMN_PRIX_VEHICULES
             + " integer not null"
             + ");";
+
+
+    public static final String INSERT_SELECT = "INSERT INTO " + TABLE_VEHICULES + " VALUES " +
+            "(?, ?, ?, ?, ?, ?);";
 }
