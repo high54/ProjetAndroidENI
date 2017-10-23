@@ -35,7 +35,7 @@ public class IContract {
             + " text, "+ COLUMN_CODE_POSTAL_CLIENTS
             + " integer, "+ COLUMN_VILLE_CLIENT
             + " text"+ COLUMN_DATE_NAISSANCE_CLIENT
-            +" date "
+            +" date not null "
             + ");";
 
 }
