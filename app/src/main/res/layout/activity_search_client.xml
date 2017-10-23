@@ -8,14 +8,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
+        <Button
+            android:id="@+id/bt_add_client"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/ajouter"
+            />
         <TextView
             android:id="@+id/txt_recherche_nom_client"
-            android:layout_width="match_parent"
+            android:layout_below="@id/bt_add_client"
+
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="@string/txt_nom_client"/>
+
         <EditText
             android:id="@+id/ed_nom_client"
+            android:layout_below="@id/txt_recherche_nom_client"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
