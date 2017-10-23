@@ -1,11 +1,14 @@
 package fr.eni.ecole.projetlocation.models;
 
-import java.util.ArrayList;
-
 /**
  * Created by Administrateur on 20/10/2017.
  */
 public class Vehicule {
+    public static final String ESSENCE = "Essence";
+    public static final String DIESEL = "Diesel";
+    public static final String GPL = "GPL";
+    public static final String ELECTRIQUE = "Electrique";
+
     private int id;
     private int prix;
     private String immatriculation;
@@ -13,9 +16,11 @@ public class Vehicule {
     private String marque;
     private String model;
     private String carburant;
+    private Boolean loue;
 
 
     public Vehicule() {
+        this.loue = false;
     }
 
     public Vehicule(int id, int prix, String immatriculation, int type, String marque, String model, String carburant) {
@@ -26,6 +31,7 @@ public class Vehicule {
         this.marque = marque;
         this.model = model;
         this.carburant = carburant;
+        this.loue = false;
     }
 
     public int getId() {
@@ -82,6 +88,14 @@ public class Vehicule {
 
     public void setCarburant(String carburant) {
         this.carburant = carburant;
+    }
+
+    public Boolean getLoue() {
+        return loue;
+    }
+
+    public void setLoue(Boolean loue) {
+        this.loue = loue;
     }
 
     @Override
