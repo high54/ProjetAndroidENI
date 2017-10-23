@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="fr.eni.ecole.projetlocation.ManageVehicule">
+
+        <TextView
+            android:id="@+id/tv_marque"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/marque" />
+
+        <EditText
+            android:id="@+id/et_marque"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_marque" />
+
+        <TextView
+            android:id="@+id/tv_model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_marque"
+            android:text="@string/model" />
+
+        <EditText
+            android:id="@+id/et_model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_model" />
+
+        <TextView
+            android:id="@+id/tv_carburant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_model"
+            android:text="@string/carburant" />
+
+        <RadioGroup
+            android:id="@+id/rg_carburant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_carburant"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+
+            <RadioButton
+                android:id="@+id/rb_essence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/essence" />
+
+            <RadioButton
+                android:id="@+id/rb_diesel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_carburant"
+                android:layout_centerHorizontal="true"
+                android:text="@string/diesel" />
+
+            <RadioButton
+                android:id="@+id/rb_gpl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/tv_carburant"
+                android:layout_alignTop="@+id/rb_diesel"
+                android:layout_marginEnd="44dp"
+                android:text="@string/gpl" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_type_vehicule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rg_carburant"
+            android:text="@string/type_de_vehicule" />
+
+        <RadioGroup
+            android:id="@+id/rg_type_vehicule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_type_vehicule"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+
+            <RadioButton
+                android:id="@+id/rb_ville"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ville" />
+
+            <RadioButton
+                android:id="@+id/rb_hors_ville"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/rb_diesel"
+                android:layout_alignTop="@+id/rg_type_vehicule"
+                android:text="@string/hors_ville" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_prix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rg_type_vehicule"
+            android:text="@string/prix" />
+
+        <EditText
+            android:id="@+id/et_prix"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_prix"
+            android:ems="10"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/bt_ajout_photos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_prix"
+            android:text="@string/ajouter_des_photos" />
+
+        <Button
+            android:id="@+id/bt_enregistrer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/enregistrer"
+            android:onClick="onClickSaveVehicule"/>
+
+</RelativeLayout>

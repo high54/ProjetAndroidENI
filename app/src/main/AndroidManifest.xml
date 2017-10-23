@@ -12,6 +12,7 @@
         <activity android:name=".ManageClient">
 
         </activity>
+        <activity android:name=".ManageVehicule">
         <activity android:name=".SearchClient">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

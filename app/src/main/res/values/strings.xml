@@ -8,5 +8,16 @@
     <string name="txt_code_postal_client">Code postal :</string>
     <string name="txt_ville_client">Ville :</string>
     <string name="enregistrer">Enregistrer</string>
+    <string name="marque">Marque :</string>
+    <string name="model">Model :</string>
+    <string name="carburant">Carburant :</string>
+    <string name="type_de_vehicule">Type de véhicule :</string>
+    <string name="prix">Prix :</string>
+    <string name="essence">Essence</string>
+    <string name="diesel">Diesel</string>
+    <string name="gpl">GPL</string>
+    <string name="ville">Ville</string>
+    <string name="hors_ville">Hors ville</string>
+    <string name="ajouter_des_photos">Ajouter des photos</string>
     <string name="bt_rechercher">Rechercher</string>
 </resources>
