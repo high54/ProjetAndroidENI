@@ -1,11 +1,14 @@
 package fr.eni.ecole.projetlocation.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class Client {
+public class Client implements Parcelable{
     private int id;
     private String nom;
     private String prenom;
@@ -29,6 +32,28 @@ public class Client {
         this.ville = ville;
         this.dateNaissance = dateNaissance;
     }
+
+    protected Client(Parcel in) {
+        id = in.readInt();
+        nom = in.readString();
+        prenom = in.readString();
+        telephone = in.readInt();
+        adresse = in.readString();
+        codePostal = in.readInt();
+        ville = in.readString();
+    }
+
+    public static final Creator<Client> CREATOR = new Creator<Client>() {
+        @Override
+        public Client createFromParcel(Parcel in) {
+            return new Client(in);
+        }
+
+        @Override
+        public Client[] newArray(int size) {
+            return new Client[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -106,5 +131,21 @@ public class Client {
                 ", ville='" + ville + '\'' +
                 ", dateNaissance=" + dateNaissance +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(nom);
+        parcel.writeString(prenom);
+        parcel.writeInt(telephone);
+        parcel.writeString(adresse);
+        parcel.writeInt(codePostal);
+        parcel.writeString(ville);
     }
 }

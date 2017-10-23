@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import fr.eni.ecole.projetlocation.dao.SQLiteHelper;
 import fr.eni.ecole.projetlocation.models.Client;
@@ -128,6 +129,7 @@ public class ClientDao {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Client client = mappage(cursor);
+            Log.wtf("WTF", "DAO CLIENT : "+client.toString());
             clients.add(client);
             cursor.moveToNext();
         }
@@ -147,7 +149,7 @@ public class ClientDao {
         List<Client> clients = new ArrayList<Client>();
 
         Cursor cursor = database.query(TABLE_CLIENTS,
-                allColumns, " nom =" + nom + " AND prenom =" + prenom, null, null, null, null);
+                allColumns, " nom = '" + nom + "' AND prenom = '" + prenom+"'", null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -184,7 +186,7 @@ public class ClientDao {
         client.setVille(cursor.getString(NUM_COL_VILLE_CLIENTS));
         client.setTelephone(cursor.getInt(NUM_COL_TELEPHONE_CLIENTS));
         String dateNaissance = cursor.getString(NUM_COL_DATE_NAISSANCE_CLIENTS);
-        DateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat date = new SimpleDateFormat("d-MM-yyyy", Locale.FRANCE);
         try {
             client.setDateNaissance(date.parse(dateNaissance));
         } catch (ParseException e) {
