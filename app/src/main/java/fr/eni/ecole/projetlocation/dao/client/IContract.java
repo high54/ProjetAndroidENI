@@ -1,9 +1,9 @@
-package fr.eni.ecole.projetlocation.dao.icontract;
+package fr.eni.ecole.projetlocation.dao.client;
 
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class IClientDao {
+public class IContract {
     public static final String TABLE_CLIENTS = "clients";
     public static final String COLUMN_ID_CLIENTS = "id";
     public static final String COLUMN_NOM_CLIENTS = "nom";
@@ -13,6 +13,16 @@ public class IClientDao {
     public static final String COLUMN_CODE_POSTAL_CLIENTS = "codePostal";
     public static final String COLUMN_VILLE_CLIENT = "ville";
     public static final String COLUMN_DATE_NAISSANCE_CLIENT = "date_naissance";
+
+    public static final int NUM_COL_ID_CLIENTS = 0;
+    public static final int NUM_COL_NOM_CLIENTS = 1;
+    public static final int NUM_COL_PRENOM_CLIENTS = 2;
+    public static final int NUM_COL_TELEPHONE_CLIENTS = 3;
+    public static final int NUM_COL_ADRESSE_CLIENTS = 4;
+    public static final int NUM_COL_CODE_POSTAL_CLIENTS = 5;
+    public static final int NUM_COL_VILLE_CLIENTS = 6;
+    public static final int NUM_COL_DATE_NAISSANCE_CLIENTS = 7;
+
 
 
 
