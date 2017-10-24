@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,8 +62,11 @@ public class LocationDao {
         Cursor cursor = database.query(TABLE_LOCATIONS,
                 allColumns, COLUMN_ID_LOCATIONS + " = " + insertId, null,
                 null, null, null);
-        cursor.moveToFirst();
-        LocationVehicule newLocationVehicule = mappage(cursor);
+        LocationVehicule newLocationVehicule=new LocationVehicule();
+        if(cursor!=null && cursor.getCount()>0) {
+            cursor.moveToFirst();
+            newLocationVehicule = mappage(cursor);
+        }
         cursor.close();
 
         return newLocationVehicule;

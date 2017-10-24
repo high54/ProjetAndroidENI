@@ -24,7 +24,7 @@ public class ILocationContract {
             + " integer primary key autoincrement, " + COLUMN_ID_CLIENT_LOCATIONS
             + " integer not null, "+ COLUMN_DATE_DEPART_LOCATIONS
             + " text not null, "+ COLUMN_DATE_RETOUR_LOCATIONS
-            + " text not null, "+ COLUMN_ID_VEHICULE_LOCATIONS
+            + " text, "+ COLUMN_ID_VEHICULE_LOCATIONS
             + " integer not null"
             + ");";
 }
