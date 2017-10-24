@@ -12,7 +12,8 @@
         android:id="@+id/menu_liste"
         android:icon="@android:drawable/ic_menu_sort_by_size"
         android:title="menu_liste"
-        app:showAsAction="always"/>
+        app:showAsAction="always"
+        android:onClick="showCarsList"/>
 
     <item
         android:id="@+id/menu_ajout"

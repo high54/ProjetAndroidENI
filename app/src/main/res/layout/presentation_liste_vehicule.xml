@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+
+    <ImageView
+        android:id="@+id/liste_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+    <TextView
+        android:id="@+id/tv_marque"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/liste_img"
+        android:text="@string/marque"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_carburant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/liste_img"
+        android:layout_below="@id/tv_marque"
+        android:text="@string/carburant"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_model"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/model"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/euros_par_jour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/euros_jours"
+        android:layout_below="@id/tv_carburant"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/tv_prix"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/prix"
+        android:layout_below="@id/tv_carburant"
+        android:layout_toStartOf="@id/euros_par_jour"/>
+
+</RelativeLayout>

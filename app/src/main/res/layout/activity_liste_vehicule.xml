@@ -9,4 +9,43 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="fr.eni.ecole.projetlocation.ListeVehiculeActivity">
 
+    <RadioGroup
+        android:id="@+id/rg_recherche"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_loue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/louees" />
+
+        <RadioButton
+            android:id="@+id/rb_disponible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/disponibles" />
+
+        <RadioButton
+            android:id="@+id/rb_toutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/toutes" />
+
+    </RadioGroup>
+    <Button
+        android:id="@+id/bt_recherche"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rechercher"
+        android:layout_below="@id/rg_recherche"
+        android:layout_alignParentEnd="true"
+        />
+
+    <ListView
+        android:id="@+id/list_vehicules"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bt_recherche"/>
 </RelativeLayout>
