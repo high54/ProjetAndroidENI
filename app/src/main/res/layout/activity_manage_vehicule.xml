@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="fr.eni.ecole.projetlocation.ManageVehicule">
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="fr.eni.ecole.projetlocation.ManageVehicule">
 
         <TextView
             android:id="@+id/tv_marque"
@@ -35,10 +39,23 @@
             android:layout_below="@id/tv_model" />
 
         <TextView
-            android:id="@+id/tv_carburant"
+            android:id="@+id/tv_immatriculation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/et_model"
+            android:text="@string/plaque_d_immatriculation"/>
+
+        <EditText
+            android:id="@+id/et_immatriculation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_immatriculation"/>
+
+        <TextView
+            android:id="@+id/tv_carburant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_immatriculation"
             android:text="@string/carburant" />
 
         <RadioGroup
@@ -59,18 +76,19 @@
                 android:id="@+id/rb_diesel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_carburant"
-                android:layout_centerHorizontal="true"
                 android:text="@string/diesel" />
 
             <RadioButton
                 android:id="@+id/rb_gpl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/tv_carburant"
-                android:layout_alignTop="@+id/rb_diesel"
-                android:layout_marginEnd="44dp"
                 android:text="@string/gpl" />
+
+            <RadioButton
+                android:id="@+id/rb_electrique"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/electrique"/>
 
         </RadioGroup>
 
@@ -127,6 +145,24 @@
             android:layout_below="@id/et_prix"
             android:text="@string/ajouter_des_photos" />
 
+        <ImageView
+            android:id="@+id/img_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bt_ajout_photos"/>
+
+        <ImageView
+            android:id="@+id/img_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/img_1"/>
+
+        <ImageView
+            android:id="@+id/img_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/img_2"/>
+
         <Button
             android:id="@+id/bt_enregistrer"
             android:layout_width="wrap_content"
@@ -134,6 +170,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:text="@string/enregistrer"
-            android:onClick="onClickSaveVehicule"/>
+            android:onClick="onClickSaveVehicule"
+            android:layout_below="@id/img_1"/>
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

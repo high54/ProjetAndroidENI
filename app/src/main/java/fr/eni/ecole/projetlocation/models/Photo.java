@@ -8,6 +8,7 @@ public class Photo {
     private String date;
     private String uri;
     private EDL edl;
+    private Vehicule vehicule;
 
     public Photo() {
     }
@@ -17,6 +18,13 @@ public class Photo {
         this.date = date;
         this.uri = uri;
         this.edl = edl;
+    }
+
+    public Photo(int id, String date, String uri, Vehicule vehicule) {
+        this.id = id;
+        this.date = date;
+        this.uri = uri;
+        this.vehicule = vehicule;
     }
 
     public int getId() {
@@ -49,6 +57,14 @@ public class Photo {
 
     public void setEdl(EDL edl) {
         this.edl = edl;
+    }
+
+    public Vehicule getVehicule() {
+        return vehicule;
+    }
+
+    public void setVehicule(Vehicule vehicule) {
+        this.vehicule = vehicule;
     }
 
     @Override

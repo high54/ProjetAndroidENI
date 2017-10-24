@@ -20,5 +20,7 @@
     <string name="hors_ville">Hors ville</string>
     <string name="ajouter_des_photos">Ajouter des photos</string>
     <string name="bt_rechercher">Rechercher</string>
+    <string name="plaque_d_immatriculation">Plaque d\'immatriculation :</string>
+    <string name="electrique">Electrique</string>
     <string name="ajouter">Ajouter</string>
 </resources>

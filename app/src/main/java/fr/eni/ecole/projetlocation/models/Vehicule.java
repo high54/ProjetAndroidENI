@@ -3,6 +3,8 @@ package fr.eni.ecole.projetlocation.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 /**
  * Created by Administrateur on 20/10/2017.
  */
@@ -23,6 +25,7 @@ public class Vehicule implements Parcelable {
     private String model;
     private String carburant;
     private Boolean loue = false;
+    private ArrayList<Photo> photos;
 
 
     public Vehicule() {
@@ -123,6 +126,25 @@ public class Vehicule implements Parcelable {
 
     public void setLoue(Boolean loue) {
         this.loue = loue;
+    }
+
+    public ArrayList<Photo> getPhotos() {
+        return photos;
+    }
+
+    public Vehicule addPhotos(Photo photo) {
+        if (!this.hasPhoto(photo)) {
+            this.photos.add(photo);
+        }
+        return this;
+    }
+
+    public Boolean hasPhoto(Photo photo) {
+        return this.photos.contains(photo);
+    }
+
+    public Boolean removePhoto(Photo photo) {
+        return this.photos.remove(photo);
     }
 
     @Override
