@@ -88,6 +88,7 @@ public class EtatDesLieux extends AppCompatActivity {
             location.setDepart(date);
             locationDao.open();
             location = locationDao.insertLocation(location);
+            Log.wtf("WTF","LOCATION ======>" + location.toString());
             EDL edl = new EDL();
             edl.setDate(date);
             edl.setLocation(location);
