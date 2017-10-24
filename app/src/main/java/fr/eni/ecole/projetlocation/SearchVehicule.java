@@ -143,9 +143,4 @@ public class SearchVehicule extends AppCompatActivity {
             }
         });
     }
-
-    public void showCarsList(MenuItem item) {
-        Intent intent = new Intent(SearchVehicule.this, ListeVehiculeActivity.class);
-        startActivity(intent);
-    }
 }

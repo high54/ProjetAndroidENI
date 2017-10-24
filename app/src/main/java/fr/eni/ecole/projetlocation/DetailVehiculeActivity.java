@@ -27,8 +27,8 @@ public class DetailVehiculeActivity extends AppCompatActivity {
         }
 
         if (null != vehicule) {
-            dao = new VehiculeDao(this);
-            vehicule = dao.selectById(vehicule.getId());
+            //dao = new VehiculeDao(this);
+            //vehicule = dao.selectById(vehicule.getId());
 
             TextView tv_marque = (TextView) findViewById(R.id.tv_marque);
             tv_marque.setText(vehicule.getMarque());
