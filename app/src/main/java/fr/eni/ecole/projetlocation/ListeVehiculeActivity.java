@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import fr.eni.ecole.projetlocation.adapter.VehiculeAdapter;
 import fr.eni.ecole.projetlocation.models.Vehicule;
-import fr.eni.ecole.projetlocation.service.VehiculeService;
+import fr.eni.ecole.projetlocation.bll.VehiculeService;
 
 public class ListeVehiculeActivity extends AppCompatActivity implements VehiculeService.VehiculeServiceListener{
 

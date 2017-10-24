@@ -1,4 +1,4 @@
-package fr.eni.ecole.projetlocation.service;
+package fr.eni.ecole.projetlocation.bll;
 
 import android.content.Context;
 import android.os.AsyncTask;

@@ -27,10 +27,13 @@ public class HistoriqueLocationsActivity extends AppCompatActivity {
         }
 
         LocationDao dao = new LocationDao(this);
+        dao.open();
         List<LocationVehicule> locations = dao.getAllLocation(vehicule.getId());
 
-        ListView listView = (ListView)findViewById(R.id.list_locations);
-        adapter = new LocationAdapter(this, R.layout.presentation_liste_locations, locations);
-        listView.setAdapter(adapter);
+        if(0 != locations.size()) {
+            ListView listView = (ListView) findViewById(R.id.list_locations);
+            adapter = new LocationAdapter(this, R.layout.presentation_liste_locations, locations);
+            listView.setAdapter(adapter);
+        }
     }
 }
