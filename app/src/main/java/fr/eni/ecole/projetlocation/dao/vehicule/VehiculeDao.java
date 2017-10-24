@@ -94,9 +94,13 @@ public class VehiculeDao {
     }
 
     public ArrayList<Vehicule> selectAllRent(Boolean bool) {
+        int boolzor = 0;
+        if(bool){
+            boolzor = 1;
+        }
         ArrayList<Vehicule> vehicules = new ArrayList<>();
         Log.wtf(TAG, "selectAllRent "+bool);
-        Cursor c = sqLiteDatabase.query(TABLE_VEHICULES, allColumns, COLUMN_LOUE_VEHICULES + "=" + bool, null, null, null, null);
+        Cursor c = sqLiteDatabase.query(TABLE_VEHICULES, allColumns, COLUMN_LOUE_VEHICULES + "=" + boolzor, null, null, null, null);
         while(c.moveToNext()) {
             vehicules.add(map(c));
         }

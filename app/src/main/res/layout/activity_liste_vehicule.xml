@@ -41,6 +41,7 @@
         android:text="@string/rechercher"
         android:layout_below="@id/rg_recherche"
         android:layout_alignParentEnd="true"
+        android:onClick="onClickRefreshListeVehicules"
         />
 
     <ListView

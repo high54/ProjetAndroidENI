@@ -31,4 +31,19 @@ public class VehiculeService {
             }
         }.execute();
     }
+
+    public static void selectAllRent(final VehiculeServiceListener listener, final Context context, final Boolean bool) {
+        new AsyncTask<Void, Void, ArrayList<Vehicule>>() {
+            @Override
+            protected ArrayList<Vehicule> doInBackground(Void... voids) {
+                return new VehiculeDao(context).selectAllRent(bool);
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<Vehicule> vehicules) {
+                super.onPostExecute(vehicules);
+                listener.OnSelectVehicule(vehicules);
+            }
+        }.execute();
+    }
 }

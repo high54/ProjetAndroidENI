@@ -30,5 +30,15 @@
     <string name="euros_jours">€/j</string>
     <string name="prix_la_journ_e">Prix à la journée :</string>
     <string name="prix_mini">10 €</string>
+    <string name="type">Type</string>
+    <string name="editer">Editer</string>
+    <string name="non_disponible">Non-disponible</string>
+    <string name="client_x">Client X</string>
+    <string name="date_de_location">Date de location :</string>
+    <string name="historique_des_locations">Historique des locations</string>
+    <string name="disponible">Disponible</string>
+    <string name="non_dispo">Non Disponible</string>
+    <string name="rendre_le_vehicule">Rendre le Vehicule</string>
+    <string name="louer_le_vehicule">Louer le véhicule</string>
     <string name="location_d_un_v_hicule">Location d\'un véhicule</string>
 </resources>

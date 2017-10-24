@@ -8,21 +8,20 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".MainActivity" />
-        <activity android:name=".ManageClient" >
-
-
-        </activity>
+        <activity android:name=".ManageClient" />
         <activity android:name=".ManageVehicule" />
         <activity android:name=".SearchClient"></activity>
         <activity android:name=".ListeVehiculeActivity" />
-        <activity android:name=".SearchVehicule">            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
-        <activity android:name=".EtatDesLieux">
+        <activity android:name=".SearchVehicule">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".DetailVehiculeActivity"></activity>
+        <activity android:name=".EtatDesLieux">
         </activity>
     </application>
 

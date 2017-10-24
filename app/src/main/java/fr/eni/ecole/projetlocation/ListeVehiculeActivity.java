@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 
 import java.util.ArrayList;
 
@@ -19,6 +22,10 @@ public class ListeVehiculeActivity extends AppCompatActivity implements Vehicule
     private VehiculeAdapter adapter;
     ListView listView;
 
+    RadioButton rb_louees;
+    RadioButton rb_disponibles;
+    RadioButton rb_toutes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +35,22 @@ public class ListeVehiculeActivity extends AppCompatActivity implements Vehicule
         adapter = new VehiculeAdapter(this, R.layout.presentation_liste_vehicule, vehicules);
         listView = (ListView) findViewById(R.id.list_vehicules);
         listView.setAdapter(adapter);
+
+        rb_louees = (RadioButton)findViewById(R.id.rb_loue);
+        rb_disponibles = (RadioButton)findViewById(R.id.rb_disponible);
+        rb_toutes = (RadioButton)findViewById(R.id.rb_toutes);
+
+        rb_toutes.setChecked(true);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(ListeVehiculeActivity.this, DetailVehiculeActivity.class);
+                Vehicule vehicule = adapter.getItem(i);
+                intent.putExtra("vehicule", vehicule);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -60,5 +83,17 @@ public class ListeVehiculeActivity extends AppCompatActivity implements Vehicule
 
     public void showCarsList(MenuItem item) {
 
+    }
+
+    public void onClickRefreshListeVehicules(View view) {
+        if(rb_louees.isChecked()){
+            VehiculeService.selectAllRent(this, this, true);
+        }
+        else if(rb_disponibles.isChecked()){
+            VehiculeService.selectAllRent(this, this, false);
+        }
+        else if(rb_toutes.isChecked()){
+            VehiculeService.selectAll(this,this);
+        }
     }
 }
