@@ -1,14 +1,12 @@
 package fr.eni.ecole.projetlocation;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -79,6 +77,11 @@ public class SearchClient extends AppCompatActivity {
 
     public void showAddCar(MenuItem item) {
         Intent intent = new Intent(SearchClient.this, ManageVehicule.class);
+        startActivity(intent);
+    }
+
+    public void showCarsList(MenuItem item) {
+        Intent intent = new Intent(SearchClient.this,ListeVehiculeActivity.class);
         startActivity(intent);
     }
 }
