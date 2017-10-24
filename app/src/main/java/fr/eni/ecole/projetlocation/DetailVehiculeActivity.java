@@ -27,8 +27,8 @@ public class DetailVehiculeActivity extends AppCompatActivity {
         }
 
         if (null != vehicule) {
-            dao = new VehiculeDao(this);
-            vehicule = dao.selectById(vehicule.getId());
+            //dao = new VehiculeDao(this);
+            //vehicule = dao.selectById(vehicule.getId());
 
             TextView tv_marque = (TextView) findViewById(R.id.tv_marque);
             tv_marque.setText(vehicule.getMarque());
@@ -43,7 +43,12 @@ public class DetailVehiculeActivity extends AppCompatActivity {
             tv_carburant.setText(vehicule.getCarburant());
 
             TextView tv_type = (TextView) findViewById(R.id.tv_type_vehicule);
-            tv_type.setText(vehicule.getType());
+
+            if(Vehicule.TYPE_VILLE == vehicule.getType()) {
+                tv_type.setText("Ville");
+            }else {
+                tv_type.setText("Hors Ville");
+            }
 
             TextView tv_loue = (TextView) findViewById(R.id.tv_dispo);
             TextView tv_nom_client = (TextView) findViewById(R.id.tv_nom_client);
@@ -53,12 +58,12 @@ public class DetailVehiculeActivity extends AppCompatActivity {
                 tv_loue.setText(R.string.disponible);
                 tv_nom_client.setText("");
                 tv_date_location.setText("");
-                rendreLouer.setText(R.string.rendre_le_vehicule);
+                rendreLouer.setText(R.string.louer_le_vehicule);
             } else {
                 tv_loue.setText(R.string.non_dispo);
                 tv_nom_client.setText("le client qui a la location :D");
                 tv_date_location.setText("le 25/85/456 mouhahaha");
-                rendreLouer.setText(R.string.louer_le_vehicule);
+                rendreLouer.setText(R.string.rendre_le_vehicule);
             }
         }
     }
