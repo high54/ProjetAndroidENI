@@ -115,6 +115,8 @@ public class ManageVehicule extends AppCompatActivity {
         else{
             dao.update(vehicule);
         }
+
+        showCarsList(null);
     }
 
     public void showAddCar(MenuItem item) {
