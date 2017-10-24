@@ -5,4 +5,7 @@
     <dimen name="width_150_dp">150dp</dimen>
     <dimen name="width_80_dp">80dp</dimen>
     <dimen name="width_10_dp">10dp</dimen>
+    <dimen name="width_40_dp">40dp</dimen>
+    <dimen name="width_20_dp">20dp</dimen>
+    <dimen name="width_120_dp">120dp</dimen>
 </resources>

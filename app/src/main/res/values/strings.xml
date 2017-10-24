@@ -23,4 +23,6 @@
     <string name="plaque_d_immatriculation">Plaque d\'immatriculation :</string>
     <string name="electrique">Electrique</string>
     <string name="ajouter">Ajouter</string>
+    <string name="prix_la_journ_e">Prix à la journée :</string>
+    <string name="prix_mini">10 €</string>
 </resources>

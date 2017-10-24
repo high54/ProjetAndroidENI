@@ -12,13 +12,14 @@
         <activity android:name=".ManageClient"></activity>
         <activity android:name=".ManageVehicule"></activity>
         <activity android:name=".SearchClient">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ListeVehiculeActivity"></activity>
+        <activity android:name=".SearchVehicule">           <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
     </application>
 
 </manifest>
