@@ -1,26 +1,13 @@
-package fr.eni.ecole.projetlocation.dao.client;
+package fr.eni.ecole.projetlocation.dao.location;
 
-import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import fr.eni.ecole.projetlocation.dao.SQLiteHelper;
-import fr.eni.ecole.projetlocation.models.Client;
-
-import static fr.eni.ecole.projetlocation.dao.client.IClientContract.*;
-
+import fr.eni.ecole.projetlocation.models.Location;
 
 /**
- * Created by Administrateur on 23/10/2017.
+ * Created by Administrateur on 24/10/2017.
  */
-public class ClientDao {
-
+public class LocationDao {
     private SQLiteHelper sqLiteHelper;
 
     private SQLiteDatabase database;
@@ -172,8 +159,8 @@ public class ClientDao {
         return client;
     }
 
-    public Client mappage(Cursor cursor) {
-        Client client = new Client();
+    public Location mappage(Cursor cursor) {
+        Location location = new Location();
         client.setId(cursor.getInt(NUM_COL_ID_CLIENTS));
         client.setNom(cursor.getString(NUM_COL_NOM_CLIENTS));
         client.setPrenom(cursor.getString(NUM_COL_PRENOM_CLIENTS));
@@ -185,5 +172,4 @@ public class ClientDao {
 
         return client;
     }
-
 }

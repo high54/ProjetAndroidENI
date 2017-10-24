@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="fr.eni.ecole.projetlocation.EtatDesLieux">
+<TextView
+    android:id="@+id/txt_legend_location"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/location_d_un_v_hicule"/>
+    <TextView
+        android:id="@+id/txt_date_jour"
+        android:layout_below="@id/txt_legend_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/width_40_dp"
+        android:text="24/10/2017"/>
+    <Button
+        android:id="@+id/bt_ajout_photos"
+        android:layout_below="@id/txt_date_jour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ajouter_des_photos"
+        android:layout_marginBottom="@dimen/width_40_dp"/>
+    <ImageView
+        android:layout_below="@id/bt_ajout_photos"
+        android:layout_width="@dimen/width_50_dp"
+        android:layout_height="@dimen/width_50_dp" />
+<Button
+    android:id="@+id/bt_save_location"
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/enregistrer"
+    android:onClick="onClickSaveLocation"/>
+
+
+
+</RelativeLayout>

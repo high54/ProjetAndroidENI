@@ -30,4 +30,5 @@
     <string name="euros_jours">€/j</string>
     <string name="prix_la_journ_e">Prix à la journée :</string>
     <string name="prix_mini">10 €</string>
+    <string name="location_d_un_v_hicule">Location d\'un véhicule</string>
 </resources>

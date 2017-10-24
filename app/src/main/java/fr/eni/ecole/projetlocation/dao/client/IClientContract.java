@@ -3,7 +3,7 @@ package fr.eni.ecole.projetlocation.dao.client;
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class IContract {
+public class IClientContract {
     public static final String TABLE_CLIENTS = "clients";
     public static final String COLUMN_ID_CLIENTS = "id";
     public static final String COLUMN_NOM_CLIENTS = "nom";

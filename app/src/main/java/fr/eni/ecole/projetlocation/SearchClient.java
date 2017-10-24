@@ -15,11 +15,13 @@ import java.util.List;
 import fr.eni.ecole.projetlocation.adapter.ClientAdapter;
 import fr.eni.ecole.projetlocation.dao.client.ClientDao;
 import fr.eni.ecole.projetlocation.models.Client;
+import fr.eni.ecole.projetlocation.models.Vehicule;
 
 public class SearchClient extends AppCompatActivity {
 
     private ClientDao daoClient;
     private  List<Client> clients;
+    private Vehicule vehicule;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,10 @@ public class SearchClient extends AppCompatActivity {
         daoClient.open();
 
         clients = daoClient.getClients();
+        Intent intent = getIntent();
+        if(intent.hasExtra("vehicule")){
+            vehicule = intent.getExtras().getParcelable("vehicule");
+        }
 
         ClientAdapter adapterClient = new ClientAdapter(this,R.layout.liste_client,clients);
         final ListView listView = (ListView) findViewById(R.id.lv_liste_client);
@@ -39,6 +45,7 @@ public class SearchClient extends AppCompatActivity {
                 Client clientSelectionne = (Client) listView.getItemAtPosition(position);
                 Intent intent = new Intent(SearchClient.this,ManageClient.class);
                 intent.putExtra("client",  clientSelectionne);
+                intent.putExtra("vehicule",vehicule);
                 startActivity(intent);
             }
         });
@@ -58,6 +65,7 @@ public class SearchClient extends AppCompatActivity {
 
     public void onClickAddClient(View view) {
         Intent intent = new Intent(SearchClient.this,ManageClient.class);
+        intent.putExtra("vehicule",vehicule);
         startActivity(intent);
     }
 

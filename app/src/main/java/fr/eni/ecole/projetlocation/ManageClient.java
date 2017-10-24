@@ -22,6 +22,7 @@ import java.util.Locale;
 
 import fr.eni.ecole.projetlocation.dao.client.ClientDao;
 import fr.eni.ecole.projetlocation.models.Client;
+import fr.eni.ecole.projetlocation.models.Vehicule;
 
 public class ManageClient extends AppCompatActivity {
 
@@ -36,6 +37,7 @@ public class ManageClient extends AppCompatActivity {
 
     private Client client = null;
     private ClientDao daoClient;
+    private Vehicule vehicule;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +56,10 @@ public class ManageClient extends AppCompatActivity {
         if(intent.hasExtra("client")){
             client = intent.getExtras().getParcelable("client");
         }
+        if(intent.hasExtra("vehicule")){
+            vehicule = intent.getExtras().getParcelable("vehicule");
+        }
         if (client != null) {
-            Log.wtf("WTF", "CLient non null=>>>>" + client.toString());
             edNom.setText(client.getNom());
             edPrenom.setText(client.getPrenom());
             edTelephone.setText("0" + client.getTelephone());
@@ -73,11 +77,7 @@ public class ManageClient extends AppCompatActivity {
         if (checkParam(edNom.getText(), 0) && checkParam(edPrenom.getText(), 0) && checkParam(edTelephone.getText(), 1)) {
             daoClient = new ClientDao(this);
             daoClient.open();
-
-
             if (client == null) {
-
-
                 client = new Client();
                 client.setNom(edNom.getText().toString());
                 client.setPrenom(edPrenom.getText().toString());
@@ -116,6 +116,11 @@ public class ManageClient extends AppCompatActivity {
                 client = daoClient.updateClient(client);
 
             }
+            Intent intent = new Intent(this,EtatDesLieux.class);
+            intent.putExtra("action","nouveau");
+            intent.putExtra("vehicule",vehicule);
+            intent.putExtra("client",client);
+            startActivity(intent);
         }
 
     }

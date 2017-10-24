@@ -8,4 +8,5 @@
     <dimen name="width_40_dp">40dp</dimen>
     <dimen name="width_20_dp">20dp</dimen>
     <dimen name="width_120_dp">120dp</dimen>
+    <dimen name="width_50_dp">50dp</dimen>
 </resources>

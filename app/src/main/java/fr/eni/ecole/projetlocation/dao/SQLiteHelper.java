@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import fr.eni.ecole.projetlocation.dao.icontract.IAgenceDao;
 import fr.eni.ecole.projetlocation.dao.icontract.IAgentDao;
-import fr.eni.ecole.projetlocation.dao.client.IContract;
-import fr.eni.ecole.projetlocation.dao.icontract.IEDLDao;
-import fr.eni.ecole.projetlocation.dao.icontract.ILocationDao;
+import fr.eni.ecole.projetlocation.dao.client.IClientContract;
+import fr.eni.ecole.projetlocation.dao.edl.IEDLContract;
+import fr.eni.ecole.projetlocation.dao.location.ILocationContract;
 import fr.eni.ecole.projetlocation.dao.icontract.IPhotoDao;
 import fr.eni.ecole.projetlocation.dao.vehicule.IVehiculeContract;
 
@@ -32,9 +32,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(IAgenceDao.CREATE_TABLE_AGENCE);
         sqLiteDatabase.execSQL(IAgentDao.CREATE_TABLE_AGENTS);
-        sqLiteDatabase.execSQL(IContract.CREATE_TABLE_CLIENTS);
-        sqLiteDatabase.execSQL(IEDLDao.CREATE_TABLE_EDLS);
-        sqLiteDatabase.execSQL(ILocationDao.CREATE_TABLE_LOCATIONS);
+        sqLiteDatabase.execSQL(IClientContract.CREATE_TABLE_CLIENTS);
+        sqLiteDatabase.execSQL(IEDLContract.CREATE_TABLE_EDLS);
+        sqLiteDatabase.execSQL(ILocationContract.CREATE_TABLE_LOCATIONS);
         sqLiteDatabase.execSQL(IPhotoDao.CREATE_TABLE_PHOTOS);
         sqLiteDatabase.execSQL(IVehiculeContract.CREATE_TABLE_VEHICULES);
     }
@@ -43,9 +43,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IAgenceDao.TABLE_AGENCE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IAgentDao.TABLE_AGENTS);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IContract.TABLE_CLIENTS);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IEDLDao.TABLE_EDLS);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ILocationDao.TABLE_LOCATIONS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IClientContract.TABLE_CLIENTS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IEDLContract.TABLE_EDLS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ILocationContract.TABLE_LOCATIONS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IPhotoDao.TABLE_PHOTOS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IVehiculeContract.TABLE_VEHICULES);
         onCreate(sqLiteDatabase);

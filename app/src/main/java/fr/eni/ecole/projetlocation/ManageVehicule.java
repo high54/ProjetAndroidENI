@@ -118,5 +118,11 @@ public class ManageVehicule extends AppCompatActivity {
     }
 
     public void showAddCar(MenuItem item) {
+        Intent intent = new Intent(ManageVehicule.this, ManageVehicule.class);
+        startActivity(intent);
+    }
+    public void showCarsList(MenuItem item) {
+        Intent intent = new Intent(ManageVehicule.this, ListeVehiculeActivity.class);
+        startActivity(intent);
     }
 }
