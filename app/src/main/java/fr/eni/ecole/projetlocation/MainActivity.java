@@ -58,4 +58,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, ManageVehicule.class);
         startActivity(intent);
     }
+
+    public void showCarsList(MenuItem item) {
+        Intent intent = new Intent(MainActivity.this,ListeVehiculeActivity.class);
+        startActivity(intent);
+    }
 }
