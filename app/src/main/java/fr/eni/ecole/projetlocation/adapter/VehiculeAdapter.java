@@ -51,7 +51,7 @@ public class VehiculeAdapter extends ArrayAdapter<Vehicule>{
         tv_model.setText(vehiculeAAfficher.getModel());
 
         TextView tv_prix = (TextView)viewARetourner.findViewById(R.id.tv_prix);
-        tv_prix.setText(vehiculeAAfficher.getPrix());
+        tv_prix.setText(String.valueOf(vehiculeAAfficher.getPrix()));
 
         return viewARetourner;
     }
