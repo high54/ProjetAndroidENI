@@ -4,13 +4,38 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/iv_vehicule"
+        android:id="@+id/liste_img"
         android:layout_width="50dp"
         android:layout_height="50dp"
         />
     <TextView
-        android:id="@+id/txt_marque"
+        android:id="@+id/tv_marque"
+android:layout_toEndOf="@id/liste_img"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Marque"/>
+    <TextView
+        android:id="@+id/tv_carburant"
+        android:layout_below="@id/tv_marque"
+        android:layout_toEndOf="@id/liste_img"
 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Carburant"/>
+<TextView
+    android:id="@+id/tv_model"
+    android:layout_below="@id/tv_carburant"
+    android:layout_toEndOf="@id/liste_img"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="model"/>
+    <TextView
+        android:id="@+id/tv_prix"
+        android:layout_below="@+id/tv_model"
+        android:layout_toEndOf="@id/liste_img"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="15"/>
 </RelativeLayout>

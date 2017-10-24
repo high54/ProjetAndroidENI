@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.ecole.projetlocation.adapter.VehiculeAdapter;
 import fr.eni.ecole.projetlocation.dao.vehicule.VehiculeDao;
 import fr.eni.ecole.projetlocation.models.Vehicule;
 
@@ -84,6 +86,8 @@ public class SearchVehicule extends AppCompatActivity {
         spMarque.setAdapter(adapterMarque);
 
 
+
+
     }
 
     @Override
@@ -94,6 +98,10 @@ public class SearchVehicule extends AppCompatActivity {
 
     public void showAddCar(MenuItem item) {
         Intent intent = new Intent(SearchVehicule.this, ManageVehicule.class);
+        startActivity(intent);
+    }
+    public void showCarsList(MenuItem item) {
+        Intent intent = new Intent(SearchVehicule.this, ListeVehiculeActivity.class);
         startActivity(intent);
     }
 
@@ -117,6 +125,23 @@ public class SearchVehicule extends AppCompatActivity {
         for(int i =0; i<vehicules.size();i++){
             Log.wtf("WTF","LISTE DES VEHICULE RECHERCHE ==> "+vehicules.get(i).toString());
         }
+
+        VehiculeAdapter vehiculeAdapter = new VehiculeAdapter(this,R.layout.list_vehicule,vehicules);
+        final ListView listView = (ListView) findViewById(R.id.lv_liste_vehicule);
+        listView.setAdapter(vehiculeAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Vehicule vehicule = (Vehicule) adapterView.getItemAtPosition(i);
+
+                Intent intent = new Intent(SearchVehicule.this,SearchClient.class);
+                intent.putExtra("vehicule",vehicule);
+                startActivity(intent);
+
+
+            }
+        });
     }
 
 
