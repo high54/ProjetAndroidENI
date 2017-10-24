@@ -9,16 +9,16 @@ public class EDL {
     private int id;
     private String date;
     private ArrayList<Photo> photos;
-    private Location location;
+    private LocationVehicule locationVehicule;
 
     public EDL() {
     }
 
-    public EDL(int id, String date, ArrayList<Photo> photos, Location location) {
+    public EDL(int id, String date, ArrayList<Photo> photos, LocationVehicule locationVehicule) {
         this.id = id;
         this.date = date;
         this.photos = photos;
-        this.location = location;
+        this.locationVehicule = locationVehicule;
     }
 
     public int getId() {
@@ -45,12 +45,12 @@ public class EDL {
         this.photos = photos;
     }
 
-    public Location getLocation() {
-        return location;
+    public LocationVehicule getLocation() {
+        return locationVehicule;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLocation(LocationVehicule locationVehicule) {
+        this.locationVehicule = locationVehicule;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class EDL {
                 "id=" + id +
                 ", date='" + date + '\'' +
                 ", photos=" + photos +
-                ", location=" + location +
+                ", locationVehicule=" + locationVehicule +
                 '}';
     }
 }

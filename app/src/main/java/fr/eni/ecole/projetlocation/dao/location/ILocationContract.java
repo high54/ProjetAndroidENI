@@ -12,6 +12,12 @@ public class ILocationContract {
     public static final String COLUMN_ID_VEHICULE_LOCATIONS  = "id_vehicule";
 
     public static final int NUM_COL_ID_LOCATION = 0;
+    public static final int NUM_COL_ID_CLIENT_LOCATION = 1;
+    public static final int NUM_COL_DATE_DEPART_LOCATION = 2;
+    public static final int NUM_COL_DATE_RETOUR_LOCATION = 3;
+    public static final int NUM_COL_ID_VEHICULE_LOCATION = 4;
+
+
 
     public static final String CREATE_TABLE_LOCATIONS= "create table "
             + TABLE_LOCATIONS + "(" + COLUMN_ID_LOCATIONS

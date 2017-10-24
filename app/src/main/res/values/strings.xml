@@ -34,8 +34,8 @@
     <string name="editer">Editer</string>
     <string name="non_disponible">Non-disponible</string>
     <string name="client_x">Client X</string>
-    <string name="date_de_location">Date de location :</string>
-    <string name="historique_des_locations">Historique des locations</string>
+    <string name="date_de_location">Date de locationVehicule :</string>
+    <string name="historique_des_locations">Historique des locationVehicules</string>
     <string name="disponible">Disponible</string>
     <string name="non_dispo">Non Disponible</string>
     <string name="rendre_le_vehicule">Rendre le Vehicule</string>

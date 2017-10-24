@@ -1,9 +1,20 @@
 package fr.eni.ecole.projetlocation.dao.location;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 
-import fr.eni.ecole.projetlocation.models.Location;
+import java.util.ArrayList;
+import java.util.List;
 
+import fr.eni.ecole.projetlocation.dao.SQLiteHelper;
+import fr.eni.ecole.projetlocation.models.Client;
+import fr.eni.ecole.projetlocation.models.LocationVehicule;
+import fr.eni.ecole.projetlocation.models.Vehicule;
+
+import static  fr.eni.ecole.projetlocation.dao.location.ILocationContract.*;
 /**
  * Created by Administrateur on 24/10/2017.
  */
@@ -12,12 +23,11 @@ public class LocationDao {
 
     private SQLiteDatabase database;
 
-    private String[] allColumns = {COLUMN_ID_CLIENTS, COLUMN_NOM_CLIENTS,
-            COLUMN_PRENOM_CLIENTS, COLUMN_TELEPHONE_CLIENTS,
-            COLUMN_ADRESSE_CLIENTS, COLUMN_CODE_POSTAL_CLIENTS, COLUMN_VILLE_CLIENT,
-            COLUMN_DATE_NAISSANCE_CLIENT};
+    private String[] allColumns = {COLUMN_ID_LOCATIONS, COLUMN_ID_CLIENT_LOCATIONS,
+            COLUMN_ID_VEHICULE_LOCATIONS, COLUMN_DATE_DEPART_LOCATIONS,
+            COLUMN_DATE_RETOUR_LOCATIONS};
 
-    public ClientDao(Context context) {
+    public LocationDao(Context context) {
         sqLiteHelper = new SQLiteHelper(context);
     }
 
@@ -32,144 +42,128 @@ public class LocationDao {
     }
 
     /**
-     * Ajoute un client
-     * Prend en paramètre un objet client
+     * Ajoute une locationVehicule
+     * Prend en paramètre un objet locationVehicule
      *
-     * @param client
-     * @return client
-     * Retourne un objet client avec l'ID
+     * @param locationVehicule
+     * @return locationVehicule
+     * Retourne un objet locationVehicule avec l'ID
      */
-    public Client insertClient(Client client) {
+    public LocationVehicule insertLocation(LocationVehicule locationVehicule) {
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NOM_CLIENTS, client.getNom());
-        values.put(COLUMN_PRENOM_CLIENTS, client.getPrenom());
-        values.put(COLUMN_TELEPHONE_CLIENTS, client.getTelephone());
-        values.put(COLUMN_ADRESSE_CLIENTS, client.getAdresse());
-        values.put(COLUMN_CODE_POSTAL_CLIENTS, client.getCodePostal());
-        values.put(COLUMN_VILLE_CLIENT, client.getVille());
-        values.put(COLUMN_DATE_NAISSANCE_CLIENT, client.getDateNaissance());
+        values.put(COLUMN_ID_CLIENT_LOCATIONS, locationVehicule.getClient().getId());
+        values.put(COLUMN_ID_VEHICULE_LOCATIONS, locationVehicule.getVehicule().getId());
+        values.put(COLUMN_DATE_DEPART_LOCATIONS, locationVehicule.getDepart());
 
-
-        long insertId = database.insert(TABLE_CLIENTS, null,
+        long insertId = database.insert(TABLE_LOCATIONS, null,
                 values);
-        Cursor cursor = database.query(TABLE_CLIENTS,
-                allColumns, COLUMN_ID_CLIENTS + " = " + insertId, null,
+        Cursor cursor = database.query(TABLE_LOCATIONS,
+                allColumns, COLUMN_ID_LOCATIONS + " = " + insertId, null,
                 null, null, null);
         cursor.moveToFirst();
-        Client newClient = mappage(cursor);
+        LocationVehicule newLocationVehicule = mappage(cursor);
         cursor.close();
 
-        return newClient;
+        return newLocationVehicule;
     }
 
     /**
-     * Met à jour un client
-     * Prends en paramètre un objet client
+     * Met à jour un locationVehicule
+     * Prends en paramètre un objet locationVehicule
      *
-     * @param client
-     * @return client
-     * Retourne un objet client
+     * @param locationVehicule
+     * @return locationVehicule
+     * Retourne un objet locationVehicule
      */
-    public Client updateClient(Client client) {
+    public LocationVehicule updateLocation(LocationVehicule locationVehicule) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NOM_CLIENTS, client.getNom());
-        values.put(COLUMN_PRENOM_CLIENTS, client.getPrenom());
-        values.put(COLUMN_TELEPHONE_CLIENTS, client.getTelephone());
-        values.put(COLUMN_ADRESSE_CLIENTS, client.getAdresse());
-        values.put(COLUMN_CODE_POSTAL_CLIENTS, client.getCodePostal());
-        values.put(COLUMN_VILLE_CLIENT, client.getVille());
-        values.put(COLUMN_DATE_NAISSANCE_CLIENT, client.getDateNaissance().toString());
+        values.put(COLUMN_ID_CLIENT_LOCATIONS, locationVehicule.getClient().getId());
+        values.put(COLUMN_ID_VEHICULE_LOCATIONS, locationVehicule.getVehicule().getId());
+        values.put(COLUMN_DATE_DEPART_LOCATIONS, locationVehicule.getDepart());
+        values.put(COLUMN_DATE_RETOUR_LOCATIONS, locationVehicule.getRetour());
 
-        database.update(TABLE_CLIENTS, values, "id=" + client.getId(), null);
 
-        return client;
+        database.update(TABLE_LOCATIONS, values, "id=" + locationVehicule.getId(), null);
+
+        return locationVehicule;
     }
 
     /**
-     * Supprime un client
-     * Prends en paramètre un objet client
+     * Supprime un locationVehicule
+     * Prends en paramètre un objet locationVehicule
      *
-     * @param client
+     * @param locationVehicule
      */
-    public void deleteClient(Client client) {
-        database.delete(TABLE_CLIENTS, COLUMN_ID_CLIENTS
-                + " = " + client.getId(), null);
+    public void deleteLocation(LocationVehicule locationVehicule) {
+        database.delete(TABLE_LOCATIONS, COLUMN_ID_LOCATIONS
+                + " = " + locationVehicule.getId(), null);
     }
 
-    /**
-     * Retourne une liste de client
-     *
-     * @return List<Client> clients
-     */
-    public List<Client> getClients() {
+    public List<LocationVehicule> getLocationByClient(LocationVehicule locationVehicule) {
 
-        List<Client> clients = new ArrayList<Client>();
+        List<LocationVehicule> locationVehicules = new ArrayList<LocationVehicule>();
 
-        Cursor cursor = database.query(TABLE_CLIENTS,
-                allColumns, null, null, null, null, null);
+        Cursor cursor = database.query(TABLE_LOCATIONS,
+                allColumns, " id_client = '" + locationVehicule.getClient().getId() + "'", null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Client client = mappage(cursor);
-            Log.wtf("WTF", "DAO CLIENT : "+client.toString());
-            clients.add(client);
+            LocationVehicule newlocation = mappage(cursor);
+            locationVehicules.add(newlocation);
             cursor.moveToNext();
         }
         cursor.close();
-        return clients;
+        return locationVehicules;
     }
 
     /**
-     * Retourne une liste de client
-     *
-     * @param nom
-     * @param prenom
+     * Retourne une liste de locationVehicule pour une voiture
      * @return clients
      */
-    public List<Client> getClientsByNomPrenom(String nom, String prenom) {
+    public List<LocationVehicule> getAllLocation(LocationVehicule locationVehicule) {
 
-        List<Client> clients = new ArrayList<Client>();
+        List<LocationVehicule> locationVehicules = new ArrayList<LocationVehicule>();
 
-        Cursor cursor = database.query(TABLE_CLIENTS,
-                allColumns, " nom = '" + nom + "' AND prenom = '" + prenom+"'", null, null, null, null);
+        Cursor cursor = database.query(TABLE_LOCATIONS,
+                allColumns, " id_vehicule = '" + locationVehicule.getVehicule().getId() + "'", null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Client client = mappage(cursor);
-            clients.add(client);
+            LocationVehicule newlocation = mappage(cursor);
+            locationVehicules.add(newlocation);
             cursor.moveToNext();
         }
         cursor.close();
-        return clients;
+        return locationVehicules;
     }
 
     /**
-     * Retourne un client en fonction de son ID
-     * @param client
+     * Retourne un locationVehicule en fonction de son ID
+     * @param locationVehicule
      * @return
      */
-    public Client getClientsById(Client client) {
-
-
-        Cursor cursor = database.query(TABLE_CLIENTS,
-                allColumns, " id = " + client.getId(), null, null, null, null);
+    public LocationVehicule getLocationById(LocationVehicule locationVehicule) {
+        Cursor cursor = database.query(TABLE_LOCATIONS,
+                allColumns, " id = " + locationVehicule.getId(), null, null, null, null);
         cursor.moveToFirst();
-        client = mappage(cursor);
-        return client;
+        locationVehicule = mappage(cursor);
+        return locationVehicule;
     }
 
-    public Location mappage(Cursor cursor) {
-        Location location = new Location();
-        client.setId(cursor.getInt(NUM_COL_ID_CLIENTS));
-        client.setNom(cursor.getString(NUM_COL_NOM_CLIENTS));
-        client.setPrenom(cursor.getString(NUM_COL_PRENOM_CLIENTS));
-        client.setAdresse(cursor.getString(NUM_COL_ADRESSE_CLIENTS));
-        client.setCodePostal(cursor.getInt(NUM_COL_CODE_POSTAL_CLIENTS));
-        client.setVille(cursor.getString(NUM_COL_VILLE_CLIENTS));
-        client.setTelephone(cursor.getInt(NUM_COL_TELEPHONE_CLIENTS));
-        client.setDateNaissance(cursor.getString(NUM_COL_DATE_NAISSANCE_CLIENTS));
+    public LocationVehicule mappage(Cursor cursor) {
+        Client client = new Client();
+        Vehicule vehicule = new Vehicule();
+        LocationVehicule locationVehicule = new LocationVehicule();
 
-        return client;
+        locationVehicule.setId(cursor.getInt(NUM_COL_ID_LOCATION));
+        client.setId(cursor.getInt(NUM_COL_ID_CLIENT_LOCATION));
+        locationVehicule.setClient(client);
+        vehicule.setId(cursor.getInt(NUM_COL_ID_VEHICULE_LOCATION));
+        locationVehicule.setVehicule(vehicule);
+        locationVehicule.setDepart(cursor.getString(NUM_COL_DATE_DEPART_LOCATION));
+        locationVehicule.setRetour(cursor.getString(NUM_COL_DATE_RETOUR_LOCATION));
+
+        return locationVehicule;
     }
 }
