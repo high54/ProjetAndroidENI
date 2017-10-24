@@ -65,7 +65,7 @@ public class ClientDao {
         values.put(COLUMN_ADRESSE_CLIENTS, client.getAdresse());
         values.put(COLUMN_CODE_POSTAL_CLIENTS, client.getCodePostal());
         values.put(COLUMN_VILLE_CLIENT, client.getVille());
-        values.put(COLUMN_DATE_NAISSANCE_CLIENT, new  java.sql.Date(client.getDateNaissance().getTime()).toString());
+        values.put(COLUMN_DATE_NAISSANCE_CLIENT, client.getDateNaissance());
 
 
         long insertId = database.insert(TABLE_CLIENTS, null,
@@ -171,7 +171,7 @@ public class ClientDao {
 
         Cursor cursor = database.query(TABLE_CLIENTS,
                 allColumns, " id = " + client.getId(), null, null, null, null);
-
+        cursor.moveToFirst();
         client = mappage(cursor);
         return client;
     }
@@ -185,13 +185,8 @@ public class ClientDao {
         client.setCodePostal(cursor.getInt(NUM_COL_CODE_POSTAL_CLIENTS));
         client.setVille(cursor.getString(NUM_COL_VILLE_CLIENTS));
         client.setTelephone(cursor.getInt(NUM_COL_TELEPHONE_CLIENTS));
-        String dateNaissance = cursor.getString(NUM_COL_DATE_NAISSANCE_CLIENTS);
-        DateFormat date = new SimpleDateFormat("d-MM-yyyy", Locale.FRANCE);
-        try {
-            client.setDateNaissance(date.parse(dateNaissance));
-        } catch (ParseException e) {
-            Log.e("WTF", "Parsing ISO8601 datetime failed", e);
-        }
+        client.setDateNaissance(cursor.getString(NUM_COL_DATE_NAISSANCE_CLIENTS));
+
         return client;
     }
 

@@ -1,8 +1,13 @@
 package fr.eni.ecole.projetlocation;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -16,6 +21,7 @@ import fr.eni.ecole.projetlocation.models.Client;
 public class SearchClient extends AppCompatActivity {
 
     private ClientDao daoClient;
+    private  List<Client> clients;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,11 +29,21 @@ public class SearchClient extends AppCompatActivity {
         daoClient = new ClientDao(this);
         daoClient.open();
 
-        List<Client> clients = daoClient.getClients();
+        clients = daoClient.getClients();
 
         ClientAdapter adapterClient = new ClientAdapter(this,R.layout.liste_client,clients);
-        ListView listView = (ListView) findViewById(R.id.lv_liste_client);
+        final ListView listView = (ListView) findViewById(R.id.lv_liste_client);
         listView.setAdapter(adapterClient);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Client clientSelectionne = (Client) listView.getItemAtPosition(position);
+                Intent intent = new Intent(SearchClient.this,ManageClient.class);
+                intent.putExtra("client",  clientSelectionne);
+                startActivity(intent);
+            }
+        });
     }
 
     public void onClickSearchClient(View view) {
@@ -42,4 +58,27 @@ public class SearchClient extends AppCompatActivity {
             }
         }
 
+    public void onClickAddClient(View view) {
+        Intent intent = new Intent(SearchClient.this,ManageClient.class);
+        startActivity(intent);
+    }
+
+    protected void onResume(){
+        super.onResume();
+        daoClient = new ClientDao(this);
+        daoClient.open();
+        clients = daoClient.getClients();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar, menu);
+        return true;
+    }
+
+    public void showAddCar(MenuItem item) {
+        Intent intent = new Intent(SearchClient.this, ManageVehicule.class);
+        startActivity(intent);
+    }
 }

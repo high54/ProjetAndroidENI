@@ -1,31 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
+
 
     <TextView
-        android:id="@id/txt_nom_client"
-        android:layout_width="150dp"
+        android:id="@id/txt_prenom_client"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/width_80_dp"
+        android:layout_marginTop="@dimen/width_10_dp"
+
         />
     <TextView
-        android:id="@id/txt_prenom_client"
-        android:layout_below="@id/txt_nom_client"
-        android:layout_width="match_parent"
+        android:id="@id/txt_nom_client"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/txt_prenom_client"
+        android:layout_marginBottom="@dimen/width_10_dp"
+
         />
     <TextView
         android:id="@id/txt_date_client"
-        android:gravity="right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
-    <TextView
-        android:id="@id/txt_telephone_client"
-        android:layout_below="@id/txt_nom_client"
+        android:layout_toEndOf="@id/txt_prenom_client"
         android:gravity="right"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/width_10_dp"
+
         />
 
-</LinearLayout>
+
+
+
+    <TextView
+        android:id="@id/txt_telephone_client"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/txt_nom_client"
+        android:layout_below="@id/txt_date_client"
+        android:gravity="right"
+        android:layout_marginBottom="@dimen/width_10_dp"
+        />
+
+</RelativeLayout>

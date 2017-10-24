@@ -38,7 +38,7 @@ public class ClientAdapter extends ArrayAdapter<Client> {
 
         txtNom.setText(clientAAfficher.getNom());
         txtPrenom.setText(clientAAfficher.getPrenom());
-        txtTelephone.setText(String.valueOf(clientAAfficher.getTelephone()));
+        txtTelephone.setText("0"+String.valueOf(clientAAfficher.getTelephone()));
         txtDateNaissance.setText(clientAAfficher.getDateNaissance().toString());
 
         return viewARetourner;

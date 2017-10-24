@@ -16,13 +16,13 @@ public class Client implements Parcelable{
     private String adresse;
     private int codePostal;
     private String ville;
-    private Date dateNaissance;
+    private String dateNaissance;
 
 
     public Client() {
     }
 
-    public Client(int id, String nom, String prenom, int telephone, String adresse, int codePostal, String ville, Date dateNaissance) {
+    public Client(int id, String nom, String prenom, int telephone, String adresse, int codePostal, String ville, String dateNaissance) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -41,6 +41,7 @@ public class Client implements Parcelable{
         adresse = in.readString();
         codePostal = in.readInt();
         ville = in.readString();
+        dateNaissance = in.readString();
     }
 
     public static final Creator<Client> CREATOR = new Creator<Client>() {
@@ -111,11 +112,11 @@ public class Client implements Parcelable{
         this.ville = ville;
     }
 
-    public Date getDateNaissance() {
+    public String getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(Date dateNaissance) {
+    public void setDateNaissance(String dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 
@@ -147,5 +148,6 @@ public class Client implements Parcelable{
         parcel.writeString(adresse);
         parcel.writeInt(codePostal);
         parcel.writeString(ville);
+        parcel.writeString(dateNaissance);
     }
 }
