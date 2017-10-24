@@ -42,4 +42,6 @@
     <string name="louer_le_vehicule">Louer le véhicule</string>
     <string name="location_d_un_v_hicule">Location d\'un véhicule</string>
     <string name="louer_rendre">Louer/Rendre</string>
+    <string name="date_depart">Date depart :</string>
+    <string name="date_retour">Date Retour :</string>
 </resources>

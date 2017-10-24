@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.eni.ecole.projetlocation">
-<uses-permission android:name="android.permission.SEND_SMS"></uses-permission>
+
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +13,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".ManageClient" />
         <activity android:name=".ManageVehicule" />
-        <activity android:name=".SearchClient"></activity>
+        <activity android:name=".SearchClient" />
         <activity android:name=".ListeVehiculeActivity" />
         <activity android:name=".SearchVehicule">
             <intent-filter>
@@ -20,9 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailVehiculeActivity"></activity>
-        <activity android:name=".EtatDesLieux">
-        </activity>
+        <activity android:name=".DetailVehiculeActivity" />
+        <activity android:name=".EtatDesLieux"></activity>
+        <activity android:name=".ListeEtatDesLieux"></activity>
     </application>
 
 </manifest>
