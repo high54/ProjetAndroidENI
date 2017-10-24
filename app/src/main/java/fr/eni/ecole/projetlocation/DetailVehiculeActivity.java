@@ -86,7 +86,9 @@ public class DetailVehiculeActivity extends AppCompatActivity {
     }
 
     public void onClickShowHistorique(View view) {
-
+        Intent intent = new Intent(DetailVehiculeActivity.this, HistoriqueLocationsActivity.class);
+        intent.putExtra("vehicule", vehicule);
+        startActivity(intent);
     }
 
     @Override

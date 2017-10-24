@@ -125,12 +125,12 @@ public class LocationDao {
      * Retourne une liste de locationVehicule pour une voiture
      * @return clients
      */
-    public List<LocationVehicule> getAllLocation(LocationVehicule locationVehicule) {
+    public List<LocationVehicule> getAllLocation(int id) {
 
         List<LocationVehicule> locationVehicules = new ArrayList<LocationVehicule>();
 
         Cursor cursor = database.query(TABLE_LOCATIONS,
-                allColumns, " id_vehicule = '" + locationVehicule.getVehicule().getId() + "'", null, null, null, null);
+                allColumns, " id_vehicule = '" + id + "'", null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
