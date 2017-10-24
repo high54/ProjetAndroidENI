@@ -1,29 +1,34 @@
 package fr.eni.ecole.projetlocation.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class Vehicule {
+public class Vehicule implements Parcelable {
     public static final String ESSENCE = "Essence";
     public static final String DIESEL = "Diesel";
     public static final String GPL = "GPL";
     public static final String ELECTRIQUE = "Electrique";
 
-    private int id;
+    public static final int TYPE_VILLE = 0;
+    public static final int TYPE_HORS_VILLE = 1;
+
+    private int id = -1;
     private int prix;
     private String immatriculation;
     private int type;
     private String marque;
     private String model;
     private String carburant;
-    private Boolean loue;
+    private Boolean loue = false;
 
 
     public Vehicule() {
-        this.loue = false;
     }
 
-    public Vehicule(int id, int prix, String immatriculation, int type, String marque, String model, String carburant) {
+    public Vehicule(int id, int prix, String immatriculation, int type, String marque, String model, String carburant, Boolean loue) {
         this.id = id;
         this.prix = prix;
         this.immatriculation = immatriculation;
@@ -31,8 +36,30 @@ public class Vehicule {
         this.marque = marque;
         this.model = model;
         this.carburant = carburant;
-        this.loue = false;
+        this.loue = loue;
     }
+
+    protected Vehicule(Parcel in) {
+        id = in.readInt();
+        prix = in.readInt();
+        immatriculation = in.readString();
+        type = in.readInt();
+        marque = in.readString();
+        model = in.readString();
+        carburant = in.readString();
+    }
+
+    public static final Creator<Vehicule> CREATOR = new Creator<Vehicule>() {
+        @Override
+        public Vehicule createFromParcel(Parcel in) {
+            return new Vehicule(in);
+        }
+
+        @Override
+        public Vehicule[] newArray(int size) {
+            return new Vehicule[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -109,5 +136,21 @@ public class Vehicule {
                 ", model='" + model + '\'' +
                 ", carburant='" + carburant + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeInt(prix);
+        parcel.writeString(immatriculation);
+        parcel.writeInt(type);
+        parcel.writeString(marque);
+        parcel.writeString(model);
+        parcel.writeString(carburant);
     }
 }
