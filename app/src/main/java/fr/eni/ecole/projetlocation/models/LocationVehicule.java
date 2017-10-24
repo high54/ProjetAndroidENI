@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class Location {
+public class LocationVehicule {
     private int id;
     private Client client;
     private String depart;
@@ -14,10 +14,10 @@ public class Location {
     private ArrayList<EDL> edls;
 
 
-    public Location() {
+    public LocationVehicule() {
     }
 
-    public Location(int id, Client client, String depart, String retour, Vehicule vehicule, ArrayList<EDL> edls) {
+    public LocationVehicule(int id, Client client, String depart, String retour, Vehicule vehicule, ArrayList<EDL> edls) {
         this.id = id;
         this.client = client;
         this.depart = depart;
@@ -76,7 +76,7 @@ public class Location {
 
     @Override
     public String toString() {
-        return "Location{" +
+        return "LocationVehicule{" +
                 "id=" + id +
                 ", client=" + client +
                 ", depart='" + depart + '\'' +
