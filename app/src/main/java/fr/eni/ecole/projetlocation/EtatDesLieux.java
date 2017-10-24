@@ -17,6 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import fr.eni.ecole.projetlocation.dao.edl.EDLDao;
 import fr.eni.ecole.projetlocation.dao.location.LocationDao;
 import fr.eni.ecole.projetlocation.models.Client;
 import fr.eni.ecole.projetlocation.models.EDL;
@@ -85,10 +86,14 @@ public class EtatDesLieux extends AppCompatActivity {
             location.setVehicule(vehicule);
             location.setClient(client);
             location.setDepart(date);
+            locationDao.open();
             location = locationDao.insertLocation(location);
             EDL edl = new EDL();
             edl.setDate(date);
             edl.setLocation(location);
+            EDLDao edlDao = new EDLDao(this);
+            edlDao.open();
+            edlDao.insertEDL(edl);
             SmsManager.getDefault().sendTextMessage("0"+client.getTelephone(), null,message,null,null);
             Toast.makeText(this, "Sms de confirmation envoyé !", Toast.LENGTH_LONG).show();
 

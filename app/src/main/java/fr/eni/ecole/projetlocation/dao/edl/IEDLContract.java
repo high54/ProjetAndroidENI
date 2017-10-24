@@ -9,6 +9,9 @@ public class IEDLContract {
     public static final String COLUMN_DATE_EDLS= "date";
     public static final String COLUMN_ID_LOCATION_EDLS ="id_location";
 
+    public static final int NUM_COL_ID_EDL = 0;
+    public static final int NUM_COL_DATE_EDL = 1;
+    public static final int NUM_ID_LOCATION_EDL = 2;
 
     public static final String CREATE_TABLE_EDLS= "create table "
             + TABLE_EDLS + "(" + COLUMN_ID_EDLS
