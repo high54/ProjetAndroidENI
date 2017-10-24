@@ -16,9 +16,11 @@ import android.widget.Toast;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import fr.eni.ecole.projetlocation.dao.edl.EDLDao;
 import fr.eni.ecole.projetlocation.dao.location.LocationDao;
+import fr.eni.ecole.projetlocation.dao.vehicule.VehiculeDao;
 import fr.eni.ecole.projetlocation.models.Client;
 import fr.eni.ecole.projetlocation.models.EDL;
 import fr.eni.ecole.projetlocation.models.LocationVehicule;
@@ -97,6 +99,15 @@ public class EtatDesLieux extends AppCompatActivity {
             edlDao.insertEDL(edl);
             SmsManager.getDefault().sendTextMessage("0"+client.getTelephone(), null,message,null,null);
             Toast.makeText(this, "Sms de confirmation envoyé !", Toast.LENGTH_LONG).show();
+
+            List<LocationVehicule> vehic = locationDao.getAllLocation(1);
+
+            VehiculeDao vehiculeDao = new VehiculeDao(this);
+            vehicule.setLoue(false);
+            vehiculeDao.update(vehicule);
+
+
+
 
         }
 

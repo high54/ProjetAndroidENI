@@ -136,6 +136,7 @@ public class LocationDao {
         while (!cursor.isAfterLast()) {
             LocationVehicule newlocation = mappage(cursor);
             locationVehicules.add(newlocation);
+            Log.wtf("WTF","ALOOOOO ===>>>>>" +newlocation.toString());
             cursor.moveToNext();
         }
         cursor.close();
