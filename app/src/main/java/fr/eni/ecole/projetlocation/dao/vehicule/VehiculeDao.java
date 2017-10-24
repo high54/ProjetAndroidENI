@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.ecole.projetlocation.dao.SQLiteHelper;
 import fr.eni.ecole.projetlocation.models.Vehicule;
@@ -23,9 +24,9 @@ public class VehiculeDao {
 
     private SQLiteDatabase sqLiteDatabase;
 
-    private String[] allColumns = {COLUMN_ID_VEHICULES, COLUMN_IMMATRICULATION_VEHICULES,
-            COLUMN_CARBURANT_VEHICULES, COLUMN_MARQUE_VEHICULES, COLUMN_MODELE_VEHICULES,
-            COLUMN_PRIX_VEHICULES, COLUMN_TYPE_VEHICULES};
+    private String[] allColumns = {COLUMN_ID_VEHICULES, COLUMN_PRIX_VEHICULES,
+            COLUMN_IMMATRICULATION_VEHICULES, COLUMN_TYPE_VEHICULES, COLUMN_MARQUE_VEHICULES,
+            COLUMN_MODELE_VEHICULES, COLUMN_CARBURANT_VEHICULES,COLUMN_LOUE_VEHICULES};
 
     public VehiculeDao(Context context) {
         sqLiteHelper = new SQLiteHelper(context);
@@ -47,6 +48,37 @@ public class VehiculeDao {
 
     public Cursor selectAllCursor() {
         return sqLiteDatabase.query(TABLE_VEHICULES, allColumns, null, null, null, null, null);
+    }
+    public String[] selectMarque(){
+        String[] colMarque ={
+                COLUMN_MARQUE_VEHICULES
+        };
+
+        String[] marques;
+        Cursor cursor = sqLiteDatabase.query(true,TABLE_VEHICULES,colMarque,null,null,null,null,null,null);
+        cursor.moveToFirst();
+        marques = new String[cursor.getCount()];
+        int i =0;
+        while (!cursor.isAfterLast()) {
+            marques[i] = cursor.getString(0);
+
+            i++;
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return marques;
+    }
+    public List<Vehicule> selectSearchVehicule(String marque,String carburant,int prix, int type, int dispo){
+        List<Vehicule> vehicules = new ArrayList<>();
+        Cursor cursor = sqLiteDatabase.query(TABLE_VEHICULES,allColumns," marque = '"+marque+"' AND carburant = '"+carburant+"' AND type ='"+type+"' AND "+" loue ='"+dispo+"' AND prix LIKE '%"+prix+"%'",null,null,null,null,null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Vehicule vehicule = map(cursor);
+            vehicules.add(vehicule);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return vehicules;
     }
 
     public ArrayList<Vehicule> selectAll() {
@@ -104,7 +136,7 @@ public class VehiculeDao {
         vehicule.setMarque(c.getString(NUM_COLUMN_MARQUE_VEHICULES));
         vehicule.setModel(c.getString(NUM_COLUMN_MODELE_VEHICULES));
         vehicule.setCarburant(c.getString(NUM_COLUMN_CARBURANT_VEHICULES));
-        vehicule.setLoue((c.getInt(NUM_COLUMN_LOUE_VEHICULES) > 0));
+        vehicule.setLoue(c.getInt(NUM_COLUMN_LOUE_VEHICULES)<0);
 
         vehicule.setId(c.getInt(NUM_COLUMN_ID_VEHICULES));
         Log.wtf(TAG, vehicule.toString());

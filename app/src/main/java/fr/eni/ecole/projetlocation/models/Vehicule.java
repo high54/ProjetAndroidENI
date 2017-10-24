@@ -157,6 +157,8 @@ public class Vehicule implements Parcelable {
                 ", marque='" + marque + '\'' +
                 ", model='" + model + '\'' +
                 ", carburant='" + carburant + '\'' +
+                ", loué='" + loue + '\'' +
+
                 '}';
     }
 

@@ -3,15 +3,20 @@ package fr.eni.ecole.projetlocation;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.ecole.projetlocation.dao.vehicule.VehiculeDao;
 import fr.eni.ecole.projetlocation.models.Vehicule;
@@ -51,11 +56,8 @@ public class SearchVehicule extends AppCompatActivity {
 
             }
         });
-        String[] marques = {
-                "bmw",
-                "fiat",
-                "Mercedes"
-        };
+        String[] marques = daoVehicule.selectMarque();
+
         String[] carburants = {
                 Vehicule.ESSENCE,
                 Vehicule.DIESEL,
@@ -70,6 +72,7 @@ public class SearchVehicule extends AppCompatActivity {
         spCarburant = (Spinner) findViewById(R.id.sp_carburant);
         spDiponibilite = (Spinner) findViewById(R.id.sp_dispo);
         spMarque = (Spinner) findViewById(R.id.sp_marque);
+        cbType = (CheckBox) findViewById(R.id.cb_type);
 
         ArrayAdapter<String> adapterDisponibilite =  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item ,dispo);
         spDiponibilite.setAdapter(adapterDisponibilite);
@@ -79,6 +82,8 @@ public class SearchVehicule extends AppCompatActivity {
 
         ArrayAdapter<String> adapterMarque =  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item ,marques);
         spMarque.setAdapter(adapterMarque);
+
+
     }
 
     @Override
@@ -93,7 +98,25 @@ public class SearchVehicule extends AppCompatActivity {
     }
 
     public void onClickSearchVehicule(View view) {
+        String dispo = spDiponibilite.getSelectedItem().toString();
+        String marque = spMarque.getSelectedItem().toString();
+        String carburant = spCarburant.getSelectedItem().toString();
+        int type = 0;
+        int disponibilite = 1;
+        if(cbType.isChecked()){
+            type=1;
+        }
+        if(dispo =="Disponible"){
+            disponibilite = 0;
+        }
 
+        Log.wtf("WTF","DATA ::=> "+marque+" "+dispo+ " "+carburant+" "+type+" "+txtPrix.getText().toString());
+        List<Vehicule> vehicules = new ArrayList<>();
+        vehicules = daoVehicule.selectSearchVehicule(marque,carburant,Integer.parseInt(txtPrix.getText().toString()),type,disponibilite);
+
+        for(int i =0; i<vehicules.size();i++){
+            Log.wtf("WTF","LISTE DES VEHICULE RECHERCHE ==> "+vehicules.get(i).toString());
+        }
     }
 
 
