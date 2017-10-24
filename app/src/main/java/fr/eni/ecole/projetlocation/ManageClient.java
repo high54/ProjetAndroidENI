@@ -1,24 +1,20 @@
 package fr.eni.ecole.projetlocation;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.format.Formatter;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 import fr.eni.ecole.projetlocation.dao.client.ClientDao;
 import fr.eni.ecole.projetlocation.models.Client;
@@ -68,8 +64,6 @@ public class ManageClient extends AppCompatActivity {
             edCodePostal.setText(String.valueOf(client.getCodePostal()));
             edVille.setText(client.getVille());
         }
-
-
     }
 
     public void onClickSaveClient(View view) {
@@ -122,7 +116,6 @@ public class ManageClient extends AppCompatActivity {
             intent.putExtra("client",client);
             startActivity(intent);
         }
-
     }
 
     public boolean checkParam(Editable param, int type) {
@@ -144,5 +137,25 @@ public class ManageClient extends AppCompatActivity {
                 return false;
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar, menu);
+        return true;
+    }
+
+    public void showAddCar(MenuItem item) {
+        Intent intent = new Intent(ManageClient.this, ManageVehicule.class);
+        startActivity(intent);
+    }
+    public void showCarsList(MenuItem item) {
+        Intent intent = new Intent(ManageClient.this, ListeVehiculeActivity.class);
+        startActivity(intent);
+    }
+
+    public void showVehiculeSearch(MenuItem item) {
+        Intent intent = new Intent(ManageClient.this, SearchVehicule.class);
+        startActivity(intent);
     }
 }

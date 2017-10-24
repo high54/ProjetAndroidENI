@@ -70,21 +70,6 @@ public class ListeVehiculeActivity extends AppCompatActivity implements Vehicule
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_bar, menu);
-        return true;
-    }
-
-    public void showAddCar(MenuItem item) {
-        Intent intent = new Intent(ListeVehiculeActivity.this, ManageVehicule.class);
-        startActivity(intent);
-    }
-
-    public void showCarsList(MenuItem item) {
-
-    }
-
     public void onClickRefreshListeVehicules(View view) {
         if(rb_louees.isChecked()){
             VehiculeService.selectAllRent(this, this, true);
@@ -95,5 +80,25 @@ public class ListeVehiculeActivity extends AppCompatActivity implements Vehicule
         else if(rb_toutes.isChecked()){
             VehiculeService.selectAll(this,this);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar, menu);
+        return true;
+    }
+
+    public void showAddCar(MenuItem item) {
+        Intent intent = new Intent(ListeVehiculeActivity.this, ManageVehicule.class);
+        startActivity(intent);
+    }
+    public void showCarsList(MenuItem item) {
+        Intent intent = new Intent(ListeVehiculeActivity.this, ListeVehiculeActivity.class);
+        startActivity(intent);
+    }
+
+    public void showVehiculeSearch(MenuItem item) {
+        Intent intent = new Intent(ListeVehiculeActivity.this, SearchVehicule.class);
+        startActivity(intent);
     }
 }

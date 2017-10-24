@@ -22,4 +22,11 @@
         app:showAsAction="always"
         android:onClick="showAddCar"/>
 
+    <item
+        android:id="@+id/menu_home"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="menu_search"
+        app:showAsAction="always"
+        android:onClick="showVehiculeSearch" />
+
 </menu>

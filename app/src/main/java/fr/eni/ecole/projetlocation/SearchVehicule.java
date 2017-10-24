@@ -1,8 +1,8 @@
 package fr.eni.ecole.projetlocation;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,7 +45,6 @@ public class SearchVehicule extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int position, boolean b) {
                 txtPrix.setText(String.valueOf(position));
-
             }
 
             @Override
@@ -84,25 +83,6 @@ public class SearchVehicule extends AppCompatActivity {
 
         ArrayAdapter<String> adapterMarque =  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item ,marques);
         spMarque.setAdapter(adapterMarque);
-
-
-
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_bar, menu);
-        return true;
-    }
-
-    public void showAddCar(MenuItem item) {
-        Intent intent = new Intent(SearchVehicule.this, ManageVehicule.class);
-        startActivity(intent);
-    }
-    public void showCarsList(MenuItem item) {
-        Intent intent = new Intent(SearchVehicule.this, ListeVehiculeActivity.class);
-        startActivity(intent);
     }
 
     public void onClickSearchVehicule(View view) {
@@ -138,9 +118,25 @@ public class SearchVehicule extends AppCompatActivity {
                 Intent intent = new Intent(SearchVehicule.this,SearchClient.class);
                 intent.putExtra("vehicule",vehicule);
                 startActivity(intent);
-
-
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar, menu);
+        return true;
+    }
+
+    public void showAddCar(MenuItem item) {
+        Intent intent = new Intent(SearchVehicule.this, ManageVehicule.class);
+        startActivity(intent);
+    }
+    public void showCarsList(MenuItem item) {
+        Intent intent = new Intent(SearchVehicule.this, ListeVehiculeActivity.class);
+        startActivity(intent);
+    }
+
+    public void showVehiculeSearch(MenuItem item) {
     }
 }

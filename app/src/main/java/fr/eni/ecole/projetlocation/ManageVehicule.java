@@ -76,12 +76,6 @@ public class ManageVehicule extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_bar, menu);
-        return true;
-    }
-
     public void onClickSaveVehicule(View view) {
         if (null == vehicule) {
             vehicule = new Vehicule();
@@ -119,12 +113,23 @@ public class ManageVehicule extends AppCompatActivity {
         showCarsList(null);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar, menu);
+        return true;
+    }
+
     public void showAddCar(MenuItem item) {
         Intent intent = new Intent(ManageVehicule.this, ManageVehicule.class);
         startActivity(intent);
     }
     public void showCarsList(MenuItem item) {
         Intent intent = new Intent(ManageVehicule.this, ListeVehiculeActivity.class);
+        startActivity(intent);
+    }
+
+    public void showVehiculeSearch(MenuItem item) {
+        Intent intent = new Intent(ManageVehicule.this, SearchVehicule.class);
         startActivity(intent);
     }
 }
