@@ -27,9 +27,6 @@ public class DetailVehiculeActivity extends AppCompatActivity {
         }
 
         if (null != vehicule) {
-            //dao = new VehiculeDao(this);
-            //vehicule = dao.selectById(vehicule.getId());
-
             TextView tv_marque = (TextView) findViewById(R.id.tv_marque);
             tv_marque.setText(vehicule.getMarque());
 
@@ -74,8 +71,19 @@ public class DetailVehiculeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     public void onClickSaveChanges(View view) {
+        Intent intent = new Intent(DetailVehiculeActivity.this, EtatDesLieux.class);
+        intent.putExtra("vehicule", vehicule);
+        if(vehicule.getLoue()){
+            intent.putExtra("etat", "rendre");
+        }
+        else {
+            intent.putExtra("etat", "louer");
+        }
+        startActivity(intent);
+    }
+
+    public void onClickShowHistorique(View view) {
 
     }
 }

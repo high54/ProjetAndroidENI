@@ -84,7 +84,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_date_location"
         android:text="@string/historique_des_locations"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp"
+        android:onClick="onClickShowHistorique"/>
 
     <Button
         android:id="@+id/bt_rendre_louer"
@@ -92,7 +93,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/bt_historique"
         android:layout_alignParentEnd="true"
-        android:onClick="onClickSaveChanges"/>
+        android:onClick="onClickSaveChanges"
+        android:text="@string/louer_rendre"/>
 
 
 </RelativeLayout>
