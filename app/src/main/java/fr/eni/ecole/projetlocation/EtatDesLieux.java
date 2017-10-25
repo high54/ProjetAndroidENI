@@ -45,8 +45,12 @@ public class EtatDesLieux extends AppCompatActivity {
     private String message;
     private String date;
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_IMAGE_CAPTURE = 0;
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
+    private ImageView mImageView;
 
+    private static final int TAKE_PHOTO_REQUEST = 1;
+    private File photoFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +70,7 @@ public class EtatDesLieux extends AppCompatActivity {
             vehicule = intent.getExtras().getParcelable("vehicule");
             client = intent.getExtras().getParcelable("client");
         }
-
+        mImageView = (ImageView) findViewById(R.id.iv_edl);
 
         message = "Confirmation de la location le "+date+" du véhicule : "+vehicule.getMarque()+" "+vehicule.getModel();
 
@@ -134,93 +138,88 @@ public class EtatDesLieux extends AppCompatActivity {
 
     }
 
-    public void onClickTakePhoto(View view) {
+    public void onClickTakePhoto(View view) throws IOException {
         dispatchTakePictureIntent();
     }
 
 
 
     private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-                Log.e("ERROR","DispatchTakePicture===>>> "+ ex.getMessage());
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "fr.eni.ecole.projetlocation.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
+
+        Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            photoFile = createImageFile();
+            takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this,"fr.eni.ecole.projetlocation.fileprovider",photoFile));
+            startActivityForResult(takePhotoIntent, TAKE_PHOTO_REQUEST);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ImageView mImageView = (ImageView) findViewById(R.id.iv_edl);
-            mImageView.setImageBitmap(imageBitmap);
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == TAKE_PHOTO_REQUEST && resultCode == RESULT_OK) {
+
+            // set the dimensions of the image
+            int targetW =100;
+            int targetH = 100;
+
+            // Get the dimensions of the bitmap
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(photoFile.getAbsolutePath(), bmOptions);
+            int photoW = bmOptions.outWidth;
+            int photoH = bmOptions.outHeight;
+
+            // Determine how much to scale down the image
+            int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+            // Decode the image file into a Bitmap sized to fill the View
+            bmOptions.inJustDecodeBounds = false;
+            bmOptions.inSampleSize = scaleFactor;
+            bmOptions.inPurgeable = true;
+
+            // stream = getContentResolver().openInputStream(data.getData());
+            Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath(),bmOptions);
+            mImageView.setImageBitmap(bitmap);
         }
+
     }
+
 
     String mCurrentPhotoPath;
 
     private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
+                .format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"/Android/data/fr.eni.ecole.projetlocation.fileprovider/files/");
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
+        File storageDir = new File(getFilesDir(),"images");
+        storageDir.mkdirs();
+        File image = new File(storageDir,imageFileName+".jpg");
 
         // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        System.out.println(mCurrentPhotoPath);
         return image;
     }
+    
 
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        this.sendBroadcast(mediaScanIntent);
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        // TODO Auto-generated method stub
+        super.onSaveInstanceState(outState);
+        System.out.println(mCurrentPhotoPath);
+        mImageView = (ImageView) findViewById(R.id.iv_edl);
     }
-    private void setPic() {
-        ImageView mImageView = (ImageView) findViewById(R.id.iv_edl);
-        // Get the dimensions of the View
-        int targetW = mImageView.getWidth();
-        int targetH = mImageView.getHeight();
 
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        mImageView.setImageBitmap(bitmap);
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        super.onRestoreInstanceState(savedInstanceState);
+        System.out.println(mCurrentPhotoPath);
+        mImageView = (ImageView) findViewById(R.id.iv_edl);
     }
 
 }

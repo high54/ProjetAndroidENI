@@ -31,8 +31,8 @@
     <ImageView
         android:id="@+id/iv_edl"
         android:layout_below="@id/bt_ajout_photos"
-        android:layout_width="@dimen/width_50_dp"
-        android:layout_height="@dimen/width_50_dp" />
+        android:layout_width="@dimen/width_120_dp"
+        android:layout_height="@dimen/width_80_dp" />
 <Button
     android:id="@+id/bt_save_location"
     android:layout_alignParentBottom="true"
