@@ -1,11 +1,14 @@
 package fr.eni.ecole.projetlocation.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class LocationVehicule {
+public class LocationVehicule implements Parcelable{
     private int id;
     private Client client;
     private String depart;
@@ -25,6 +28,26 @@ public class LocationVehicule {
         this.vehicule = vehicule;
         this.edls = edls;
     }
+
+    protected LocationVehicule(Parcel in) {
+        id = in.readInt();
+        client = in.readParcelable(Client.class.getClassLoader());
+        depart = in.readString();
+        retour = in.readString();
+        vehicule = in.readParcelable(Vehicule.class.getClassLoader());
+    }
+
+    public static final Creator<LocationVehicule> CREATOR = new Creator<LocationVehicule>() {
+        @Override
+        public LocationVehicule createFromParcel(Parcel in) {
+            return new LocationVehicule(in);
+        }
+
+        @Override
+        public LocationVehicule[] newArray(int size) {
+            return new LocationVehicule[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -84,5 +107,19 @@ public class LocationVehicule {
                 ", vehicule=" + vehicule +
                 ", edls=" + edls +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeParcelable(client, i);
+        parcel.writeString(depart);
+        parcel.writeString(retour);
+        parcel.writeParcelable(vehicule, i);
     }
 }

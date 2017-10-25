@@ -24,9 +24,5 @@ public class ListeEtatDesLieux extends AppCompatActivity {
         }
         edlDao = new EDLDao(this);
         List<EDL> edls = edlDao.getEdlByLocation(location.getId());
-
-
-
-
     }
 }
