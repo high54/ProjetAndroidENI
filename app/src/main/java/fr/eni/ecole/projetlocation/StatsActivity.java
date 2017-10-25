@@ -62,6 +62,7 @@ public class StatsActivity extends AppCompatActivity {
                 Log.wtf("prix", String.valueOf(prix));
 
 
+
                 Calendar calWeek = Calendar.getInstance();
                 calWeek.add(Calendar.DATE, -7);
                 String sevenDays = df.format(calWeek.getTime());
@@ -69,12 +70,14 @@ public class StatsActivity extends AppCompatActivity {
 
                 //on compare la date de départ à la date d'il y a 7 jours
                 //Si la date est inférieure, on additionne pour la semaine
-                long differenceForSeven = lastWeek.getTime() - depart.getTime();
+                long differenceForSeven = lastWeek.getTime() -  depart.getTime();
                 differenceForSeven = differenceForSeven/1000/60/60/24+1;
                 Log.wtf("difference 7======>", String.valueOf(differenceForSeven));
                 if(differenceForSeven < 7){
-                    //semaine = semaine +
+                    semaine = semaine + differenceForAll*prix;
+                    Log.wtf("Chiffre d'affaire de la semaine======>", String.valueOf(semaine));
                 }
+
 
                 Calendar calMonth = Calendar.getInstance();
                 calMonth.add(Calendar.DATE, -30);
@@ -86,6 +89,10 @@ public class StatsActivity extends AppCompatActivity {
                 long differenceForThirty = depart.getTime() - lastMonth.getTime();
                 differenceForThirty = differenceForThirty/1000/60/60/24+1;
                 Log.wtf("difference 30======>", String.valueOf(differenceForThirty));
+                if(differenceForThirty < 30){
+                    mois = mois + differenceForThirty*prix;
+                    Log.wtf("Chiffre d'affaire du mois======>", String.valueOf(mois));
+                }
 
             } catch (ParseException e) {
                 e.printStackTrace();
