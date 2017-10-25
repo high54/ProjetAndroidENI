@@ -70,7 +70,7 @@ public class VehiculeDao {
     }
     public List<Vehicule> selectSearchVehicule(String marque,String carburant,int prix, int type, int dispo){
         List<Vehicule> vehicules = new ArrayList<>();
-        Cursor cursor = sqLiteDatabase.query(TABLE_VEHICULES,allColumns," marque = '"+marque+"' AND carburant = '"+carburant+"' AND type ='"+type+"' AND "+" loue ='"+dispo+"' AND prix > '"+prix+"'",null,null,null,null,null);
+        Cursor cursor = sqLiteDatabase.query(TABLE_VEHICULES,allColumns," marque = '"+marque+"' AND carburant = '"+carburant+"' AND type ='"+type+"' AND "+" loue ='"+dispo+"' AND prix >= '"+prix+"'",null,null,null,null,null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Vehicule vehicule = map(cursor);

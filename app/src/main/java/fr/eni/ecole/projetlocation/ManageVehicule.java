@@ -82,7 +82,7 @@ public class ManageVehicule extends AppCompatActivity {
         }
         vehicule.setMarque(et_marque.getText().toString());
         vehicule.setModel(et_model.getText().toString());
-        vehicule.setImmatriculation(et_immatriculation.getText().toString());
+        vehicule.setImmatriculation(et_immatriculation.getText().toString().toUpperCase());
 
         if (button_essence.isChecked()) {
             vehicule.setCarburant(Vehicule.ESSENCE);
