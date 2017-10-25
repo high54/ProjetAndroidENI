@@ -113,4 +113,9 @@ public class DetailVehiculeActivity extends AppCompatActivity {
         Intent intent = new Intent(DetailVehiculeActivity.this, SearchVehicule.class);
         startActivity(intent);
     }
+
+    public void showStats(MenuItem item) {
+        Intent intent = new Intent(DetailVehiculeActivity.this, StatsActivity.class);
+        startActivity(intent);
+    }
 }

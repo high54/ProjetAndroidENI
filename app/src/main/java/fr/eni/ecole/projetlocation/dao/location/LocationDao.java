@@ -143,6 +143,24 @@ public class LocationDao {
         return locationVehicules;
     }
 
+    public List<LocationVehicule> getLocationsForStats() {
+
+        List<LocationVehicule> locationVehicules = new ArrayList<LocationVehicule>();
+
+        Cursor cursor = database.query(TABLE_LOCATIONS,
+                allColumns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            LocationVehicule newlocation = mappage(cursor);
+            locationVehicules.add(newlocation);
+            Log.wtf("WTF","ALOOOOO ===>>>>>" +newlocation.toString());
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return locationVehicules;
+    }
+
     /**
      * Retourne un locationVehicule en fonction de son ID
      * @param locationVehicule

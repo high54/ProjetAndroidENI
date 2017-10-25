@@ -6,7 +6,8 @@
         android:id="@+id/menu_stats"
         android:icon="@drawable/ic_euros"
         android:title="menu_stats"
-        app:showAsAction="always"/>
+        app:showAsAction="always"
+        android:onClick="showStats"/>
 
     <item
         android:id="@+id/menu_liste"
