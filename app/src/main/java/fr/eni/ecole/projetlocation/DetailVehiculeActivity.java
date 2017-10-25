@@ -74,12 +74,15 @@ public class DetailVehiculeActivity extends AppCompatActivity {
     }
 
     public void onClickSaveChanges(View view) {
-        Intent intent = new Intent(DetailVehiculeActivity.this, EtatDesLieux.class);
-        intent.putExtra("vehicule", vehicule);
+        Intent intent;
         if(vehicule.getLoue()){
+            intent = new Intent(DetailVehiculeActivity.this, EtatDesLieux.class);
+            intent.putExtra("vehicule", vehicule);
             intent.putExtra("etat", "rendre");
         }
         else {
+            intent = new Intent(DetailVehiculeActivity.this, SearchClient.class);
+            intent.putExtra("vehicule", vehicule);
             intent.putExtra("etat", "louer");
         }
         startActivity(intent);
@@ -108,6 +111,11 @@ public class DetailVehiculeActivity extends AppCompatActivity {
 
     public void showVehiculeSearch(MenuItem item) {
         Intent intent = new Intent(DetailVehiculeActivity.this, SearchVehicule.class);
+        startActivity(intent);
+    }
+
+    public void showStats(MenuItem item) {
+        Intent intent = new Intent(DetailVehiculeActivity.this, StatsActivity.class);
         startActivity(intent);
     }
 }

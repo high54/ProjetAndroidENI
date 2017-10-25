@@ -35,10 +35,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HistoriqueLocationsActivity"></activity>
-        <activity android:name=".ListeEtatDesLieux"></activity>
-        <activity android:name=".EtatDesLieux"></activity>
+        <activity android:name=".HistoriqueLocationsActivity" />
+        <activity android:name=".ListeEtatDesLieux" />
+        <activity android:name=".EtatDesLieux" />
         <activity android:name=".DetailVehiculeActivity" />
+        <activity android:name=".StatsActivity"></activity>
     </application>
 
 </manifest>

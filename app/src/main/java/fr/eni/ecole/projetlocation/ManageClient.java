@@ -158,4 +158,10 @@ public class ManageClient extends AppCompatActivity {
         Intent intent = new Intent(ManageClient.this, SearchVehicule.class);
         startActivity(intent);
     }
+
+    public void showStats(MenuItem item) {
+        Intent intent = new Intent(ManageClient.this, StatsActivity.class);
+        startActivity(intent);
+    }
+
 }

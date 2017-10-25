@@ -139,4 +139,9 @@ public class SearchVehicule extends AppCompatActivity {
 
     public void showVehiculeSearch(MenuItem item) {
     }
+
+    public void showStats(MenuItem item) {
+        Intent intent = new Intent(SearchVehicule.this, StatsActivity.class);
+        startActivity(intent);
+    }
 }

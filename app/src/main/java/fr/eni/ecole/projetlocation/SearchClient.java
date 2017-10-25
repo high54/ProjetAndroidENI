@@ -97,4 +97,9 @@ public class SearchClient extends AppCompatActivity {
         Intent intent = new Intent(SearchClient.this, SearchVehicule.class);
         startActivity(intent);
     }
+
+    public void showStats(MenuItem item) {
+        Intent intent = new Intent(SearchClient.this, StatsActivity.class);
+        startActivity(intent);
+    }
 }

@@ -101,4 +101,9 @@ public class ListeVehiculeActivity extends AppCompatActivity implements Vehicule
         Intent intent = new Intent(ListeVehiculeActivity.this, SearchVehicule.class);
         startActivity(intent);
     }
+
+    public void showStats(MenuItem item) {
+        Intent intent = new Intent(ListeVehiculeActivity.this, StatsActivity.class);
+        startActivity(intent);
+    }
 }
