@@ -28,12 +28,12 @@ public class IVehiculeContract {
     public static final String CREATE_TABLE_VEHICULES= "create table "
             + TABLE_VEHICULES
             + "(" + COLUMN_ID_VEHICULES + " integer primary key autoincrement, "
+            + COLUMN_PRIX_VEHICULES + " integer not null, "
             + COLUMN_IMMATRICULATION_VEHICULES + " text not null, "
             + COLUMN_TYPE_VEHICULES + " integer not null, "
             + COLUMN_MARQUE_VEHICULES + " text not null, "
             + COLUMN_MODELE_VEHICULES + " text not null, "
             + COLUMN_CARBURANT_VEHICULES + " text not null, "
-            + COLUMN_PRIX_VEHICULES + " integer not null, "
             + COLUMN_LOUE_VEHICULES + " integer not null "
             + ");";
 

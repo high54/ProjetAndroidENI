@@ -112,6 +112,7 @@ public class VehiculeDao {
         Vehicule vehicule = new Vehicule();
         Log.wtf(TAG, "selectByid");
         Cursor c = sqLiteDatabase.query(TABLE_VEHICULES, null, COLUMN_ID_VEHICULES + "=" + id, null, null, null, null);
+        c.moveToFirst();
         if(c.getCount() > 0){
             vehicule = map(c);
         }

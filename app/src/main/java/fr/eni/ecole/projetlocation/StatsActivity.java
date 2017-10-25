@@ -10,13 +10,19 @@ import android.view.MenuItem;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import fr.eni.ecole.projetlocation.dao.location.LocationDao;
+import fr.eni.ecole.projetlocation.dao.vehicule.VehiculeDao;
 import fr.eni.ecole.projetlocation.models.LocationVehicule;
+import fr.eni.ecole.projetlocation.models.Vehicule;
 
 public class StatsActivity extends AppCompatActivity {
+    private long total = 0;
+    private long semaine = 0;
+    private long mois = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +50,43 @@ public class StatsActivity extends AppCompatActivity {
                     retour = new Date();
                 }
                 Date depart = df.parse(location.getDepart());
-                Log.wtf("retour", retour.toString());
-                Log.wtf("depart", depart.toString());
-                //int daysOfLocation = retour - depart;
+                long differenceForAll = retour.getTime() - depart.getTime();
+                differenceForAll = differenceForAll/1000/60/60/24+1;
+
+                VehiculeDao vehiculeDao = new VehiculeDao(this);
+                dao.open();
+                Vehicule vehicule = vehiculeDao.selectById(location.getVehicule().getId());
+                int prix = vehicule.getPrix();
+                total = total + differenceForAll*prix;
+                Log.wtf("Chiffre d'affaire TOTAL======>", String.valueOf(total));
+                Log.wtf("prix", String.valueOf(prix));
+
+
+                Calendar calWeek = Calendar.getInstance();
+                calWeek.add(Calendar.DATE, -7);
+                String sevenDays = df.format(calWeek.getTime());
+                Date lastWeek = df.parse(sevenDays);
+
+                //on compare la date de départ à la date d'il y a 7 jours
+                //Si la date est inférieure, on additionne pour la semaine
+                long differenceForSeven = lastWeek.getTime() - depart.getTime();
+                differenceForSeven = differenceForSeven/1000/60/60/24+1;
+                Log.wtf("difference 7======>", String.valueOf(differenceForSeven));
+                if(differenceForSeven < 7){
+                    //semaine = semaine +
+                }
+
+                Calendar calMonth = Calendar.getInstance();
+                calMonth.add(Calendar.DATE, -30);
+                String thirtyDays = df.format(calMonth.getTime());
+                Date lastMonth = df.parse(thirtyDays);
+
+                //on compare la date de départ à la date d'il y a 30 jours
+                //Si la date est inférieure, on additionne pour le mois
+                long differenceForThirty = depart.getTime() - lastMonth.getTime();
+                differenceForThirty = differenceForThirty/1000/60/60/24+1;
+                Log.wtf("difference 30======>", String.valueOf(differenceForThirty));
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
