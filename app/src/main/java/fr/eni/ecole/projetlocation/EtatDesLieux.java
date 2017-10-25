@@ -120,6 +120,7 @@ public class EtatDesLieux extends AppCompatActivity {
             location.setVehicule(vehicule);
             location.setClient(client);
             location.setDepart(date);
+            location.setTarif(vehicule.getPrix());
             locationDao.open();
             location = locationDao.insertLocation(location);
             EDL edl = new EDL();

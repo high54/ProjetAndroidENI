@@ -1,11 +1,17 @@
 package fr.eni.ecole.projetlocation;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -15,82 +21,74 @@ import java.util.Date;
 import java.util.List;
 
 import fr.eni.ecole.projetlocation.dao.location.LocationDao;
-import fr.eni.ecole.projetlocation.dao.vehicule.VehiculeDao;
 import fr.eni.ecole.projetlocation.models.LocationVehicule;
-import fr.eni.ecole.projetlocation.models.Vehicule;
 
 public class StatsActivity extends AppCompatActivity {
+
+    WebView webView;
+
+    private static final String TAG = "StatsActivity";
+
     private long total = 0;
     private long semaine = 0;
     private long mois = 0;
+
+    private static final int MY_PERMISSIONS_REQUEST_INTERNET = 1;
+    private static final int MY_PERMISSIONS_REQUEST_NETWORK_STATE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+        PackageManager pm = this.getPackageManager();
+        int hasPermForSms = pm.checkPermission(
+                Manifest.permission.INTERNET,
+                this.getPackageName());
+        if (hasPermForSms != PackageManager.PERMISSION_GRANTED) {
+            Log.i(TAG, "Permission Not Ok =====>" + hasPermForSms);
+            askPermission();
+        }
 
         LocationDao dao = new LocationDao(this);
         dao.open();
 
         List<LocationVehicule> locations = dao.getLocationsForStats();
 
-        for ( LocationVehicule location : locations){
+        for (LocationVehicule location : locations) {
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             try {
                 Date retour;
-                if(null != location.getRetour()){
+                if (null != location.getRetour()) {
                     retour = df.parse(location.getRetour());
-                }
-                else{
+                } else {
                     retour = new Date();
                 }
                 Date depart = df.parse(location.getDepart());
                 long differenceForAll = retour.getTime() - depart.getTime();
-                differenceForAll = differenceForAll/1000/60/60/24+1;
-
-                VehiculeDao vehiculeDao = new VehiculeDao(this);
-                dao.open();
-                Vehicule vehicule = vehiculeDao.selectById(location.getVehicule().getId());
-                int prix = vehicule.getPrix();
-                total = total + differenceForAll*prix;
+                differenceForAll = differenceForAll / 1000 / 60 / 60 / 24 + 1;
+                int prix = location.getTarif();
+                total = total + differenceForAll * prix;
                 Log.wtf("Chiffre d'affaire TOTAL======>", String.valueOf(total));
                 Log.wtf("prix", String.valueOf(prix));
-
-
 
                 Calendar calWeek = Calendar.getInstance();
                 calWeek.add(Calendar.DATE, -7);
                 String sevenDays = df.format(calWeek.getTime());
                 Date lastWeek = df.parse(sevenDays);
 
-                //on compare la date de départ à la date d'il y a 7 jours
-                //Si la date est inférieure, on additionne pour la semaine
-                long differenceForSeven = lastWeek.getTime() -  depart.getTime();
-                differenceForSeven = differenceForSeven/1000/60/60/24+1;
-                Log.wtf("difference 7======>", String.valueOf(differenceForSeven));
-                if(differenceForSeven < 7){
-                    semaine = semaine + differenceForAll*prix;
+                if (depart.getTime() >= lastWeek.getTime()) {
+                    semaine = semaine + differenceForAll * prix;
                     Log.wtf("Chiffre d'affaire de la semaine======>", String.valueOf(semaine));
                 }
-
 
                 Calendar calMonth = Calendar.getInstance();
                 calMonth.add(Calendar.DATE, -30);
                 String thirtyDays = df.format(calMonth.getTime());
                 Date lastMonth = df.parse(thirtyDays);
 
-                //on compare la date de départ à la date d'il y a 30 jours
-                //Si la date est inférieure, on additionne pour le mois
-                long differenceForThirty = depart.getTime() - lastMonth.getTime();
-                differenceForThirty = differenceForThirty/1000/60/60/24+1;
-                Log.wtf("difference 30======>", String.valueOf(differenceForThirty));
-                if(differenceForThirty < 30){
-                    mois = mois + differenceForThirty*prix;
+                if (depart.getTime()>= lastMonth.getTime()) {
+                    mois = mois + differenceForAll * prix;
                     Log.wtf("Chiffre d'affaire du mois======>", String.valueOf(mois));
                 }
 
@@ -98,6 +96,31 @@ public class StatsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        long totalFinal = total - mois;
+        long moisFinal = mois - semaine;
+
+        webView = (WebView) findViewById(R.id.webView);
+        webView.getSettings().setJavaScriptEnabled(true);
+
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
+
+        webView.loadUrl("http://chart.apis.google.com/chart?cht=p3&chs=250x100&chd=t:" + totalFinal + "," + moisFinal + "," + semaine + "&chl=total|mois|semaine");
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+            webView.goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -123,5 +146,15 @@ public class StatsActivity extends AppCompatActivity {
 
     public void showStats(MenuItem item) {
 
+    }
+
+    public void askPermission() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_NETWORK_STATE},
+                MY_PERMISSIONS_REQUEST_NETWORK_STATE);
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.INTERNET},
+                MY_PERMISSIONS_REQUEST_INTERNET);
     }
 }

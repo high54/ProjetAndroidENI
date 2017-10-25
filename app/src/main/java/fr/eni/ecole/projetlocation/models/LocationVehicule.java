@@ -15,19 +15,22 @@ public class LocationVehicule implements Parcelable{
     private String retour;
     private Vehicule vehicule;
     private ArrayList<EDL> edls;
+    private int tarif;
 
 
     public LocationVehicule() {
     }
 
-    public LocationVehicule(int id, Client client, String depart, String retour, Vehicule vehicule, ArrayList<EDL> edls) {
+    public LocationVehicule(int id, Client client, String depart, String retour, Vehicule vehicule, ArrayList<EDL> edls, int tarif) {
         this.id = id;
         this.client = client;
         this.depart = depart;
         this.retour = retour;
         this.vehicule = vehicule;
         this.edls = edls;
+        this.tarif = tarif;
     }
+
 
     protected LocationVehicule(Parcel in) {
         id = in.readInt();
@@ -35,6 +38,7 @@ public class LocationVehicule implements Parcelable{
         depart = in.readString();
         retour = in.readString();
         vehicule = in.readParcelable(Vehicule.class.getClassLoader());
+        tarif = in.readInt();
     }
 
     public static final Creator<LocationVehicule> CREATOR = new Creator<LocationVehicule>() {
@@ -97,6 +101,14 @@ public class LocationVehicule implements Parcelable{
         this.edls = edls;
     }
 
+    public int getTarif() {
+        return tarif;
+    }
+
+    public void setTarif(int tarif) {
+        this.tarif = tarif;
+    }
+
     @Override
     public String toString() {
         return "LocationVehicule{" +
@@ -121,5 +133,6 @@ public class LocationVehicule implements Parcelable{
         parcel.writeString(depart);
         parcel.writeString(retour);
         parcel.writeParcelable(vehicule, i);
+        parcel.writeInt(tarif);
     }
 }

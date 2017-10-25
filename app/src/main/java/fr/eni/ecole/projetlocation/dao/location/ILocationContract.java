@@ -10,12 +10,14 @@ public class ILocationContract {
     public static final String COLUMN_DATE_DEPART_LOCATIONS  = "depart";
     public static final String COLUMN_DATE_RETOUR_LOCATIONS  = "retour";
     public static final String COLUMN_ID_VEHICULE_LOCATIONS  = "id_vehicule";
+    public static final String COLUMN_TARIF_LOCATIONS = "tarif";
 
     public static final int NUM_COL_ID_LOCATION = 0;
     public static final int NUM_COL_ID_CLIENT_LOCATION = 1;
     public static final int NUM_COL_ID_VEHICULE_LOCATION = 2;
     public static final int NUM_COL_DATE_DEPART_LOCATION = 3;
     public static final int NUM_COL_DATE_RETOUR_LOCATION = 4;
+    public static final int NUM_COL_TARIF_LOCATION = 5;
 
 
 
@@ -25,6 +27,7 @@ public class ILocationContract {
             + " integer not null, "+ COLUMN_DATE_DEPART_LOCATIONS
             + " text not null, "+ COLUMN_DATE_RETOUR_LOCATIONS
             + " text, "+ COLUMN_ID_VEHICULE_LOCATIONS
+            + " integer not null,"+ COLUMN_TARIF_LOCATIONS
             + " integer not null"
             + ");";
 }

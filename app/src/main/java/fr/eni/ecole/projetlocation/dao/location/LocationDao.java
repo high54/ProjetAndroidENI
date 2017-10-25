@@ -26,7 +26,7 @@ public class LocationDao {
 
     private String[] allColumns = {COLUMN_ID_LOCATIONS, COLUMN_ID_CLIENT_LOCATIONS,
             COLUMN_ID_VEHICULE_LOCATIONS, COLUMN_DATE_DEPART_LOCATIONS,
-            COLUMN_DATE_RETOUR_LOCATIONS};
+            COLUMN_DATE_RETOUR_LOCATIONS, COLUMN_TARIF_LOCATIONS};
 
     public LocationDao(Context context) {
         sqLiteHelper = new SQLiteHelper(context);
@@ -56,6 +56,7 @@ public class LocationDao {
         values.put(COLUMN_ID_CLIENT_LOCATIONS, locationVehicule.getClient().getId());
         values.put(COLUMN_ID_VEHICULE_LOCATIONS, locationVehicule.getVehicule().getId());
         values.put(COLUMN_DATE_DEPART_LOCATIONS, locationVehicule.getDepart());
+        values.put(COLUMN_TARIF_LOCATIONS, locationVehicule.getTarif());
 
         long insertId = database.insert(TABLE_LOCATIONS, null,
                 values);
@@ -86,6 +87,7 @@ public class LocationDao {
         values.put(COLUMN_ID_VEHICULE_LOCATIONS, locationVehicule.getVehicule().getId());
         values.put(COLUMN_DATE_DEPART_LOCATIONS, locationVehicule.getDepart());
         values.put(COLUMN_DATE_RETOUR_LOCATIONS, locationVehicule.getRetour());
+        values.put(COLUMN_TARIF_LOCATIONS, locationVehicule.getTarif());
 
 
         database.update(TABLE_LOCATIONS, values, "id=" + locationVehicule.getId(), null);
@@ -186,6 +188,7 @@ public class LocationDao {
         locationVehicule.setVehicule(vehicule);
         locationVehicule.setDepart(cursor.getString(NUM_COL_DATE_DEPART_LOCATION));
         locationVehicule.setRetour(cursor.getString(NUM_COL_DATE_RETOUR_LOCATION));
+        locationVehicule.setTarif(cursor.getInt(NUM_COL_TARIF_LOCATION));
 
         return locationVehicule;
     }
