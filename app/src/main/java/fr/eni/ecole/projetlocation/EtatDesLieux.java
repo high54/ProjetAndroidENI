@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -16,7 +14,6 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,16 +22,20 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import fr.eni.ecole.projetlocation.dao.edl.EDLDao;
+import fr.eni.ecole.projetlocation.dao.photo.IPhotoContract;
 import fr.eni.ecole.projetlocation.dao.location.LocationDao;
+import fr.eni.ecole.projetlocation.dao.photo.PhotoDao;
 import fr.eni.ecole.projetlocation.dao.vehicule.VehiculeDao;
 import fr.eni.ecole.projetlocation.models.Client;
 import fr.eni.ecole.projetlocation.models.EDL;
 import fr.eni.ecole.projetlocation.models.LocationVehicule;
 
+import fr.eni.ecole.projetlocation.models.Photo;
 import fr.eni.ecole.projetlocation.models.Vehicule;
 
 public class EtatDesLieux extends AppCompatActivity {
@@ -48,9 +49,11 @@ public class EtatDesLieux extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 0;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
     private ImageView mImageView;
+    private EDL edl = new EDL();
 
     private static final int TAKE_PHOTO_REQUEST = 1;
     private File photoFile;
+    private List<Photo> photos = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,18 +126,24 @@ public class EtatDesLieux extends AppCompatActivity {
             location.setTarif(vehicule.getPrix());
             locationDao.open();
             location = locationDao.insertLocation(location);
-            EDL edl = new EDL();
+            edl = new EDL();
             edl.setDate(date);
             edl.setLocation(location);
             EDLDao edlDao = new EDLDao(this);
             edlDao.open();
-            edlDao.insertEDL(edl);
+            edl = edlDao.insertEDL(edl);
             SmsManager.getDefault().sendTextMessage("0"+client.getTelephone(), null,message,null,null);
             Toast.makeText(this, "Sms de confirmation envoyé !", Toast.LENGTH_LONG).show();
 
             VehiculeDao vehiculeDao = new VehiculeDao(this);
             vehicule.setLoue(true);
             vehiculeDao.update(vehicule);
+            PhotoDao photoDao = new PhotoDao(this);
+            for(int i = 0; i<photos.size();i++){
+                photos.get(i).setEdl(edl);
+                photoDao.createPhoto(photos.get(i));
+            }                Log.wtf("WTF","LA PHOTO =========>>>>> ");
+
         }
 
     }
@@ -181,7 +190,11 @@ public class EtatDesLieux extends AppCompatActivity {
             bmOptions.inJustDecodeBounds = false;
             bmOptions.inSampleSize = scaleFactor;
             bmOptions.inPurgeable = true;
-
+            Photo photo = new Photo();
+            photo.setDate(date);
+            photo.setUri(photoFile.getAbsolutePath());
+            photo.setEdl(edl);
+            photos.add(photo);
             // stream = getContentResolver().openInputStream(data.getData());
             Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath(),bmOptions);
             mImageView.setImageBitmap(bitmap);
@@ -205,7 +218,7 @@ public class EtatDesLieux extends AppCompatActivity {
         System.out.println(mCurrentPhotoPath);
         return image;
     }
-    
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
