@@ -100,7 +100,7 @@ public class VehiculeDao {
         }
         ArrayList<Vehicule> vehicules = new ArrayList<>();
         Log.wtf(TAG, "selectAllRent "+bool);
-        Cursor c = sqLiteDatabase.query(TABLE_VEHICULES, allColumns, COLUMN_LOUE_VEHICULES + "=" + boolzor, null, null, null, null);
+        Cursor c = sqLiteDatabase.query(TABLE_VEHICULES, allColumns, COLUMN_LOUE_VEHICULES + "= '" + boolzor +"'", null, null, null, null);
         while(c.moveToNext()) {
             vehicules.add(map(c));
         }
@@ -128,9 +128,15 @@ public class VehiculeDao {
         values.put(COLUMN_MODELE_VEHICULES, vehicule.getModel());
         values.put(COLUMN_PRIX_VEHICULES, vehicule.getPrix());
         values.put(COLUMN_TYPE_VEHICULES, vehicule.getType());
-        values.put(COLUMN_LOUE_VEHICULES, vehicule.getLoue());
-        Log.wtf(TAG, "update");
-        return sqLiteDatabase.update(TABLE_VEHICULES, values, COLUMN_ID_VEHICULES + " = " + vehicule.getId(), null) > 0;
+        if(vehicule.getLoue()){
+            values.put(COLUMN_LOUE_VEHICULES, 1);
+        }
+         else{
+            values.put(COLUMN_LOUE_VEHICULES, 0);
+        }
+        Log.wtf(TAG, "update"+vehicule);
+        Boolean bool = sqLiteDatabase.update(TABLE_VEHICULES, values, COLUMN_ID_VEHICULES + " = " + vehicule.getId(), null) > 0;
+        return bool;
     }
 
     public Vehicule map(Cursor c) {
@@ -141,7 +147,7 @@ public class VehiculeDao {
         vehicule.setMarque(c.getString(NUM_COLUMN_MARQUE_VEHICULES));
         vehicule.setModel(c.getString(NUM_COLUMN_MODELE_VEHICULES));
         vehicule.setCarburant(c.getString(NUM_COLUMN_CARBURANT_VEHICULES));
-        vehicule.setLoue(c.getInt(NUM_COLUMN_LOUE_VEHICULES)<0);
+        vehicule.setLoue(c.getInt(NUM_COLUMN_LOUE_VEHICULES)>0);
 
         vehicule.setId(c.getInt(NUM_COLUMN_ID_VEHICULES));
         Log.wtf(TAG, vehicule.toString());

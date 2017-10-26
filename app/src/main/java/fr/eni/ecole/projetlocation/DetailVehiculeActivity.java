@@ -1,15 +1,20 @@
 package fr.eni.ecole.projetlocation;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import fr.eni.ecole.projetlocation.dao.client.ClientDao;
+import fr.eni.ecole.projetlocation.dao.location.LocationDao;
 import fr.eni.ecole.projetlocation.dao.vehicule.VehiculeDao;
+import fr.eni.ecole.projetlocation.models.Client;
+import fr.eni.ecole.projetlocation.models.LocationVehicule;
 import fr.eni.ecole.projetlocation.models.Vehicule;
 
 public class DetailVehiculeActivity extends AppCompatActivity {
@@ -26,6 +31,8 @@ public class DetailVehiculeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent.hasExtra("vehicule")) {
             vehicule = intent.getExtras().getParcelable("vehicule");
+            Log.wtf("Detail Véhicule======> ", ":"+vehicule);
+            Log.wtf("Detail Véhicule======> ", ":"+vehicule.getLoue());
         }
 
         if (null != vehicule) {
@@ -60,8 +67,17 @@ public class DetailVehiculeActivity extends AppCompatActivity {
                 rendreLouer.setText(R.string.louer_le_vehicule);
             } else {
                 tv_loue.setText(R.string.non_dispo);
-                tv_nom_client.setText("le client qui a la location :D");
-                tv_date_location.setText("le 25/85/456 mouhahaha");
+                LocationDao locationDao = new LocationDao(this);
+                locationDao.open();
+                LocationVehicule location = locationDao.getLastLocation(vehicule.getId());
+                ClientDao clientDao = new ClientDao(this);
+                Client client = clientDao.getClientsById(location.getClient());
+                if (client != null) {
+                    tv_nom_client.setText(client.getNom() + " " + client.getPrenom());
+                }
+                if(location != null) {
+                    tv_date_location.setText(location.getDepart());
+                }
                 rendreLouer.setText(R.string.rendre_le_vehicule);
             }
         }
@@ -78,12 +94,12 @@ public class DetailVehiculeActivity extends AppCompatActivity {
         if(vehicule.getLoue()){
             intent = new Intent(DetailVehiculeActivity.this, EtatDesLieux.class);
             intent.putExtra("vehicule", vehicule);
-            intent.putExtra("etat", "rendre");
+            intent.putExtra("action", "rendre");
         }
         else {
             intent = new Intent(DetailVehiculeActivity.this, SearchClient.class);
             intent.putExtra("vehicule", vehicule);
-            intent.putExtra("etat", "louer");
+            intent.putExtra("action", "louer");
         }
         startActivity(intent);
     }

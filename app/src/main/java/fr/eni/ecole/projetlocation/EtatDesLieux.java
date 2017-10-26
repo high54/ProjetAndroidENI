@@ -5,18 +5,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Environment;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +25,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import fr.eni.ecole.projetlocation.dao.edl.EDLDao;
 import fr.eni.ecole.projetlocation.dao.location.LocationDao;
@@ -34,7 +32,6 @@ import fr.eni.ecole.projetlocation.dao.vehicule.VehiculeDao;
 import fr.eni.ecole.projetlocation.models.Client;
 import fr.eni.ecole.projetlocation.models.EDL;
 import fr.eni.ecole.projetlocation.models.LocationVehicule;
-
 import fr.eni.ecole.projetlocation.models.Vehicule;
 
 public class EtatDesLieux extends AppCompatActivity {
@@ -63,7 +60,7 @@ public class EtatDesLieux extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         date = dateFormat.format(dateDuJour);
         txtDateJour.setText(date);
-        if(intent.hasExtra("action")){
+        if (intent.hasExtra("action")) {
             action = intent.getExtras().getString("action");
         }
         if (intent.hasExtra("client") && intent.hasExtra("vehicule")) {
@@ -72,7 +69,7 @@ public class EtatDesLieux extends AppCompatActivity {
         }
         mImageView = (ImageView) findViewById(R.id.iv_edl);
 
-        message = "Confirmation de la location le "+date+" du véhicule : "+vehicule.getMarque()+" "+vehicule.getModel();
+        message = "Confirmation de la location le " + date + " du véhicule : " + vehicule.getMarque() + " " + vehicule.getModel();
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.SEND_SMS)
@@ -82,7 +79,7 @@ public class EtatDesLieux extends AppCompatActivity {
                     Manifest.permission.SEND_SMS)) {
             } else {
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.SEND_SMS,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},REQUEST_ID_MULTIPLE_PERMISSIONS);
+                        new String[]{Manifest.permission.SEND_SMS, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_ID_MULTIPLE_PERMISSIONS);
             }
         }
         if (ContextCompat.checkSelfPermission(this,
@@ -93,7 +90,7 @@ public class EtatDesLieux extends AppCompatActivity {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             } else {
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_ID_MULTIPLE_PERMISSIONS);
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_ID_MULTIPLE_PERMISSIONS);
             }
         }
         if (ContextCompat.checkSelfPermission(this,
@@ -104,19 +101,22 @@ public class EtatDesLieux extends AppCompatActivity {
                     Manifest.permission.READ_EXTERNAL_STORAGE)) {
             } else {
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},REQUEST_ID_MULTIPLE_PERMISSIONS);
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_ID_MULTIPLE_PERMISSIONS);
             }
         }
     }
 
     public void onClickSaveLocation(View view) {
-        Log.wtf("WTF",""+client.getTelephone());
+        final VehiculeDao vehiculeDao = new VehiculeDao(this);
+        Log.wtf("WTF", "" + client.getTelephone());
         LocationDao locationDao = new LocationDao(this);
-         LocationVehicule location = new LocationVehicule();
+        LocationVehicule location = new LocationVehicule();
 
-        if(action =="rendre"){
+        if (action == "rendre") {
             location.setRetour(date);
-        }else{
+            vehicule.setLoue(false);
+            vehiculeDao.update(vehicule);
+        } else {
             location.setVehicule(vehicule);
             location.setClient(client);
             location.setDepart(date);
@@ -129,28 +129,42 @@ public class EtatDesLieux extends AppCompatActivity {
             EDLDao edlDao = new EDLDao(this);
             edlDao.open();
             edlDao.insertEDL(edl);
-            SmsManager.getDefault().sendTextMessage("0"+client.getTelephone(), null,message,null,null);
+            SmsManager.getDefault().sendTextMessage("0" + client.getTelephone(), null, message, null, null);
             Toast.makeText(this, "Sms de confirmation envoyé !", Toast.LENGTH_LONG).show();
 
-            VehiculeDao vehiculeDao = new VehiculeDao(this);
             vehicule.setLoue(true);
             vehiculeDao.update(vehicule);
-        }
+            Intent intent = new Intent(EtatDesLieux.this, SearchVehicule.class);
+            startActivity(intent);
 
+//            AlertDialog.Builder builder = new AlertDialog.Builder(EtatDesLieux.this);
+//            builder.setMessage("Êtes vous sur de vouloir comfirmer la location?");
+//            // Add the buttons
+//            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int id) {
+//
+//                }
+//            });
+//            builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int id) {
+//                    // User cancelled the dialog
+//                }
+//            });
+//            AlertDialog dialog = builder.create();
+//            dialog.show();
+        }
     }
 
     public void onClickTakePhoto(View view) throws IOException {
         dispatchTakePictureIntent();
     }
 
-
-
     private void dispatchTakePictureIntent() {
 
         Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
             photoFile = createImageFile();
-            takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this,"fr.eni.ecole.projetlocation.fileprovider",photoFile));
+            takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this, "fr.eni.ecole.projetlocation.fileprovider", photoFile));
             startActivityForResult(takePhotoIntent, TAKE_PHOTO_REQUEST);
         } catch (IOException e) {
             e.printStackTrace();
@@ -164,7 +178,7 @@ public class EtatDesLieux extends AppCompatActivity {
         if (requestCode == TAKE_PHOTO_REQUEST && resultCode == RESULT_OK) {
 
             // set the dimensions of the image
-            int targetW =100;
+            int targetW = 100;
             int targetH = 100;
 
             // Get the dimensions of the bitmap
@@ -175,7 +189,7 @@ public class EtatDesLieux extends AppCompatActivity {
             int photoH = bmOptions.outHeight;
 
             // Determine how much to scale down the image
-            int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+            int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
 
             // Decode the image file into a Bitmap sized to fill the View
             bmOptions.inJustDecodeBounds = false;
@@ -183,12 +197,10 @@ public class EtatDesLieux extends AppCompatActivity {
             bmOptions.inPurgeable = true;
 
             // stream = getContentResolver().openInputStream(data.getData());
-            Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath(),bmOptions);
+            Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath(), bmOptions);
             mImageView.setImageBitmap(bitmap);
         }
-
     }
-
 
     String mCurrentPhotoPath;
 
@@ -196,16 +208,15 @@ public class EtatDesLieux extends AppCompatActivity {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
                 .format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = new File(getFilesDir(),"images");
+        File storageDir = new File(getFilesDir(), "images");
         storageDir.mkdirs();
-        File image = new File(storageDir,imageFileName+".jpg");
+        File image = new File(storageDir, imageFileName + ".jpg");
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         System.out.println(mCurrentPhotoPath);
         return image;
     }
-    
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -223,4 +234,29 @@ public class EtatDesLieux extends AppCompatActivity {
         mImageView = (ImageView) findViewById(R.id.iv_edl);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar, menu);
+        return true;
+    }
+
+    public void showAddCar(MenuItem item) {
+        Intent intent = new Intent(EtatDesLieux.this, ManageVehicule.class);
+        startActivity(intent);
+    }
+
+    public void showCarsList(MenuItem item) {
+        Intent intent = new Intent(EtatDesLieux.this, ListeVehiculeActivity.class);
+        startActivity(intent);
+    }
+
+    public void showVehiculeSearch(MenuItem item) {
+        Intent intent = new Intent(EtatDesLieux.this, SearchVehicule.class);
+        startActivity(intent);
+    }
+
+    public void showStats(MenuItem item) {
+        Intent intent = new Intent(EtatDesLieux.this, StatsActivity.class);
+        startActivity(intent);
+    }
 }

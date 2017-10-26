@@ -15,7 +15,20 @@ import fr.eni.ecole.projetlocation.models.Client;
 import fr.eni.ecole.projetlocation.models.LocationVehicule;
 import fr.eni.ecole.projetlocation.models.Vehicule;
 
-import static  fr.eni.ecole.projetlocation.dao.location.ILocationContract.*;
+import static fr.eni.ecole.projetlocation.dao.location.ILocationContract.COLUMN_DATE_DEPART_LOCATIONS;
+import static fr.eni.ecole.projetlocation.dao.location.ILocationContract.COLUMN_DATE_RETOUR_LOCATIONS;
+import static fr.eni.ecole.projetlocation.dao.location.ILocationContract.COLUMN_ID_CLIENT_LOCATIONS;
+import static fr.eni.ecole.projetlocation.dao.location.ILocationContract.COLUMN_ID_LOCATIONS;
+import static fr.eni.ecole.projetlocation.dao.location.ILocationContract.COLUMN_ID_VEHICULE_LOCATIONS;
+import static fr.eni.ecole.projetlocation.dao.location.ILocationContract.COLUMN_TARIF_LOCATIONS;
+import static fr.eni.ecole.projetlocation.dao.location.ILocationContract.NUM_COL_DATE_DEPART_LOCATION;
+import static fr.eni.ecole.projetlocation.dao.location.ILocationContract.NUM_COL_DATE_RETOUR_LOCATION;
+import static fr.eni.ecole.projetlocation.dao.location.ILocationContract.NUM_COL_ID_CLIENT_LOCATION;
+import static fr.eni.ecole.projetlocation.dao.location.ILocationContract.NUM_COL_ID_LOCATION;
+import static fr.eni.ecole.projetlocation.dao.location.ILocationContract.NUM_COL_ID_VEHICULE_LOCATION;
+import static fr.eni.ecole.projetlocation.dao.location.ILocationContract.NUM_COL_TARIF_LOCATION;
+import static fr.eni.ecole.projetlocation.dao.location.ILocationContract.TABLE_LOCATIONS;
+
 /**
  * Created by Administrateur on 24/10/2017.
  */
@@ -63,8 +76,8 @@ public class LocationDao {
         Cursor cursor = database.query(TABLE_LOCATIONS,
                 allColumns, COLUMN_ID_LOCATIONS + " = " + insertId, null,
                 null, null, null);
-        LocationVehicule newLocationVehicule=new LocationVehicule();
-        if(cursor!=null && cursor.getCount()>0) {
+        LocationVehicule newLocationVehicule = new LocationVehicule();
+        if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             newLocationVehicule = mappage(cursor);
         }
@@ -125,6 +138,7 @@ public class LocationDao {
 
     /**
      * Retourne une liste de locationVehicule pour une voiture
+     *
      * @return clients
      */
     public List<LocationVehicule> getAllLocation(int id) {
@@ -138,11 +152,21 @@ public class LocationDao {
         while (!cursor.isAfterLast()) {
             LocationVehicule newlocation = mappage(cursor);
             locationVehicules.add(newlocation);
-            Log.wtf("WTF","ALOOOOO ===>>>>>" +newlocation.toString());
+            Log.wtf("WTF", "ALOOOOO ===>>>>>" + newlocation.toString());
             cursor.moveToNext();
         }
         cursor.close();
         return locationVehicules;
+    }
+
+    public LocationVehicule getLastLocation(int id) {
+        Cursor cursor = database.query(TABLE_LOCATIONS,
+                allColumns, " id_vehicule = '" + id + "' and " + ILocationContract.COLUMN_DATE_RETOUR_LOCATIONS + " = ''", null, null, null, null);
+
+        cursor.moveToLast();
+        LocationVehicule locationVehicule = mappage(cursor);
+        Log.wtf("WTF", "ALOOOOO ===>>>>>" + locationVehicule.toString());
+        return locationVehicule;
     }
 
     public List<LocationVehicule> getLocationsForStats() {
@@ -156,7 +180,7 @@ public class LocationDao {
         while (!cursor.isAfterLast()) {
             LocationVehicule newlocation = mappage(cursor);
             locationVehicules.add(newlocation);
-            Log.wtf("WTF","ALOOOOO ===>>>>>" +newlocation.toString());
+            Log.wtf("WTF", "ALOOOOO ===>>>>>" + newlocation.toString());
             cursor.moveToNext();
         }
         cursor.close();
@@ -165,6 +189,7 @@ public class LocationDao {
 
     /**
      * Retourne un locationVehicule en fonction de son ID
+     *
      * @param locationVehicule
      * @return
      */

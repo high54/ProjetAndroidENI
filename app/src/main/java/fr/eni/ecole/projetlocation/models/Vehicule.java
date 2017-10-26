@@ -27,7 +27,6 @@ public class Vehicule implements Parcelable {
     private Boolean loue = false;
     private ArrayList<Photo> photos;
 
-
     public Vehicule() {
     }
 
@@ -50,6 +49,7 @@ public class Vehicule implements Parcelable {
         marque = in.readString();
         model = in.readString();
         carburant = in.readString();
+        loue =  in.readByte() != 0;
     }
 
     public static final Creator<Vehicule> CREATOR = new Creator<Vehicule>() {
@@ -176,5 +176,6 @@ public class Vehicule implements Parcelable {
         parcel.writeString(marque);
         parcel.writeString(model);
         parcel.writeString(carburant);
+        parcel.writeByte((byte) (loue ? 1 : 0));
     }
 }
