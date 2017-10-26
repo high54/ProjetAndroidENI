@@ -1,7 +1,12 @@
 package fr.eni.ecole.projetlocation;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,7 +15,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import fr.eni.ecole.projetlocation.dao.vehicule.VehiculeDao;
+import fr.eni.ecole.projetlocation.models.Photo;
 import fr.eni.ecole.projetlocation.models.Vehicule;
 
 public class ManageVehicule extends AppCompatActivity {
@@ -27,6 +41,13 @@ public class ManageVehicule extends AppCompatActivity {
     RadioButton button_hors_ville;
     EditText et_prix;
     VehiculeDao dao;
+
+    private ImageView mImageView;
+
+    private static final int TAKE_PHOTO_REQUEST = 1;
+    private File photoFile;
+    private List<Photo> photos = new ArrayList<>();
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +130,82 @@ public class ManageVehicule extends AppCompatActivity {
         }
 
         showCarsList(null);
+    }
+
+    public void onClickTakePhoto(View view) throws IOException {
+        dispatchTakePictureIntent();
+    }
+
+    private void dispatchTakePictureIntent() {
+
+        Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            photoFile = createImageFile();
+            takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this, "fr.eni.ecole.projetlocation.fileprovider", photoFile));
+            startActivityForResult(takePhotoIntent, TAKE_PHOTO_REQUEST);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == TAKE_PHOTO_REQUEST && resultCode == RESULT_OK) {
+            int targetW = 100;
+            int targetH = 100;
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(photoFile.getAbsolutePath(), bmOptions);
+            int photoW = bmOptions.outWidth;
+            int photoH = bmOptions.outHeight;
+            int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+            bmOptions.inJustDecodeBounds = false;
+            bmOptions.inSampleSize = scaleFactor;
+            bmOptions.inPurgeable = true;
+            Photo photo = new Photo();
+
+            Date dateDuJour = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String date = dateFormat.format(dateDuJour);
+
+            photo.setDate(date);
+            photo.setUri(photoFile.getAbsolutePath());
+            photo.setVehicule(vehicule);
+            photos.add(photo);
+            Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath(), bmOptions);
+            mImageView.setImageBitmap(bitmap);
+        }
+    }
+
+    String mCurrentPhotoPath;
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
+                .format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = new File(getFilesDir(), "images");
+        storageDir.mkdirs();
+        File image = new File(storageDir, imageFileName + ".jpg");
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        System.out.println(mCurrentPhotoPath);
+        return image;
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        // TODO Auto-generated method stub
+        super.onSaveInstanceState(outState);
+        System.out.println(mCurrentPhotoPath);
+        mImageView = (ImageView) findViewById(R.id.img_1);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        super.onRestoreInstanceState(savedInstanceState);
+        System.out.println(mCurrentPhotoPath);
+        mImageView = (ImageView) findViewById(R.id.img_1);
     }
 
     @Override
