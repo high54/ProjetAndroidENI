@@ -9,93 +9,99 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="fr.eni.ecole.projetlocation.DetailVehiculeActivity">
 
+    <ImageView
+        android:id="@+id/image_detail"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
     <Button
         android:id="@+id/bt_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:text="@string/editer"
-        android:onClick="onClickEditCar"/>
+        android:onClick="onClickEditCar"
+        android:text="@string/editer" />
 
     <TextView
         android:id="@+id/tv_marque"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/marque"
-        android:layout_margin="10dp"/>
+        android:layout_toEndOf="@id/image_detail"
+        android:layout_margin="10dp"
+        android:text="@string/marque" />
 
     <TextView
         android:id="@+id/tv_model"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/model"
         android:layout_below="@id/tv_marque"
-        android:layout_margin="10dp"/>
-
-    <TextView
-        android:id="@+id/tv_prix"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_model"
-        android:layout_alignParentEnd="true"
-        android:text="@string/prix"/>
+        android:layout_toEndOf="@id/image_detail"
+        android:layout_margin="10dp"
+        android:text="@string/model" />
 
     <TextView
         android:id="@+id/tv_carburant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_prix"
-        android:text="@string/carburant"/>
-
-    <TextView
-        android:id="@+id/tv_type_vehicule"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_prix"
-        android:layout_alignParentEnd="true"
-        android:text="@string/type"/>
+        android:layout_below="@id/image_detail"
+        android:text="@string/carburant"
+        android:layout_marginTop="5dp"/>
 
     <TextView
         android:id="@+id/tv_dispo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_carburant"
-        android:text="@string/non_disponible"/>
+        android:text="@string/non_disponible" />
 
     <TextView
         android:id="@+id/tv_nom_client"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/tv_dispo"
         android:layout_below="@id/tv_carburant"
-        android:text="@string/client_x"
-        android:layout_marginLeft="3dp"/>
+        android:layout_marginLeft="3dp"
+        android:layout_toEndOf="@id/tv_dispo"
+        android:text="@string/client_x" />
 
     <TextView
         android:id="@+id/tv_date_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/date_de_location"
-        android:layout_below="@id/tv_dispo"/>
+        android:layout_below="@id/tv_dispo"
+        android:text="@string/date_de_location" />
+
+    <TextView
+        android:id="@+id/tv_prix"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_date_location"
+        android:text="@string/prix" />
+
+    <TextView
+        android:id="@+id/tv_type_vehicule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_prix"
+        android:text="@string/type" />
 
     <Button
         android:id="@+id/bt_historique"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_date_location"
         android:layout_alignParentEnd="true"
-        android:text="@string/historique"
+        android:layout_below="@id/tv_date_location"
         android:layout_marginTop="5dp"
-        android:onClick="onClickShowHistorique"/>
+        android:onClick="onClickShowHistorique"
+        android:text="@string/historique" />
 
     <Button
         android:id="@+id/bt_rendre_louer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bt_historique"
         android:layout_alignParentEnd="true"
+        android:layout_below="@id/bt_historique"
         android:onClick="onClickSaveChanges"
-        android:text="@string/louer_rendre"/>
+        android:text="@string/louer_rendre" />
 
 
 </RelativeLayout>

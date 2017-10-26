@@ -37,7 +37,7 @@
     <string name="date_de_location">Date de locationVehicule :</string>
     <string name="historique_des_locations">Historique des locationVehicules</string>
     <string name="disponible">Disponible</string>
-    <string name="non_dispo">Non Disponible</string>
+    <string name="non_dispo">Non Disponible, louée par :</string>
     <string name="rendre_le_vehicule">Rendre le Vehicule</string>
     <string name="louer_le_vehicule">Louer le véhicule</string>
     <string name="location_d_un_v_hicule">Location d\'un véhicule</string>

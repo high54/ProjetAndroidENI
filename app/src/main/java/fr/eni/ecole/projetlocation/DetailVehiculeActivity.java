@@ -1,6 +1,9 @@
 package fr.eni.ecole.projetlocation;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,13 +11,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.List;
 
 import fr.eni.ecole.projetlocation.dao.client.ClientDao;
 import fr.eni.ecole.projetlocation.dao.location.LocationDao;
+import fr.eni.ecole.projetlocation.dao.photo.PhotoDao;
 import fr.eni.ecole.projetlocation.dao.vehicule.VehiculeDao;
 import fr.eni.ecole.projetlocation.models.Client;
 import fr.eni.ecole.projetlocation.models.LocationVehicule;
+import fr.eni.ecole.projetlocation.models.Photo;
 import fr.eni.ecole.projetlocation.models.Vehicule;
 
 public class DetailVehiculeActivity extends AppCompatActivity {
@@ -48,6 +56,30 @@ public class DetailVehiculeActivity extends AppCompatActivity {
         }
 
         if (null != vehicule) {
+            PhotoDao daoPhotos = new PhotoDao(this);
+            List<Photo> photos = daoPhotos.selectPhotoByVehicule(vehicule.getId());
+            ImageView img = (ImageView)findViewById(R.id.image_detail);
+            int targetW = 100;
+            int targetH = 100;
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inJustDecodeBounds = true;
+
+            if(null != photos && photos.size() >0)
+            {
+                BitmapFactory.decodeFile(photos.get(0).getUri(), bmOptions);
+                int photoW = bmOptions.outWidth;
+                int photoH = bmOptions.outHeight;
+                int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+                bmOptions.inJustDecodeBounds = false;
+                bmOptions.inSampleSize = scaleFactor;
+                bmOptions.inPurgeable = true;
+                Bitmap bitmap = BitmapFactory.decodeFile(photos.get(0).getUri(), bmOptions);
+                img.setImageBitmap(bitmap);
+            }
+            else {
+                img.setBackgroundColor(Color.DKGRAY);
+            }
+
             tv_marque = (TextView) findViewById(R.id.tv_marque);
             tv_marque.setText(vehicule.getMarque());
 
@@ -55,7 +87,7 @@ public class DetailVehiculeActivity extends AppCompatActivity {
             tv_model.setText(vehicule.getModel());
 
             tv_prix = (TextView) findViewById(R.id.tv_prix);
-            tv_prix.setText(String.valueOf(vehicule.getPrix()));
+            tv_prix.setText("Prix :"+String.valueOf(vehicule.getPrix()));
 
             tv_carburant = (TextView) findViewById(R.id.tv_carburant);
             tv_carburant.setText(vehicule.getCarburant());
@@ -88,7 +120,7 @@ public class DetailVehiculeActivity extends AppCompatActivity {
                     tv_nom_client.setText(client.getNom() + " " + client.getPrenom());
                 }
                 if(location != null) {
-                    tv_date_location.setText(location.getDepart());
+                    tv_date_location.setText("Départ du véhicule le : "+location.getDepart());
                 }
                 rendreLouer.setText(R.string.rendre_le_vehicule);
             }
