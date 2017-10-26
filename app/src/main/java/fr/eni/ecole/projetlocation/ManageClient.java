@@ -71,48 +71,36 @@ public class ManageClient extends AppCompatActivity {
             daoClient = new ClientDao(this);
             if (client == null) {
                 client = new Client();
-                client.setNom(edNom.getText().toString());
-                client.setPrenom(edPrenom.getText().toString());
-                client.setTelephone(Float.parseFloat(edTelephone.getText().toString()));
-                client.setAdresse(edAdresse.getText().toString());
-                client.setVille(edVille.getText().toString());
-                client.setCodePostal(Integer.parseInt(edCodePostal.getText().toString()));
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                Date startDate;
-                try {
-                    startDate = df.parse(edDateNaissance.getText().toString());
-                    String newDateString = df.format(startDate);
-                    client.setDateNaissance(newDateString);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                defineClient();
                 client = daoClient.insertClient(client);
             } else {
-
                 client = daoClient.getClientsById(client);
-                client.setNom(edNom.getText().toString());
-                client.setPrenom(edPrenom.getText().toString());
-                client.setTelephone(Float.parseFloat(edTelephone.getText().toString()));
-                client.setAdresse(edAdresse.getText().toString());
-                client.setVille(edVille.getText().toString());
-                client.setCodePostal(Integer.parseInt(edCodePostal.getText().toString()));
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                Date startDate;
-                try {
-                    startDate = df.parse(edDateNaissance.getText().toString());
-                    String newDateString = df.format(startDate);
-                    client.setDateNaissance(newDateString);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                defineClient();
                 client = daoClient.updateClient(client);
-
             }
             Intent intent = new Intent(this,EtatDesLieux.class);
             intent.putExtra("action","nouveau");
             intent.putExtra("vehicule",vehicule);
             intent.putExtra("client",client);
             startActivity(intent);
+        }
+    }
+
+    private void defineClient() {
+        client.setNom(edNom.getText().toString());
+        client.setPrenom(edPrenom.getText().toString());
+        client.setTelephone(Float.parseFloat(edTelephone.getText().toString()));
+        client.setAdresse(edAdresse.getText().toString());
+        client.setVille(edVille.getText().toString());
+        client.setCodePostal(Integer.parseInt(edCodePostal.getText().toString()));
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date startDate;
+        try {
+            startDate = df.parse(edDateNaissance.getText().toString());
+            String newDateString = df.format(startDate);
+            client.setDateNaissance(newDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 

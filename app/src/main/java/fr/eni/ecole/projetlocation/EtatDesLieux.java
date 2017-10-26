@@ -90,8 +90,9 @@ public class EtatDesLieux extends AppCompatActivity {
     public void onClickSaveLocation(View view) {
         vehiculeDao = new VehiculeDao(this);
         locationDao = new LocationDao(this);
-        location = locationDao.getLastLocation(vehicule.getId());
+
         if (action.equals("rendre")) {
+            location = locationDao.getLastLocation(vehicule.getId());
             location.setRetour(date);
             vehicule.setLoue(false);
             vehiculeDao.update(vehicule);
@@ -102,6 +103,7 @@ public class EtatDesLieux extends AppCompatActivity {
             Intent intent = new Intent(EtatDesLieux.this, SearchVehicule.class);
             startActivity(intent);
         } else {
+            location = new LocationVehicule();
             location.setVehicule(vehicule);
             location.setClient(client);
             location.setDepart(date);
