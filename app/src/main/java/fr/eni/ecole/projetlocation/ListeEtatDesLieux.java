@@ -1,16 +1,24 @@
 package fr.eni.ecole.projetlocation;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import java.util.List;
 
 import fr.eni.ecole.projetlocation.dao.edl.EDLDao;
+import fr.eni.ecole.projetlocation.dao.photo.PhotoDao;
 import fr.eni.ecole.projetlocation.models.EDL;
 import fr.eni.ecole.projetlocation.models.LocationVehicule;
+import fr.eni.ecole.projetlocation.models.Photo;
 
 public class ListeEtatDesLieux extends AppCompatActivity {
     private LocationVehicule location;
@@ -27,6 +35,33 @@ public class ListeEtatDesLieux extends AppCompatActivity {
         edlDao = new EDLDao(this);
         edlDao.open();
         List<EDL> edls = edlDao.getEdlByLocation(location.getId());
+
+        PhotoDao photoDao = new PhotoDao(this);
+        List<Photo> photos = photoDao.selectPhotoByEdl(edls.get(0).getId());
+
+
+
+        RelativeLayout rl1 = (RelativeLayout) findViewById(R.id.rl_liste_edl);
+        for(int x=0;x<photos.size();x++) {
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            int targetW =40;
+            int targetH = 40;
+            int photoW = bmOptions.outWidth;
+            int photoH = bmOptions.outHeight;
+
+            int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+            bmOptions.inSampleSize = scaleFactor;
+
+            ImageView image = new ImageView(this);
+            rl1.addView(image);
+
+            ViewGroup.LayoutParams lp = image.getLayoutParams();
+            Bitmap bitmap = BitmapFactory.decodeFile(photos.get(x).getUri(),bmOptions);
+            image.setImageBitmap(bitmap);
+            lp.height = 250;
+            lp.width = 250;
+            image.setLayoutParams(lp);
+        }
     }
 
     @Override

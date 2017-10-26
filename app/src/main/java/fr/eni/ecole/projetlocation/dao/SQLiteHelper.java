@@ -9,7 +9,7 @@ import fr.eni.ecole.projetlocation.dao.icontract.IAgentDao;
 import fr.eni.ecole.projetlocation.dao.client.IClientContract;
 import fr.eni.ecole.projetlocation.dao.edl.IEDLContract;
 import fr.eni.ecole.projetlocation.dao.location.ILocationContract;
-import fr.eni.ecole.projetlocation.dao.icontract.IPhotoDao;
+import fr.eni.ecole.projetlocation.dao.photo.IPhotoContract;
 import fr.eni.ecole.projetlocation.dao.vehicule.IVehiculeContract;
 
 /**
@@ -18,7 +18,7 @@ import fr.eni.ecole.projetlocation.dao.vehicule.IVehiculeContract;
 public class SQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "location.db";
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 11;
 
     public SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -35,7 +35,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(IClientContract.CREATE_TABLE_CLIENTS);
         sqLiteDatabase.execSQL(IEDLContract.CREATE_TABLE_EDLS);
         sqLiteDatabase.execSQL(ILocationContract.CREATE_TABLE_LOCATIONS);
-        sqLiteDatabase.execSQL(IPhotoDao.CREATE_TABLE_PHOTOS);
+        sqLiteDatabase.execSQL(IPhotoContract.CREATE_TABLE_PHOTOS);
         sqLiteDatabase.execSQL(IVehiculeContract.CREATE_TABLE_VEHICULES);
     }
 
@@ -46,7 +46,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IClientContract.TABLE_CLIENTS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IEDLContract.TABLE_EDLS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ILocationContract.TABLE_LOCATIONS);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IPhotoDao.TABLE_PHOTOS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IPhotoContract.TABLE_PHOTOS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IVehiculeContract.TABLE_VEHICULES);
         onCreate(sqLiteDatabase);
     }
