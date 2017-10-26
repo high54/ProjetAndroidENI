@@ -119,7 +119,7 @@ public class EtatDesLieux extends AppCompatActivity {
                     edl.setLocation(locationVehicule);
                     edlDao = new EDLDao(context);
                     edl = edlDao.insertEDL(edl);
-                    SmsManager.getDefault().sendTextMessage(String.valueOf(client.getTelephone()), null, message, null, null);
+                    SmsManager.getDefault().sendTextMessage("0"+client.getTelephone(), null, message, null, null);
                     Toast.makeText(context, "Sms de confirmation envoyé !", Toast.LENGTH_LONG).show();
 
                     vehicule.setLoue(true);

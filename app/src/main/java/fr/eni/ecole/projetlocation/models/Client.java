@@ -10,7 +10,7 @@ public class Client implements Parcelable{
     private int id;
     private String nom;
     private String prenom;
-    private float telephone;
+    private int telephone;
     private String adresse;
     private int codePostal;
     private String ville;
@@ -34,7 +34,7 @@ public class Client implements Parcelable{
         id = in.readInt();
         nom = in.readString();
         prenom = in.readString();
-        telephone = in.readFloat();
+        telephone = in.readInt();
         adresse = in.readString();
         codePostal = in.readInt();
         ville = in.readString();
@@ -77,11 +77,11 @@ public class Client implements Parcelable{
         this.prenom = prenom;
     }
 
-    public float getTelephone() {
+    public int getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(float telephone) {
+    public void setTelephone(int telephone) {
         this.telephone = telephone;
     }
 
@@ -141,7 +141,7 @@ public class Client implements Parcelable{
         parcel.writeInt(id);
         parcel.writeString(nom);
         parcel.writeString(prenom);
-        parcel.writeFloat(telephone);
+        parcel.writeInt(telephone);
         parcel.writeString(adresse);
         parcel.writeInt(codePostal);
         parcel.writeString(ville);
