@@ -48,4 +48,5 @@
     <string name="identifiant">Identifiant :</string>
     <string name="mot_de_passe">Mot de passe :</string>
     <string name="choisissez_le_nom_de_votre_agence">Choisissez le nom de votre agence :</string>
+    <string name="historique">Historique</string>
 </resources>

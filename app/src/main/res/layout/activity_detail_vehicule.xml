@@ -83,7 +83,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_date_location"
-        android:text="@string/historique_des_locations"
+        android:layout_alignParentEnd="true"
+        android:text="@string/historique"
         android:layout_marginTop="5dp"
         android:onClick="onClickShowHistorique"/>
 
