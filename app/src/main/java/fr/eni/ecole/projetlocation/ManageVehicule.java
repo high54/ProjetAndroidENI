@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import fr.eni.ecole.projetlocation.dao.photo.PhotoDao;
 import fr.eni.ecole.projetlocation.dao.vehicule.VehiculeDao;
 import fr.eni.ecole.projetlocation.models.Photo;
 import fr.eni.ecole.projetlocation.models.Vehicule;
@@ -127,6 +128,11 @@ public class ManageVehicule extends AppCompatActivity {
         }
         else{
             dao.update(vehicule);
+        }
+        PhotoDao photoDao = new PhotoDao(this);
+        for(int i = 0; i<photos.size();i++){
+            photoDao.createPhoto(photos.get(i));
+
         }
 
         showCarsList(null);

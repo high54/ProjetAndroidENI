@@ -83,7 +83,7 @@ public class EtatDesLieux extends AppCompatActivity {
             client = intent.getExtras().getParcelable("client");
             message = "Confirmation de la location le " + date + " du véhicule : " + vehicule.getMarque() + " " + vehicule.getModel();
         }
-        mImageView = (ImageView) findViewById(R.id.iv_edl);
+
     }
 
     public void onClickSaveLocation(View view) {
@@ -172,7 +172,7 @@ public class EtatDesLieux extends AppCompatActivity {
 
 
 
-            relativeLayout = (RelativeLayout) findViewById(R.id.rl_liste_edl);
+            relativeLayout = (RelativeLayout) findViewById(R.id.edl);
 
             for(int x=0;x<photos.size();x++) {
                 BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -188,14 +188,14 @@ public class EtatDesLieux extends AppCompatActivity {
                 layoutParams.height = 250;
                 if(x==1){
                     layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, (x));
-                    layoutParams.addRule(RelativeLayout.BELOW, R.id.txt_date_retour);
+                    layoutParams.addRule(RelativeLayout.BELOW, R.id.bt_ajout_photos);
 
                 }else if(x==2){
-                    layoutParams.addRule(RelativeLayout.BELOW, R.id.txt_date_retour);
+                    layoutParams.addRule(RelativeLayout.BELOW, R.id.bt_ajout_photos);
                     layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, (x-1));
                 }
                 else{
-                    layoutParams.addRule(RelativeLayout.BELOW, R.id.txt_date_retour);
+                    layoutParams.addRule(RelativeLayout.BELOW, R.id.bt_ajout_photos);
 
                 }
                 image.setLayoutParams(layoutParams);
@@ -222,7 +222,7 @@ public class EtatDesLieux extends AppCompatActivity {
         // TODO Auto-generated method stub
         super.onSaveInstanceState(outState);
         System.out.println(mCurrentPhotoPath);
-        mImageView = (ImageView) findViewById(R.id.iv_edl);
+
     }
 
     @Override
@@ -230,7 +230,7 @@ public class EtatDesLieux extends AppCompatActivity {
         // TODO Auto-generated method stub
         super.onRestoreInstanceState(savedInstanceState);
         System.out.println(mCurrentPhotoPath);
-        mImageView = (ImageView) findViewById(R.id.iv_edl);
+
     }
 
     @Override

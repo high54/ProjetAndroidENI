@@ -49,6 +49,18 @@ public class PhotoDao {
     public Cursor selectAllCursor() {
         return sqLiteDatabase.query(TABLE_PHOTOS, allColumns, null, null, null, null, null);
     }
+    public List<Photo> selectPhotoByVehicule(int id){
+        List<Photo> photos = new ArrayList<>();
+        Cursor cursor = sqLiteDatabase.query(TABLE_PHOTOS,allColumns,"id_vehicule ='"+id+"'",null,null,null,null,null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Photo photo = map(cursor);
+            photos.add(photo);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return photos;
+    }
 
     public List<Photo> selectPhotoByEdl(int id){
         List<Photo> photos = new ArrayList<>();

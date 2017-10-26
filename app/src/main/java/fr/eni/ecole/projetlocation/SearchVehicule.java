@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -31,7 +32,7 @@ public class SearchVehicule extends AppCompatActivity {
     private Spinner spDiponibilite;
     private VehiculeDao daoVehicule;
     private List<Vehicule> vehicules;
-
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,24 @@ public class SearchVehicule extends AppCompatActivity {
         sbPrix = (SeekBar) findViewById(R.id.sb_select_prix);
         txtPrix = (TextView) findViewById(R.id.txt_prix);
         sbPrix.setMax(150);
+        vehicules = daoVehicule.selectAll();
+
+
+        VehiculeAdapter vehiculeAdapter = new VehiculeAdapter(this, R.layout.list_vehicule, vehicules);
+        listView = (ListView) findViewById(R.id.lv_liste_vehicule);
+
+        listView.setAdapter(vehiculeAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Vehicule vehicule = (Vehicule) adapterView.getItemAtPosition(i);
+
+                Intent intent = new Intent(SearchVehicule.this, SearchClient.class);
+                intent.putExtra("vehicule", vehicule);
+                startActivity(intent);
+            }
+        });
         sbPrix.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int position, boolean b) {
@@ -102,7 +121,7 @@ public class SearchVehicule extends AppCompatActivity {
 
 
         VehiculeAdapter vehiculeAdapter = new VehiculeAdapter(this, R.layout.list_vehicule, vehicules);
-        final ListView listView = (ListView) findViewById(R.id.lv_liste_vehicule);
+        listView = (ListView) findViewById(R.id.lv_liste_vehicule);
         listView.setAdapter(vehiculeAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

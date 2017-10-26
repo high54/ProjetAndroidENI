@@ -1,6 +1,8 @@
 package fr.eni.ecole.projetlocation.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.ecole.projetlocation.R;
+import fr.eni.ecole.projetlocation.dao.photo.PhotoDao;
 import fr.eni.ecole.projetlocation.models.Photo;
 import fr.eni.ecole.projetlocation.models.Vehicule;
 
@@ -20,9 +23,10 @@ import fr.eni.ecole.projetlocation.models.Vehicule;
  * Created by bkrafft2016 on 24/10/2017.
  */
 public class VehiculeAdapter extends ArrayAdapter<Vehicule>{
-
+    private Context contextGlobal;
     public VehiculeAdapter(Context context, int resource, List<Vehicule> objects) {
         super(context, resource, objects);
+        contextGlobal = context;
     }
 
     @Override
@@ -31,12 +35,25 @@ public class VehiculeAdapter extends ArrayAdapter<Vehicule>{
 
         View viewARetourner = inflater.inflate(R.layout.presentation_liste_vehicule, parent, false);
         Vehicule vehiculeAAfficher = getItem(position);
-        //TextView tv_designation = (TextView)viewARetourner.findViewById(R.id.tv_designation);
+        PhotoDao daoPhotos = new PhotoDao(contextGlobal);
+        List<Photo> photos = daoPhotos.selectPhotoByVehicule(vehiculeAAfficher.getId());
         ImageView img = (ImageView)viewARetourner.findViewById(R.id.liste_img);
-        ArrayList<Photo> photos = vehiculeAAfficher.getPhotos();
-        if(null != photos)
+        int targetW = 100;
+        int targetH = 100;
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+
+        if(null != photos && photos.size() >0)
         {
-            //img.setImageURI();
+            BitmapFactory.decodeFile(photos.get(0).getUri(), bmOptions);
+            int photoW = bmOptions.outWidth;
+            int photoH = bmOptions.outHeight;
+            int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+            bmOptions.inJustDecodeBounds = false;
+            bmOptions.inSampleSize = scaleFactor;
+            bmOptions.inPurgeable = true;
+            Bitmap bitmap = BitmapFactory.decodeFile(photos.get(0).getUri(), bmOptions);
+            img.setImageBitmap(bitmap);
         }
         else {
             img.setBackgroundColor(Color.DKGRAY);
