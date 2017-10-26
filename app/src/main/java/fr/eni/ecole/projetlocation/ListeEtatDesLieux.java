@@ -53,11 +53,12 @@ public class ListeEtatDesLieux extends AppCompatActivity {
         }
 
         relativeLayout = (RelativeLayout) findViewById(R.id.rl_liste_edl);
+
         for(int x=0;x<photos.size();x++) {
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            int scaleFactor =1;
-            bmOptions.inSampleSize = scaleFactor;
+
+            bmOptions.inSampleSize = 1;
             ImageView image = new ImageView(this);
             image.setId(x);
             relativeLayout.addView(image);

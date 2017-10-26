@@ -169,7 +169,7 @@ public class ClientDao {
         client.setAdresse(cursor.getString(NUM_COL_ADRESSE_CLIENTS));
         client.setCodePostal(cursor.getInt(NUM_COL_CODE_POSTAL_CLIENTS));
         client.setVille(cursor.getString(NUM_COL_VILLE_CLIENTS));
-        client.setTelephone(cursor.getFloat(NUM_COL_TELEPHONE_CLIENTS));
+        client.setTelephone(cursor.getInt(NUM_COL_TELEPHONE_CLIENTS));
         client.setDateNaissance(cursor.getString(NUM_COL_DATE_NAISSANCE_CLIENTS));
 
         return client;
