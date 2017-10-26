@@ -152,7 +152,6 @@ public class LocationDao {
         while (!cursor.isAfterLast()) {
             LocationVehicule newlocation = mappage(cursor);
             locationVehicules.add(newlocation);
-            Log.wtf("WTF", "ALOOOOO ===>>>>>" + newlocation.toString());
             cursor.moveToNext();
         }
         cursor.close();
@@ -163,7 +162,6 @@ public class LocationDao {
         Cursor cursor = database.query(TABLE_LOCATIONS,allColumns,COLUMN_ID_VEHICULE_LOCATIONS+"='"+id+"'"+" AND "+COLUMN_DATE_RETOUR_LOCATIONS + "= '' OR "+COLUMN_DATE_RETOUR_LOCATIONS+ " is null",null,null,null,null);
         cursor.moveToLast();
         LocationVehicule locationVehicule = mappage(cursor);
-        Log.wtf("WTF", "ALOOOOO ===>>>>>" + locationVehicule.toString());
         return locationVehicule;
     }
 
@@ -178,7 +176,6 @@ public class LocationDao {
         while (!cursor.isAfterLast()) {
             LocationVehicule newlocation = mappage(cursor);
             locationVehicules.add(newlocation);
-            Log.wtf("WTF", "ALOOOOO ===>>>>>" + newlocation.toString());
             cursor.moveToNext();
         }
         cursor.close();

@@ -42,7 +42,6 @@ public class PhotoDao {
         }
         values.put(COLUMN_DATE_PHOTOS, photo.getDate());
         values.put(COLUMN_URI_PHOTOS, photo.getUri());
-        Log.wtf("WTF","LA PHOTO CREATE ====>" + photo.toString());
 
         return sqLiteDatabase.insert(TABLE_PHOTOS, null, values);
     }
@@ -77,7 +76,6 @@ public class PhotoDao {
         Vehicule vehicule = new Vehicule();
         vehicule.setId(c.getInt(NUM_COL_ID_VEHICULE));
         photo.setVehicule(vehicule);
-        Log.wtf("WTF","LA PHOTO MAPPER ====>" + photo.toString());
         return photo;
     }
 }

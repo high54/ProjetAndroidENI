@@ -125,7 +125,6 @@ public class ClientDao {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Client client = mappage(cursor);
-            Log.wtf("WTF", "DAO CLIENT : "+client.toString());
             clients.add(client);
             cursor.moveToNext();
         }
@@ -163,7 +162,6 @@ public class ClientDao {
      * @return
      */
     public Client getClientsById(Client client) {
-        Log.wtf("WTF", "LE CLIENT DU GET ID ==========>"+client.toString());
 
         Cursor cursor = database.query(TABLE_CLIENTS,
                 allColumns, " id ='" + client.getId()+"'", null, null, null, null);

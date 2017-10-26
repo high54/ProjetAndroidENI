@@ -121,34 +121,32 @@ public class EtatDesLieux extends AppCompatActivity {
         final VehiculeDao vehiculeDao = new VehiculeDao(this);
         final LocationDao locationDao = new LocationDao(this);
         locationDao.open();
-        final LocationVehicule[] location = {new LocationVehicule()};
-
+        final LocationVehicule location = locationDao.getLastLocation(vehicule.getId());
         if (action.equals("rendre")) {
-
-            location[0].setRetour(date);
+            location.setRetour(date);
             vehicule.setLoue(false);
             vehiculeDao.update(vehicule);
 
+            locationDao.updateLocation(location);
             Toast.makeText(context, "Le véhicule a bien été rendu", Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(EtatDesLieux.this, SearchVehicule.class);
             startActivity(intent);
         } else {
-            Log.wtf("WTF", "" + client.getTelephone());
-            location[0].setVehicule(vehicule);
-            location[0].setClient(client);
-            location[0].setDepart(date);
-            location[0].setTarif(vehicule.getPrix());
+            location.setVehicule(vehicule);
+            location.setClient(client);
+            location.setDepart(date);
+            location.setTarif(vehicule.getPrix());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(EtatDesLieux.this);
             builder.setMessage("Êtes vous sur de vouloir comfirmer la location?");
             // Add the buttons
             builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    location[0] = locationDao.insertLocation(location[0]);
+                    LocationVehicule locationVehicule = locationDao.insertLocation(location);
                     edl = new EDL();
                     edl.setDate(date);
-                    edl.setLocation(location[0]);
+                    edl.setLocation(locationVehicule);
                     EDLDao edlDao = new EDLDao(context);
                     edlDao.open();
                     edl = edlDao.insertEDL(edl);
@@ -162,7 +160,6 @@ public class EtatDesLieux extends AppCompatActivity {
                         photos.get(i).setEdl(edl);
                         photoDao.createPhoto(photos.get(i));
                     }
-                    Log.wtf("WTF", "LA PHOTO =========>>>>> ");
 
                     Intent intent = new Intent(EtatDesLieux.this, SearchVehicule.class);
                     startActivity(intent);
@@ -196,25 +193,16 @@ public class EtatDesLieux extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TAKE_PHOTO_REQUEST && resultCode == RESULT_OK) {
-
-            // set the dimensions of the image
             int targetW = 100;
             int targetH = 100;
-
-            // Get the dimensions of the bitmap
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
             bmOptions.inJustDecodeBounds = true;
             BitmapFactory.decodeFile(photoFile.getAbsolutePath(), bmOptions);
             int photoW = bmOptions.outWidth;
             int photoH = bmOptions.outHeight;
-
-            // Determine how much to scale down the image
             int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
-
-            // Decode the image file into a Bitmap sized to fill the View
             bmOptions.inJustDecodeBounds = false;
             bmOptions.inSampleSize = scaleFactor;
             bmOptions.inPurgeable = true;
@@ -223,14 +211,12 @@ public class EtatDesLieux extends AppCompatActivity {
             photo.setUri(photoFile.getAbsolutePath());
             photo.setEdl(edl);
             photos.add(photo);
-            // stream = getContentResolver().openInputStream(data.getData());
             Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath(), bmOptions);
             mImageView.setImageBitmap(bitmap);
         }
     }
 
     String mCurrentPhotoPath;
-
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
                 .format(new Date());
@@ -238,7 +224,6 @@ public class EtatDesLieux extends AppCompatActivity {
         File storageDir = new File(getFilesDir(), "images");
         storageDir.mkdirs();
         File image = new File(storageDir, imageFileName + ".jpg");
-
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         System.out.println(mCurrentPhotoPath);

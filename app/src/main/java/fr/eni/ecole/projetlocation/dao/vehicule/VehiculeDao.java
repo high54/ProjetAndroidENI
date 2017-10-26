@@ -42,7 +42,6 @@ public class VehiculeDao {
         values.put(COLUMN_PRIX_VEHICULES, vehicule.getPrix());
         values.put(COLUMN_TYPE_VEHICULES, vehicule.getType());
         values.put(COLUMN_LOUE_VEHICULES, vehicule.getLoue());
-        Log.wtf(TAG, "insert");
         return sqLiteDatabase.insert(TABLE_VEHICULES, null, values);
     }
 
@@ -83,11 +82,9 @@ public class VehiculeDao {
 
     public ArrayList<Vehicule> selectAll() {
         ArrayList<Vehicule> vehicules = new ArrayList<>();
-        Log.wtf(TAG, "selectAll");
         Cursor c = selectAllCursor();
         while(c.moveToNext()) {
             vehicules.add(map(c));
-            Log.wtf(TAG, "vehicule");
         }
 
         return vehicules;
@@ -99,7 +96,6 @@ public class VehiculeDao {
             boolzor = 1;
         }
         ArrayList<Vehicule> vehicules = new ArrayList<>();
-        Log.wtf(TAG, "selectAllRent "+bool);
         Cursor c = sqLiteDatabase.query(TABLE_VEHICULES, allColumns, COLUMN_LOUE_VEHICULES + "= '" + boolzor +"'", null, null, null, null);
         while(c.moveToNext()) {
             vehicules.add(map(c));
@@ -110,7 +106,6 @@ public class VehiculeDao {
 
     public Vehicule selectById(int id) {
         Vehicule vehicule = new Vehicule();
-        Log.wtf(TAG, "selectByid");
         Cursor c = sqLiteDatabase.query(TABLE_VEHICULES, null, COLUMN_ID_VEHICULES + "=" + id, null, null, null, null);
         c.moveToFirst();
         if(c.getCount() > 0){
@@ -134,7 +129,6 @@ public class VehiculeDao {
          else{
             values.put(COLUMN_LOUE_VEHICULES, 0);
         }
-        Log.wtf(TAG, "update"+vehicule);
         Boolean bool = sqLiteDatabase.update(TABLE_VEHICULES, values, COLUMN_ID_VEHICULES + " = " + vehicule.getId(), null) > 0;
         return bool;
     }
