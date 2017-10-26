@@ -160,9 +160,7 @@ public class LocationDao {
     }
 
     public LocationVehicule getLastLocation(int id) {
-        Cursor cursor = database.query(TABLE_LOCATIONS,
-                allColumns, " id_vehicule = '" + id + "' and " + ILocationContract.COLUMN_DATE_RETOUR_LOCATIONS + " = ''", null, null, null, null);
-
+        Cursor cursor = database.query(TABLE_LOCATIONS,allColumns,COLUMN_ID_VEHICULE_LOCATIONS+"='"+id+"'"+" AND "+COLUMN_DATE_RETOUR_LOCATIONS + "= '' OR "+COLUMN_DATE_RETOUR_LOCATIONS+ " is null",null,null,null,null);
         cursor.moveToLast();
         LocationVehicule locationVehicule = mappage(cursor);
         Log.wtf("WTF", "ALOOOOO ===>>>>>" + locationVehicule.toString());
