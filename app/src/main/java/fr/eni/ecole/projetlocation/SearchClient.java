@@ -22,12 +22,16 @@ public class SearchClient extends AppCompatActivity {
     private ClientDao daoClient;
     private  List<Client> clients;
     private Vehicule vehicule;
+    private EditText edPrenom;
+    private EditText edNom;
+    private ListView listView;
+    private ClientAdapter adapterClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_client);
         daoClient = new ClientDao(this);
-        daoClient.open();
 
         clients = daoClient.getClients();
         Intent intent = getIntent();
@@ -52,13 +56,13 @@ public class SearchClient extends AppCompatActivity {
     }
 
     public void onClickSearchClient(View view) {
-        EditText edNom = (EditText) findViewById(R.id.ed_nom_client);
-        EditText edPrenom = (EditText) findViewById(R.id.ed_prenom_client);
+        edNom = (EditText) findViewById(R.id.ed_nom_client);
+        edPrenom = (EditText) findViewById(R.id.ed_prenom_client);
 
         if(edNom.getText() != null && edPrenom.getText() != null && edNom.getText().toString() !="" && edPrenom.getText().toString() !="" ){
-            List<Client> clients = daoClient.getClientsByNomPrenom(edNom.getText().toString(),edPrenom.getText().toString());
-                ClientAdapter adapterClient = new ClientAdapter(this,R.layout.liste_client,clients);
-                ListView listView = (ListView) findViewById(R.id.lv_liste_client);
+            clients = daoClient.getClientsByNomPrenom(edNom.getText().toString(),edPrenom.getText().toString());
+                adapterClient = new ClientAdapter(this,R.layout.liste_client,clients);
+                listView = (ListView) findViewById(R.id.lv_liste_client);
                 listView.setAdapter(adapterClient);
             }
         }
@@ -72,7 +76,6 @@ public class SearchClient extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         daoClient = new ClientDao(this);
-        daoClient.open();
         clients = daoClient.getClients();
 
     }

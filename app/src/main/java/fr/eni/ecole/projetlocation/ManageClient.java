@@ -47,7 +47,6 @@ public class ManageClient extends AppCompatActivity {
         edCodePostal = (EditText) findViewById(R.id.ed_codepostal_client);
         edVille = (EditText) findViewById(R.id.ed_ville_client);
         daoClient = new ClientDao(this);
-        daoClient.open();
         Intent intent = getIntent();
         if(intent.hasExtra("client")){
             client = intent.getExtras().getParcelable("client");
@@ -70,7 +69,6 @@ public class ManageClient extends AppCompatActivity {
 
         if (checkParam(edNom.getText(), 0) && checkParam(edPrenom.getText(), 0) && checkParam(edTelephone.getText(), 1)) {
             daoClient = new ClientDao(this);
-            daoClient.open();
             if (client == null) {
                 client = new Client();
                 client.setNom(edNom.getText().toString());

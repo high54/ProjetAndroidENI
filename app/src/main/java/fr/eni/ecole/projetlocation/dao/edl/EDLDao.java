@@ -25,15 +25,8 @@ public class EDLDao {
 
     public EDLDao(Context context) {
         sqLiteHelper = new SQLiteHelper(context);
-    }
-
-
-    public void open() throws SQLException {
         database = sqLiteHelper.getWritableDatabase();
-    }
 
-    public void close() {
-        sqLiteHelper.close();
     }
 
     public EDL insertEDL(EDL edl){

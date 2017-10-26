@@ -27,6 +27,10 @@ public class ListeEtatDesLieux extends AppCompatActivity {
     private EDLDao edlDao;
     private TextView dateDepart;
     private TextView dateRetour;
+    private PhotoDao photoDao;
+    private List<Photo> photos;
+    private List<EDL> edls;
+    private RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +41,10 @@ public class ListeEtatDesLieux extends AppCompatActivity {
             location = intent.getExtras().getParcelable("location");
         }
         edlDao = new EDLDao(this);
-        edlDao.open();
-        List<EDL> edls = edlDao.getEdlByLocation(location.getId());
+        edls = edlDao.getEdlByLocation(location.getId());
 
-        PhotoDao photoDao = new PhotoDao(this);
-        List<Photo> photos = photoDao.selectPhotoByEdl(edls.get(0).getId());
+        photoDao = new PhotoDao(this);
+        photos = photoDao.selectPhotoByEdl(edls.get(0).getId());
         dateDepart = (TextView) findViewById(R.id.txt_date_depart);
         dateRetour = (TextView) findViewById(R.id.txt_date_retour);
         dateDepart.setText(dateDepart.getText().toString()+ " " +location.getDepart().toString());
@@ -49,32 +52,32 @@ public class ListeEtatDesLieux extends AppCompatActivity {
             dateRetour.setText(dateRetour.getText().toString()+" "+location.getRetour().toString());
         }
 
-        RelativeLayout rl1 = (RelativeLayout) findViewById(R.id.rl_liste_edl);
+        relativeLayout = (RelativeLayout) findViewById(R.id.rl_liste_edl);
         for(int x=0;x<photos.size();x++) {
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            RelativeLayout.LayoutParams lpRl = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             int scaleFactor =1;
             bmOptions.inSampleSize = scaleFactor;
             ImageView image = new ImageView(this);
             image.setId(x);
-            rl1.addView(image);
+            relativeLayout.addView(image);
             Bitmap bitmap = BitmapFactory.decodeFile(photos.get(x).getUri(),bmOptions);
             image.setImageBitmap(bitmap);
-            lpRl.width = 250;
-            lpRl.height = 250;
+            layoutParams.width = 250;
+            layoutParams.height = 250;
             if(x==1){
-                lpRl.addRule(RelativeLayout.CENTER_IN_PARENT, (x));
-                lpRl.addRule(RelativeLayout.BELOW, R.id.txt_date_retour);
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, (x));
+                layoutParams.addRule(RelativeLayout.BELOW, R.id.txt_date_retour);
 
             }else if(x==2){
-                lpRl.addRule(RelativeLayout.BELOW, R.id.txt_date_retour);
-                lpRl.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, (x-1));
+                layoutParams.addRule(RelativeLayout.BELOW, R.id.txt_date_retour);
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, (x-1));
             }
             else{
-                lpRl.addRule(RelativeLayout.BELOW, R.id.txt_date_retour);
+                layoutParams.addRule(RelativeLayout.BELOW, R.id.txt_date_retour);
 
             }
-            image.setLayoutParams(lpRl);
+            image.setLayoutParams(layoutParams);
         }
     }
 

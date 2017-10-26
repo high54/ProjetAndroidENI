@@ -19,6 +19,9 @@ import fr.eni.ecole.projetlocation.models.Vehicule;
 public class HistoriqueLocationsActivity extends AppCompatActivity {
     private Vehicule vehicule;
     private LocationAdapter adapter;
+    private LocationVehicule locationVehicule;
+    private List<LocationVehicule> locations;
+    private LocationDao dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +33,8 @@ public class HistoriqueLocationsActivity extends AppCompatActivity {
             vehicule = intent.getExtras().getParcelable("vehicule");
         }
 
-        LocationDao dao = new LocationDao(this);
-        dao.open();
-        List<LocationVehicule> locations = dao.getAllLocation(vehicule.getId());
+        dao = new LocationDao(this);
+        locations = dao.getAllLocation(vehicule.getId());
 
         if (0 != locations.size()) {
             ListView listView = (ListView) findViewById(R.id.list_locations);
@@ -43,7 +45,7 @@ public class HistoriqueLocationsActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Intent intent = new Intent(HistoriqueLocationsActivity.this, ListeEtatDesLieux.class);
-                    LocationVehicule locationVehicule = adapter.getItem(i);
+                    locationVehicule = adapter.getItem(i);
                     intent.putExtra("location", locationVehicule);
                     startActivity(intent);
                 }

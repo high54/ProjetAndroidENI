@@ -43,16 +43,8 @@ public class LocationDao {
 
     public LocationDao(Context context) {
         sqLiteHelper = new SQLiteHelper(context);
-    }
-
-
-    public void open() throws SQLException {
         database = sqLiteHelper.getWritableDatabase();
-    }
 
-
-    public void close() {
-        sqLiteHelper.close();
     }
 
     /**

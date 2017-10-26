@@ -35,6 +35,9 @@ public class StatsActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_INTERNET = 1;
     private static final int MY_PERMISSIONS_REQUEST_NETWORK_STATE = 1;
 
+    private LocationDao dao;
+    private List<LocationVehicule> locations;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +51,9 @@ public class StatsActivity extends AppCompatActivity {
             askPermission();
         }
 
-        LocationDao dao = new LocationDao(this);
-        dao.open();
+        dao = new LocationDao(this);
 
-        List<LocationVehicule> locations = dao.getLocationsForStats();
+        locations = dao.getLocationsForStats();
 
         for (LocationVehicule location : locations) {
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");

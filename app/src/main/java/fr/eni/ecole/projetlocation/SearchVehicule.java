@@ -23,14 +23,15 @@ import fr.eni.ecole.projetlocation.dao.vehicule.VehiculeDao;
 import fr.eni.ecole.projetlocation.models.Vehicule;
 
 public class SearchVehicule extends AppCompatActivity {
-    private VehiculeDao daoVehicule;
     private TextView txtPrix;
     private SeekBar sbPrix;
     private CheckBox cbType;
     private Spinner spMarque;
     private Spinner spCarburant;
     private Spinner spDiponibilite;
-    private Button btRecherche;
+    private VehiculeDao daoVehicule;
+    private List<Vehicule> vehicules;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +98,6 @@ public class SearchVehicule extends AppCompatActivity {
             disponibilite = 0;
         }
 
-        List<Vehicule> vehicules = new ArrayList<>();
         vehicules = daoVehicule.selectSearchVehicule(marque, carburant, Integer.parseInt(txtPrix.getText().toString()), type, disponibilite);
 
 

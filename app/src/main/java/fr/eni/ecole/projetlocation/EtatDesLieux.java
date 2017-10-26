@@ -53,6 +53,10 @@ public class EtatDesLieux extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
     private ImageView mImageView;
     private EDL edl = new EDL();
+    private VehiculeDao vehiculeDao;
+    private LocationDao locationDao;
+    private EDLDao edlDao;
+    private PhotoDao photoDao;
 
     private static final int TAKE_PHOTO_REQUEST = 1;
     private File photoFile;
@@ -63,7 +67,7 @@ public class EtatDesLieux extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_etat_des_lieux);
-
+        RequestPermision();
         Intent intent = getIntent();
         txtDateJour = (TextView) findViewById(R.id.txt_date_jour);
         Date dateDuJour = new Date();
@@ -81,46 +85,11 @@ public class EtatDesLieux extends AppCompatActivity {
             message = "Confirmation de la location le " + date + " du véhicule : " + vehicule.getMarque() + " " + vehicule.getModel();
         }
         mImageView = (ImageView) findViewById(R.id.iv_edl);
-
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.SEND_SMS)) {
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.SEND_SMS, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_ID_MULTIPLE_PERMISSIONS);
-            }
-        }
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_ID_MULTIPLE_PERMISSIONS);
-            }
-        }
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_ID_MULTIPLE_PERMISSIONS);
-            }
-        }
     }
 
     public void onClickSaveLocation(View view) {
-        final VehiculeDao vehiculeDao = new VehiculeDao(this);
-        final LocationDao locationDao = new LocationDao(this);
-        locationDao.open();
+        vehiculeDao = new VehiculeDao(this);
+        locationDao = new LocationDao(this);
         final LocationVehicule location = locationDao.getLastLocation(vehicule.getId());
         if (action.equals("rendre")) {
             location.setRetour(date);
@@ -140,22 +109,20 @@ public class EtatDesLieux extends AppCompatActivity {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(EtatDesLieux.this);
             builder.setMessage("Êtes vous sur de vouloir comfirmer la location?");
-            // Add the buttons
             builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     LocationVehicule locationVehicule = locationDao.insertLocation(location);
                     edl = new EDL();
                     edl.setDate(date);
                     edl.setLocation(locationVehicule);
-                    EDLDao edlDao = new EDLDao(context);
-                    edlDao.open();
+                    edlDao = new EDLDao(context);
                     edl = edlDao.insertEDL(edl);
                     SmsManager.getDefault().sendTextMessage("0" + client.getTelephone(), null, message, null, null);
                     Toast.makeText(context, "Sms de confirmation envoyé !", Toast.LENGTH_LONG).show();
 
                     vehicule.setLoue(true);
                     vehiculeDao.update(vehicule);
-                    PhotoDao photoDao = new PhotoDao(context);
+                    photoDao = new PhotoDao(context);
                     for (int i = 0; i < photos.size(); i++) {
                         photos.get(i).setEdl(edl);
                         photoDao.createPhoto(photos.get(i));
@@ -224,7 +191,6 @@ public class EtatDesLieux extends AppCompatActivity {
         File storageDir = new File(getFilesDir(), "images");
         storageDir.mkdirs();
         File image = new File(storageDir, imageFileName + ".jpg");
-        // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         System.out.println(mCurrentPhotoPath);
         return image;
@@ -271,5 +237,41 @@ public class EtatDesLieux extends AppCompatActivity {
     public void showStats(MenuItem item) {
         Intent intent = new Intent(EtatDesLieux.this, StatsActivity.class);
         startActivity(intent);
+    }
+
+    public void RequestPermision(){
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.SEND_SMS)) {
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.SEND_SMS, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_ID_MULTIPLE_PERMISSIONS);
+            }
+        }
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_ID_MULTIPLE_PERMISSIONS);
+            }
+        }
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_ID_MULTIPLE_PERMISSIONS);
+            }
+        }
     }
 }

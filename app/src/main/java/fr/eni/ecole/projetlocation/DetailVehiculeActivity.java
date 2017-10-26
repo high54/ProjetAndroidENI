@@ -22,7 +22,19 @@ public class DetailVehiculeActivity extends AppCompatActivity {
     private Vehicule vehicule;
     private VehiculeDao dao;
     private Button rendreLouer;
+    private ClientDao clientDao;
+    private LocationVehicule location;
+    private LocationDao locationDao;
+    private Client client;
 
+    private TextView tv_loue;
+    private TextView tv_nom_client;
+    private TextView tv_date_location;
+    private TextView tv_marque;
+    private TextView tv_model;
+    private TextView tv_prix;
+    private TextView tv_carburant;
+    private TextView tv_type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,19 +48,19 @@ public class DetailVehiculeActivity extends AppCompatActivity {
         }
 
         if (null != vehicule) {
-            TextView tv_marque = (TextView) findViewById(R.id.tv_marque);
+            tv_marque = (TextView) findViewById(R.id.tv_marque);
             tv_marque.setText(vehicule.getMarque());
 
-            TextView tv_model = (TextView) findViewById(R.id.tv_model);
+            tv_model = (TextView) findViewById(R.id.tv_model);
             tv_model.setText(vehicule.getModel());
 
-            TextView tv_prix = (TextView) findViewById(R.id.tv_prix);
+            tv_prix = (TextView) findViewById(R.id.tv_prix);
             tv_prix.setText(String.valueOf(vehicule.getPrix()));
 
-            TextView tv_carburant = (TextView) findViewById(R.id.tv_carburant);
+            tv_carburant = (TextView) findViewById(R.id.tv_carburant);
             tv_carburant.setText(vehicule.getCarburant());
 
-            TextView tv_type = (TextView) findViewById(R.id.tv_type_vehicule);
+            tv_type = (TextView) findViewById(R.id.tv_type_vehicule);
 
             if(Vehicule.TYPE_VILLE == vehicule.getType()) {
                 tv_type.setText("Ville");
@@ -56,9 +68,9 @@ public class DetailVehiculeActivity extends AppCompatActivity {
                 tv_type.setText("Hors Ville");
             }
 
-            TextView tv_loue = (TextView) findViewById(R.id.tv_dispo);
-            TextView tv_nom_client = (TextView) findViewById(R.id.tv_nom_client);
-            TextView tv_date_location = (TextView) findViewById(R.id.tv_date_location);
+            tv_loue = (TextView) findViewById(R.id.tv_dispo);
+            tv_nom_client = (TextView) findViewById(R.id.tv_nom_client);
+            tv_date_location = (TextView) findViewById(R.id.tv_date_location);
             rendreLouer = (Button) findViewById(R.id.bt_rendre_louer);
             if (!vehicule.getLoue()) {
                 tv_loue.setText(R.string.disponible);
@@ -67,13 +79,11 @@ public class DetailVehiculeActivity extends AppCompatActivity {
                 rendreLouer.setText(R.string.louer_le_vehicule);
             } else {
                 tv_loue.setText(R.string.non_dispo);
-                LocationDao locationDao = new LocationDao(this);
-                locationDao.open();
-                LocationVehicule location = locationDao.getLastLocation(vehicule.getId());
-                ClientDao clientDao = new ClientDao(this);
-                clientDao.open();
+                locationDao = new LocationDao(this);
+                location = locationDao.getLastLocation(vehicule.getId());
+                clientDao = new ClientDao(this);
                 Log.wtf("WTF","LOCATION CLIENT =============> "+location.getClient().toString());
-                Client client = clientDao.getClientsById(location.getClient());
+                client = clientDao.getClientsById(location.getClient());
                 if (client != null) {
                     tv_nom_client.setText(client.getNom() + " " + client.getPrenom());
                 }

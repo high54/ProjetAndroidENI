@@ -25,10 +25,8 @@ public class ManageVehicule extends AppCompatActivity {
     RadioButton button_electrique;
     RadioButton button_ville;
     RadioButton button_hors_ville;
-    ImageView img1;
-    ImageView img2;
-    ImageView img3;
     EditText et_prix;
+    VehiculeDao dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +100,7 @@ public class ManageVehicule extends AppCompatActivity {
 
         vehicule.setPrix((Integer.parseInt(et_prix.getText().toString())));
 
-        VehiculeDao dao = new VehiculeDao(this);
+        dao = new VehiculeDao(this);
         if(-1 == vehicule.getId()){
             dao.createVehicule(vehicule);
         }

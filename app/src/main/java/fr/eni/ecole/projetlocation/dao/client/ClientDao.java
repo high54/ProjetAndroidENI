@@ -32,18 +32,9 @@ public class ClientDao {
 
     public ClientDao(Context context) {
         sqLiteHelper = new SQLiteHelper(context);
-    }
-
-
-    public void open() throws SQLException {
         database = sqLiteHelper.getWritableDatabase();
+
     }
-
-
-    public void close() {
-        sqLiteHelper.close();
-    }
-
     /**
      * Ajoute un client
      * Prend en paramètre un objet client
