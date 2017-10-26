@@ -20,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:onClick="onClickEditCar"
-        android:text="@string/editer" />
+        android:text="@string/editer"
+        style="@style/ButtonStyle"/>
 
     <TextView
         android:id="@+id/tv_marque"
@@ -92,7 +93,9 @@
         android:layout_below="@id/tv_date_location"
         android:layout_marginTop="5dp"
         android:onClick="onClickShowHistorique"
-        android:text="@string/historique" />
+        android:text="@string/historique"
+        style="@style/ButtonStyle"
+        android:layout_marginBottom="@dimen/width_10_dp"/>
 
     <Button
         android:id="@+id/bt_rendre_louer"
@@ -101,7 +104,8 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@id/bt_historique"
         android:onClick="onClickSaveChanges"
-        android:text="@string/louer_rendre" />
+        android:text="@string/louer_rendre"
+        style="@style/ButtonStyle"/>
 
 
 </RelativeLayout>

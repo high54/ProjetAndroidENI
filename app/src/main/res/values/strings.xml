@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProjetLocation</string>
+    <string name="app_name">Rent Car</string>
     <string name="txt_nom_client">Nom : *</string>
     <string name="txt_prenom_client">Prenom : *</string>
     <string name="txt_telephone_client">Telephone : *</string>

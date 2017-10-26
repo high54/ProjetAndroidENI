@@ -93,7 +93,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/enregistrer"
-        android:onClick="onClickSaveClient"/>
+        android:onClick="onClickSaveClient"
+        style="@style/ButtonStyle"/>
 
 
 </RelativeLayout>

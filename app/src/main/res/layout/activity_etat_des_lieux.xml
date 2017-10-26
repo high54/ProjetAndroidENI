@@ -29,7 +29,8 @@
         android:text="@string/ajouter_des_photos"
         android:layout_marginBottom="@dimen/width_40_dp"
         android:onClick="onClickTakePhoto"
-        android:src="@android:drawable/ic_menu_camera"/>
+        android:src="@android:drawable/ic_menu_camera"
+        style="@style/ButtonStyle"/>
     <ImageView
         android:id="@+id/iv_edl"
         android:layout_below="@id/bt_ajout_photos"
@@ -41,7 +42,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="@string/enregistrer"
-    android:onClick="onClickSaveLocation"/>
+    android:onClick="onClickSaveLocation"
+    style="@style/ButtonStyle"/>
 
 
 

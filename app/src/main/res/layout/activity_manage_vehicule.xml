@@ -146,7 +146,8 @@
             android:text="@string/ajouter_des_photos"
             android:onClick="onClickTakePhoto"
             android:src="@android:drawable/ic_menu_camera"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            style="@style/ButtonStyle"/>
 
         <ImageView
             android:id="@+id/img_1"
@@ -174,7 +175,8 @@
             android:layout_alignParentEnd="true"
             android:text="@string/enregistrer"
             android:onClick="onClickSaveVehicule"
-            android:layout_below="@id/img_1"/>
+            android:layout_below="@id/img_1"
+            style="@style/ButtonStyle"/>
 
     </RelativeLayout>
 </ScrollView>

@@ -64,7 +64,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="@string/bt_rechercher"
-    android:onClick="onClickSearchVehicule"/>
+    android:onClick="onClickSearchVehicule"
+    style="@style/ButtonStyle"/>
 </RelativeLayout>
 
     <RelativeLayout
