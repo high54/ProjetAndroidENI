@@ -11,4 +11,6 @@ public class IAgenceContract {
     public static final String CREATE_TABLE_AGENCE = " CREATE TABLE "
             + TABLE_AGENCE + "(" + COLUMN_NOM_AGENCE
             + " text not null);";
+
+    public static final String INSERT_AGENCE = "INSERT INTO "+TABLE_AGENCE +" ("+COLUMN_NOM_AGENCE+") values ('Agence Bonjour');";
 }

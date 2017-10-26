@@ -3,6 +3,7 @@ package fr.eni.ecole.projetlocation.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import fr.eni.ecole.projetlocation.dao.agence.IAgenceContract;
 import fr.eni.ecole.projetlocation.dao.agent.IAgentContract;
@@ -18,7 +19,7 @@ import fr.eni.ecole.projetlocation.dao.vehicule.IVehiculeContract;
 public class SQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "location.db";
-    private static final int DATABASE_VERSION = 12;
+    private static final int DATABASE_VERSION = 15;
 
     public SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -31,7 +32,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(IAgenceContract.CREATE_TABLE_AGENCE);
+        sqLiteDatabase.execSQL(IAgenceContract.INSERT_AGENCE);
+        Log.wtf("Création de l'agence", "===>"+IAgenceContract.INSERT_AGENCE);
         sqLiteDatabase.execSQL(IAgentContract.CREATE_TABLE_AGENTS);
+        sqLiteDatabase.execSQL(IAgentContract.INSERT_AGENT);
+        Log.wtf("Création de l'agent", "===>"+IAgentContract.INSERT_AGENT);
         sqLiteDatabase.execSQL(IClientContract.CREATE_TABLE_CLIENTS);
         sqLiteDatabase.execSQL(IEDLContract.CREATE_TABLE_EDLS);
         sqLiteDatabase.execSQL(ILocationContract.CREATE_TABLE_LOCATIONS);

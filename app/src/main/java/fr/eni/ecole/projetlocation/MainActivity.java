@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -91,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
 
                             agence = agenceDao.getAgence();
                             txNomAgence.setText(agence.getNom());
+
+                            Intent intent = new Intent(MainActivity.this, SearchVehicule.class);
+                            startActivity(intent);
+                            Toast.makeText(MainActivity.this, "Votre nom d'agence a bien été modifié!", Toast.LENGTH_LONG);
                         }
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);

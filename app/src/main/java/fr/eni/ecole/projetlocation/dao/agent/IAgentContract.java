@@ -14,5 +14,7 @@ public class IAgentContract {
             + " integer primary key autoincrement, " + COLUMN_LOGIN_AGENTS
             + " text not null, "+ COLUMN_PASS_AGENTS
             + " text not null"
-            + ");  INSERT INTO "+ TABLE_AGENTS + " ("+COLUMN_LOGIN_AGENTS+","+COLUMN_PASS_AGENTS+") VALUES ('pass','pass');";
+            + ");";
+
+    public static final String INSERT_AGENT = "INSERT INTO "+TABLE_AGENTS +" ("+COLUMN_LOGIN_AGENTS+", "+COLUMN_PASS_AGENTS+") values ('pass', 'pass');";
 }

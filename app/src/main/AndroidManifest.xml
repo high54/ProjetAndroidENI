@@ -37,12 +37,7 @@
         <activity android:name=".ManageVehicule" />
         <activity android:name=".SearchClient" />
         <activity android:name=".ListeVehiculeActivity" />
-        <activity android:name=".SearchVehicule">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
+        <activity android:name=".SearchVehicule"/>
         <activity android:name=".HistoriqueLocationsActivity" />
         <activity android:name=".ListeEtatDesLieux" />
         <activity android:name=".EtatDesLieux" />
