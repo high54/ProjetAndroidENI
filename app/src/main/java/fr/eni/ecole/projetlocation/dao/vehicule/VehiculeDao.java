@@ -37,7 +37,7 @@ public class VehiculeDao {
         ContentValues values = new ContentValues();
         values.put(COLUMN_IMMATRICULATION_VEHICULES, vehicule.getImmatriculation());
         values.put(COLUMN_CARBURANT_VEHICULES, vehicule.getCarburant());
-        values.put(COLUMN_MARQUE_VEHICULES, vehicule.getMarque());
+        values.put(COLUMN_MARQUE_VEHICULES, vehicule.getMarque().toUpperCase());
         values.put(COLUMN_MODELE_VEHICULES, vehicule.getModel());
         values.put(COLUMN_PRIX_VEHICULES, vehicule.getPrix());
         values.put(COLUMN_TYPE_VEHICULES, vehicule.getType());
@@ -119,7 +119,7 @@ public class VehiculeDao {
         ContentValues values = new ContentValues();
         values.put(COLUMN_IMMATRICULATION_VEHICULES, vehicule.getImmatriculation());
         values.put(COLUMN_CARBURANT_VEHICULES, vehicule.getCarburant());
-        values.put(COLUMN_MARQUE_VEHICULES, vehicule.getMarque());
+        values.put(COLUMN_MARQUE_VEHICULES, vehicule.getMarque().toUpperCase());
         values.put(COLUMN_MODELE_VEHICULES, vehicule.getModel());
         values.put(COLUMN_PRIX_VEHICULES, vehicule.getPrix());
         values.put(COLUMN_TYPE_VEHICULES, vehicule.getType());

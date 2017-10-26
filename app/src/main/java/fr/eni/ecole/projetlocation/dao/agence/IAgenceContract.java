@@ -8,7 +8,7 @@ public class IAgenceContract {
     public static final String COLUMN_NOM_AGENCE = "nom";
     public static final Integer NUM_COL_NOM = 0;
 
-    public static final String CREATE_TABLE_AGENCE = " CREATE TABLE if not exists "
+    public static final String CREATE_TABLE_AGENCE = " CREATE TABLE "
             + TABLE_AGENCE + "(" + COLUMN_NOM_AGENCE
-            + " text not null); INSERT INTO "+TABLE_AGENCE+" ("+COLUMN_NOM_AGENCE+") VALUES ('Agence Bonjour');";
+            + " text not null);";
 }

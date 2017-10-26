@@ -57,7 +57,7 @@ public class ManageClient extends AppCompatActivity {
         if (client != null) {
             edNom.setText(client.getNom());
             edPrenom.setText(client.getPrenom());
-            edTelephone.setText("0" + client.getTelephone());
+            edTelephone.setText(String.valueOf(client.getTelephone()));
             edDateNaissance.setText(client.getDateNaissance());
             edAdresse.setText(client.getAdresse());
             edCodePostal.setText(String.valueOf(client.getCodePostal()));
@@ -73,7 +73,7 @@ public class ManageClient extends AppCompatActivity {
                 client = new Client();
                 client.setNom(edNom.getText().toString());
                 client.setPrenom(edPrenom.getText().toString());
-                client.setTelephone(Integer.parseInt(edTelephone.getText().toString()));
+                client.setTelephone(Float.parseFloat(edTelephone.getText().toString()));
                 client.setAdresse(edAdresse.getText().toString());
                 client.setVille(edVille.getText().toString());
                 client.setCodePostal(Integer.parseInt(edCodePostal.getText().toString()));
@@ -92,7 +92,7 @@ public class ManageClient extends AppCompatActivity {
                 client = daoClient.getClientsById(client);
                 client.setNom(edNom.getText().toString());
                 client.setPrenom(edPrenom.getText().toString());
-                client.setTelephone(Integer.parseInt(edTelephone.getText().toString()));
+                client.setTelephone(Float.parseFloat(edTelephone.getText().toString()));
                 client.setAdresse(edAdresse.getText().toString());
                 client.setVille(edVille.getText().toString());
                 client.setCodePostal(Integer.parseInt(edCodePostal.getText().toString()));

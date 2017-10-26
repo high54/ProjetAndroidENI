@@ -57,6 +57,7 @@ public class EtatDesLieux extends AppCompatActivity {
     private LocationDao locationDao;
     private EDLDao edlDao;
     private PhotoDao photoDao;
+    private LocationVehicule location;
 
     private static final int TAKE_PHOTO_REQUEST = 1;
     private File photoFile;
@@ -90,7 +91,7 @@ public class EtatDesLieux extends AppCompatActivity {
     public void onClickSaveLocation(View view) {
         vehiculeDao = new VehiculeDao(this);
         locationDao = new LocationDao(this);
-        final LocationVehicule location = locationDao.getLastLocation(vehicule.getId());
+        location = locationDao.getLastLocation(vehicule.getId());
         if (action.equals("rendre")) {
             location.setRetour(date);
             vehicule.setLoue(false);
@@ -117,7 +118,7 @@ public class EtatDesLieux extends AppCompatActivity {
                     edl.setLocation(locationVehicule);
                     edlDao = new EDLDao(context);
                     edl = edlDao.insertEDL(edl);
-                    SmsManager.getDefault().sendTextMessage("0" + client.getTelephone(), null, message, null, null);
+                    SmsManager.getDefault().sendTextMessage(String.valueOf(client.getTelephone()), null, message, null, null);
                     Toast.makeText(context, "Sms de confirmation envoyé !", Toast.LENGTH_LONG).show();
 
                     vehicule.setLoue(true);
