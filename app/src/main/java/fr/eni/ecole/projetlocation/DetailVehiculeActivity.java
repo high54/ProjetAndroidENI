@@ -71,6 +71,7 @@ public class DetailVehiculeActivity extends AppCompatActivity {
                 locationDao.open();
                 LocationVehicule location = locationDao.getLastLocation(vehicule.getId());
                 ClientDao clientDao = new ClientDao(this);
+                clientDao.open();
                 Log.wtf("WTF","LOCATION CLIENT =============> "+location.getClient().toString());
                 Client client = clientDao.getClientsById(location.getClient());
                 if (client != null) {

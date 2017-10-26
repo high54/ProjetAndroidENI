@@ -163,10 +163,10 @@ public class ClientDao {
      * @return
      */
     public Client getClientsById(Client client) {
-
+        Log.wtf("WTF", "LE CLIENT DU GET ID ==========>"+client.toString());
 
         Cursor cursor = database.query(TABLE_CLIENTS,
-                allColumns, " id = " + client.getId(), null, null, null, null);
+                allColumns, " id ='" + client.getId()+"'", null, null, null, null);
         cursor.moveToFirst();
         client = mappage(cursor);
         return client;
