@@ -28,20 +28,20 @@
         </provider>
 
         <activity android:name=".MainActivity">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ManageClient" />
         <activity android:name=".ManageVehicule" />
         <activity android:name=".SearchClient" />
         <activity android:name=".ListeVehiculeActivity" />
         <activity android:name=".SearchVehicule">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".HistoriqueLocationsActivity" />
         <activity android:name=".ListeEtatDesLieux" />

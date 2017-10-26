@@ -38,10 +38,10 @@ public class AgenceDao {
                 allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
-        //while (!cursor.isAfterLast()) {
+        while (!cursor.isAfterLast()) {
             agence = mappage(cursor);
-            //cursor.moveToNext();
-        //}
+            cursor.moveToNext();
+        }
         cursor.close();
         return agence;
     }

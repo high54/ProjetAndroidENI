@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         agenceDao = new AgenceDao(this);
         agence = agenceDao.getAgence();
 
-        if(null != agence && agence.getNom().equals("Agence Bonjour")){
+        if(null != agence.getNom() && agence.getNom().equals("Agence Bonjour")){
             login = (EditText) findViewById(R.id.et_identifiant);
             motDePasse = (EditText) findViewById(R.id.et_mot_de_passe);
 
