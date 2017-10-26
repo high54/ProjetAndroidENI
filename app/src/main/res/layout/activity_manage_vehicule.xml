@@ -17,7 +17,8 @@
             android:id="@+id/tv_marque"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/marque" />
+            android:text="@string/marque"
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/et_marque"
@@ -138,13 +139,14 @@
             android:ems="10"
             android:inputType="number" />
 
-        <Button
+        <ImageButton
             android:id="@+id/bt_ajout_photos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/et_prix"
             android:text="@string/ajouter_des_photos"
-            android:onClick="onClickTakePhoto"/>
+            android:onClick="onClickTakePhoto"
+            android:src="@android:drawable/ic_menu_camera"
+            android:layout_alignParentEnd="true"/>
 
         <ImageView
             android:id="@+id/img_1"

@@ -20,14 +20,15 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/width_40_dp"
         android:text="24/10/2017"/>
-    <Button
+    <ImageButton
         android:id="@+id/bt_ajout_photos"
         android:layout_below="@id/txt_date_jour"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/ajouter_des_photos"
         android:layout_marginBottom="@dimen/width_40_dp"
-        android:onClick="onClickTakePhoto"/>
+        android:onClick="onClickTakePhoto"
+        android:src="@android:drawable/ic_menu_camera"/>
     <ImageView
         android:id="@+id/iv_edl"
         android:layout_below="@id/bt_ajout_photos"
