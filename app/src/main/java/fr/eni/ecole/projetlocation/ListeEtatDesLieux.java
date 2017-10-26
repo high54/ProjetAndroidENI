@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -23,6 +24,8 @@ import fr.eni.ecole.projetlocation.models.Photo;
 public class ListeEtatDesLieux extends AppCompatActivity {
     private LocationVehicule location;
     private EDLDao edlDao;
+    private TextView dateDepart;
+    private TextView dateRetour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,29 +41,40 @@ public class ListeEtatDesLieux extends AppCompatActivity {
 
         PhotoDao photoDao = new PhotoDao(this);
         List<Photo> photos = photoDao.selectPhotoByEdl(edls.get(0).getId());
+        dateDepart = (TextView) findViewById(R.id.txt_date_depart);
+        dateRetour = (TextView) findViewById(R.id.txt_date_retour);
+        dateDepart.setText(dateDepart.getText().toString()+ " " +location.getDepart().toString());
 
-
+        if(location.getRetour() !=null){
+            dateRetour.setText(dateRetour.getText().toString()+" "+location.getRetour().toString());
+        }
 
         RelativeLayout rl1 = (RelativeLayout) findViewById(R.id.rl_liste_edl);
         for(int x=0;x<photos.size();x++) {
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            int targetW =40;
-            int targetH = 40;
-            int photoW = bmOptions.outWidth;
-            int photoH = bmOptions.outHeight;
-
-            int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+            RelativeLayout.LayoutParams lpRl = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            int scaleFactor =1;
             bmOptions.inSampleSize = scaleFactor;
-
             ImageView image = new ImageView(this);
+            image.setId(x);
             rl1.addView(image);
-
-            ViewGroup.LayoutParams lp = image.getLayoutParams();
             Bitmap bitmap = BitmapFactory.decodeFile(photos.get(x).getUri(),bmOptions);
             image.setImageBitmap(bitmap);
-            lp.height = 250;
-            lp.width = 250;
-            image.setLayoutParams(lp);
+            lpRl.width = 250;
+            lpRl.height = 250;
+            if(x==1){
+                lpRl.addRule(RelativeLayout.CENTER_IN_PARENT, (x));
+                lpRl.addRule(RelativeLayout.BELOW, R.id.txt_date_retour);
+
+            }else if(x==2){
+                lpRl.addRule(RelativeLayout.BELOW, R.id.txt_date_retour);
+                lpRl.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, (x-1));
+            }
+            else{
+                lpRl.addRule(RelativeLayout.BELOW, R.id.txt_date_retour);
+
+            }
+            image.setLayoutParams(lpRl);
         }
     }
 

@@ -18,9 +18,11 @@
 
     <TextView
         android:id="@+id/txt_date_retour"
+        android:layout_below="@id/txt_date_depart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/date_retour"/>
+        android:text="@string/date_retour"
+        android:layout_marginBottom="@dimen/width_40_dp"/>
 
 
 </RelativeLayout>
