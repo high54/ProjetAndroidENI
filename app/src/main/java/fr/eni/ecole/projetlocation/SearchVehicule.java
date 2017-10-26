@@ -3,7 +3,6 @@ package fr.eni.ecole.projetlocation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -98,13 +97,9 @@ public class SearchVehicule extends AppCompatActivity {
             disponibilite = 0;
         }
 
-        Log.wtf("WTF", "DATA ::=> " + marque + " " + dispo + " " + carburant + " " + type + " " + txtPrix.getText().toString());
         List<Vehicule> vehicules = new ArrayList<>();
         vehicules = daoVehicule.selectSearchVehicule(marque, carburant, Integer.parseInt(txtPrix.getText().toString()), type, disponibilite);
 
-        for (int i = 0; i < vehicules.size(); i++) {
-            Log.wtf("WTF", "LISTE DES VEHICULE RECHERCHE ==> " + vehicules.get(i).toString());
-        }
 
         VehiculeAdapter vehiculeAdapter = new VehiculeAdapter(this, R.layout.list_vehicule, vehicules);
         final ListView listView = (ListView) findViewById(R.id.lv_liste_vehicule);

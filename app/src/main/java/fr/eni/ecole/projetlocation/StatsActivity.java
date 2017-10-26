@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,7 +45,6 @@ public class StatsActivity extends AppCompatActivity {
                 Manifest.permission.INTERNET,
                 this.getPackageName());
         if (hasPermForSms != PackageManager.PERMISSION_GRANTED) {
-            Log.i(TAG, "Permission Not Ok =====>" + hasPermForSms);
             askPermission();
         }
 
@@ -69,8 +67,6 @@ public class StatsActivity extends AppCompatActivity {
                 differenceForAll = differenceForAll / 1000 / 60 / 60 / 24 + 1;
                 int prix = location.getTarif();
                 total = total + differenceForAll * prix;
-                Log.wtf("Chiffre d'affaire TOTAL======>", String.valueOf(total));
-                Log.wtf("prix", String.valueOf(prix));
 
                 Calendar calWeek = Calendar.getInstance();
                 calWeek.add(Calendar.DATE, -7);
@@ -79,7 +75,6 @@ public class StatsActivity extends AppCompatActivity {
 
                 if (depart.getTime() >= lastWeek.getTime()) {
                     semaine = semaine + differenceForAll * prix;
-                    Log.wtf("Chiffre d'affaire de la semaine======>", String.valueOf(semaine));
                 }
 
                 Calendar calMonth = Calendar.getInstance();
@@ -89,7 +84,6 @@ public class StatsActivity extends AppCompatActivity {
 
                 if (depart.getTime()>= lastMonth.getTime()) {
                     mois = mois + differenceForAll * prix;
-                    Log.wtf("Chiffre d'affaire du mois======>", String.valueOf(mois));
                 }
 
             } catch (ParseException e) {

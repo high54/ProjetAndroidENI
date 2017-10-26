@@ -45,7 +45,6 @@ public class ListeEtatDesLieux extends AppCompatActivity {
         dateDepart = (TextView) findViewById(R.id.txt_date_depart);
         dateRetour = (TextView) findViewById(R.id.txt_date_retour);
         dateDepart.setText(dateDepart.getText().toString()+ " " +location.getDepart().toString());
-        Log.wtf("WTF","DATE RETOUR D'UNE LOCATION ===>>>"+location.getRetour());
         if(location.getRetour() !=null){
             dateRetour.setText(dateRetour.getText().toString()+" "+location.getRetour().toString());
         }
