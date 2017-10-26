@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     Vehicule vehicule2;
     Client client;
     Client client2;
+    Intent intent;
 
     EditText login;
     EditText motDePasse;
@@ -38,21 +39,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        VehiculeDao vehiculeDao = new VehiculeDao(this);
-        List<Vehicule> vehicules = vehiculeDao.selectAll();
-        if(vehicules.size()==0){
-            vehicule = new Vehicule(20, "KI123KI", Vehicule.TYPE_VILLE, "Fiat", "Punto", Vehicule.ESSENCE);
-            vehiculeDao.createVehicule(vehicule);
-            vehicule2 = new Vehicule(25, "LO123VF", Vehicule.TYPE_VILLE, "Peaugeot", "305", Vehicule.ESSENCE);
-            vehiculeDao.createVehicule(vehicule2);
-            Vehicule vehicule3 = new Vehicule(25, "GF456LO", Vehicule.TYPE_HORS_VILLE, "Citroën", "Picasso", Vehicule.DIESEL);
-            vehiculeDao.createVehicule(vehicule3);
-            Vehicule vehicule4 = new Vehicule(30, "JU123JU", Vehicule.TYPE_HORS_VILLE, "Wolkswagen", "Golf", Vehicule.DIESEL);
-            vehiculeDao.createVehicule(vehicule4);
-            Vehicule vehicule5 = new Vehicule(40, "BG852HY", Vehicule.TYPE_VILLE, "Mercedes", "Autre", Vehicule.ESSENCE);
-            vehiculeDao.createVehicule(vehicule5);
-        }
 
         ClientDao clientDao = new ClientDao(this);
         List<Client> clients = clientDao.getClients();
@@ -93,7 +79,14 @@ public class MainActivity extends AppCompatActivity {
                             agence = agenceDao.getAgence();
                             txNomAgence.setText(agence.getNom());
 
-                            Intent intent = new Intent(MainActivity.this, SearchVehicule.class);
+                            VehiculeDao vehiculeDao = new VehiculeDao(MainActivity.this);
+                            List<Vehicule> vehicules = vehiculeDao.selectAll();
+                            if(vehicules.size()==0){
+                                intent = new Intent(MainActivity.this, ManageVehicule.class);
+                            }
+                            else{
+                                intent = new Intent(MainActivity.this, SearchVehicule.class);
+                            }
                             startActivity(intent);
                             Toast.makeText(MainActivity.this, "Votre nom d'agence a bien été modifié!", Toast.LENGTH_LONG);
                         }
