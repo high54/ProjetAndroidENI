@@ -4,8 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import fr.eni.ecole.projetlocation.dao.icontract.IAgenceDao;
-import fr.eni.ecole.projetlocation.dao.icontract.IAgentDao;
+import fr.eni.ecole.projetlocation.dao.agence.IAgenceContract;
+import fr.eni.ecole.projetlocation.dao.agent.IAgentContract;
 import fr.eni.ecole.projetlocation.dao.client.IClientContract;
 import fr.eni.ecole.projetlocation.dao.edl.IEDLContract;
 import fr.eni.ecole.projetlocation.dao.location.ILocationContract;
@@ -30,8 +30,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(IAgenceDao.CREATE_TABLE_AGENCE);
-        sqLiteDatabase.execSQL(IAgentDao.CREATE_TABLE_AGENTS);
+        sqLiteDatabase.execSQL(IAgenceContract.CREATE_TABLE_AGENCE);
+        sqLiteDatabase.execSQL(IAgentContract.CREATE_TABLE_AGENTS);
         sqLiteDatabase.execSQL(IClientContract.CREATE_TABLE_CLIENTS);
         sqLiteDatabase.execSQL(IEDLContract.CREATE_TABLE_EDLS);
         sqLiteDatabase.execSQL(ILocationContract.CREATE_TABLE_LOCATIONS);
@@ -41,8 +41,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IAgenceDao.TABLE_AGENCE);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IAgentDao.TABLE_AGENTS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IAgenceContract.TABLE_AGENCE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IAgentContract.TABLE_AGENTS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IClientContract.TABLE_CLIENTS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + IEDLContract.TABLE_EDLS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ILocationContract.TABLE_LOCATIONS);

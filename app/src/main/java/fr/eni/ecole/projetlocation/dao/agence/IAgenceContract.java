@@ -1,9 +1,9 @@
-package fr.eni.ecole.projetlocation.dao.icontract;
+package fr.eni.ecole.projetlocation.dao.agence;
 
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class IAgenceDao {
+public class IAgenceContract {
     public static final String TABLE_AGENCE = "agence";
     public static final String COLUMN_NOM_AGENCE = "nom";
     public static final Integer NUM_COL_NOM = 0;

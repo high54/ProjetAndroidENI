@@ -1,11 +1,11 @@
-package fr.eni.ecole.projetlocation.dao;
+package fr.eni.ecole.projetlocation.dao.agence;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import fr.eni.ecole.projetlocation.dao.icontract.IAgenceDao;
+import fr.eni.ecole.projetlocation.dao.SQLiteHelper;
 import fr.eni.ecole.projetlocation.models.Agence;
 
 /**
@@ -17,7 +17,7 @@ public class AgenceDao {
 
     private SQLiteDatabase sqLiteDatabase;
 
-    private String[] allColumns = {IAgenceDao.COLUMN_NOM_AGENCE};
+    private String[] allColumns = {IAgenceContract.COLUMN_NOM_AGENCE};
 
     public AgenceDao(Context context) {
         sqLiteHelper = new SQLiteHelper(context);
@@ -26,22 +26,22 @@ public class AgenceDao {
 
     public Agence updateAgence(Agence agence) {
         ContentValues values = new ContentValues();
-        values.put(IAgenceDao.COLUMN_NOM_AGENCE, agence.getNom());
-        sqLiteDatabase.update(IAgenceDao.TABLE_AGENCE, values, null, null);
+        values.put(IAgenceContract.COLUMN_NOM_AGENCE, agence.getNom());
+        sqLiteDatabase.update(IAgenceContract.TABLE_AGENCE, values, null, null);
         return agence;
     }
 
     public Agence getAgence() {
         Agence agence = new Agence();
 
-        Cursor cursor = sqLiteDatabase.query(IAgenceDao.TABLE_AGENCE,
+        Cursor cursor = sqLiteDatabase.query(IAgenceContract.TABLE_AGENCE,
                 allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
+        //while (!cursor.isAfterLast()) {
             agence = mappage(cursor);
-            cursor.moveToNext();
-        }
+            //cursor.moveToNext();
+        //}
         cursor.close();
         return agence;
     }
@@ -49,7 +49,7 @@ public class AgenceDao {
     public Agence mappage(Cursor cursor) {
         Agence agence = new Agence();
 
-        agence.setNom(cursor.getString(IAgenceDao.NUM_COL_NOM));
+        agence.setNom(cursor.getString(IAgenceContract.NUM_COL_NOM));
         return agence;
     }
 

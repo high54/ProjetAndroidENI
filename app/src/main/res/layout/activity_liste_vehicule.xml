@@ -13,40 +13,35 @@
         android:id="@+id/rg_recherche"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
 
         <RadioButton
             android:id="@+id/rb_loue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/louees" />
+            android:text="@string/louees"
+            android:onClick="onClickRefreshListeVehicules"/>
 
         <RadioButton
             android:id="@+id/rb_disponible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/disponibles" />
+            android:text="@string/disponibles"
+            android:onClick="onClickRefreshListeVehicules"/>
 
         <RadioButton
             android:id="@+id/rb_toutes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/toutes" />
+            android:text="@string/toutes"
+            android:onClick="onClickRefreshListeVehicules"/>
 
     </RadioGroup>
-    <Button
-        android:id="@+id/bt_recherche"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rechercher"
-        android:layout_below="@id/rg_recherche"
-        android:layout_alignParentEnd="true"
-        android:onClick="onClickRefreshListeVehicules"
-        />
 
     <ListView
         android:id="@+id/list_vehicules"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bt_recherche"/>
+        android:layout_below="@id/rg_recherche"/>
 </RelativeLayout>

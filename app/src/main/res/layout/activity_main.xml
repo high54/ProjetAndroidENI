@@ -10,15 +10,44 @@
     tools:context="fr.eni.ecole.projetlocation.MainActivity">
 
     <TextView
+        android:layout_marginTop="20dp"
+        android:id="@+id/tv_identifiant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/identifiant"/>
+
+    <EditText
+        android:id="@+id/et_identifiant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_identifiant"/>
+
+    <TextView
+        android:id="@+id/tv_mot_de_passe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_identifiant"
+        android:text="@string/mot_de_passe"/>
+
+    <EditText
+        android:id="@+id/et_mot_de_passe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_mot_de_passe"/>
+
+    <TextView
         android:id="@+id/txt_nom_agence"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:layout_below="@id/et_mot_de_passe"
+        android:text="@string/choisissez_le_nom_de_votre_agence" />
+
     <EditText
     android:id="@+id/ed_nom_agence"
         android:layout_below="@id/txt_nom_agence"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
+
     <Button
         android:id="@+id/save_nom_agence"
         android:layout_below="@id/ed_nom_agence"

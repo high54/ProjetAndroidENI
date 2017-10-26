@@ -1,9 +1,9 @@
-package fr.eni.ecole.projetlocation.dao.icontract;
+package fr.eni.ecole.projetlocation.dao.agent;
 
 /**
  * Created by Administrateur on 20/10/2017.
  */
-public class IAgentDao {
+public class IAgentContract {
     public static final String TABLE_AGENTS = "agents";
     public static final String COLUMN_ID_AGENTS = "id";
     public static final String COLUMN_LOGIN_AGENTS = "login";

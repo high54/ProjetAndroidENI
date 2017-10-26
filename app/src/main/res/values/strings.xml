@@ -45,4 +45,7 @@
     <string name="en_cours">En cours</string>
     <string name="date_depart">Date depart :</string>
     <string name="date_retour">Date Retour :</string>
+    <string name="identifiant">Identifiant :</string>
+    <string name="mot_de_passe">Mot de passe :</string>
+    <string name="choisissez_le_nom_de_votre_agence">Choisissez le nom de votre agence :</string>
 </resources>
