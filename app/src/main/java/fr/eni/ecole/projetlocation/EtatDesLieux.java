@@ -1,6 +1,8 @@
 package fr.eni.ecole.projetlocation;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -10,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -29,14 +32,12 @@ import java.util.Date;
 import java.util.List;
 
 import fr.eni.ecole.projetlocation.dao.edl.EDLDao;
-import fr.eni.ecole.projetlocation.dao.photo.IPhotoContract;
 import fr.eni.ecole.projetlocation.dao.location.LocationDao;
 import fr.eni.ecole.projetlocation.dao.photo.PhotoDao;
 import fr.eni.ecole.projetlocation.dao.vehicule.VehiculeDao;
 import fr.eni.ecole.projetlocation.models.Client;
 import fr.eni.ecole.projetlocation.models.EDL;
 import fr.eni.ecole.projetlocation.models.LocationVehicule;
-
 import fr.eni.ecole.projetlocation.models.Photo;
 import fr.eni.ecole.projetlocation.models.Vehicule;
 
@@ -56,6 +57,7 @@ public class EtatDesLieux extends AppCompatActivity {
     private static final int TAKE_PHOTO_REQUEST = 1;
     private File photoFile;
     private List<Photo> photos = new ArrayList<>();
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,55 +119,55 @@ public class EtatDesLieux extends AppCompatActivity {
     public void onClickSaveLocation(View view) {
         final VehiculeDao vehiculeDao = new VehiculeDao(this);
         Log.wtf("WTF", "" + client.getTelephone());
-        LocationDao locationDao = new LocationDao(this);
-        LocationVehicule location = new LocationVehicule();
+        final LocationDao locationDao = new LocationDao(this);
+        final LocationVehicule[] location = {new LocationVehicule()};
 
         if (action == "rendre") {
-            location.setRetour(date);
+            location[0].setRetour(date);
             vehicule.setLoue(false);
             vehiculeDao.update(vehicule);
         } else {
-            location.setVehicule(vehicule);
-            location.setClient(client);
-            location.setDepart(date);
-            location.setTarif(vehicule.getPrix());
-            locationDao.open();
-            location = locationDao.insertLocation(location);
-            edl = new EDL();
-            edl.setDate(date);
-            edl.setLocation(location);
-            EDLDao edlDao = new EDLDao(this);
-            edlDao.open();
-            edl = edlDao.insertEDL(edl);
-            SmsManager.getDefault().sendTextMessage("0"+client.getTelephone(), null,message,null,null);
-            Toast.makeText(this, "Sms de confirmation envoyé !", Toast.LENGTH_LONG).show();
+            location[0].setVehicule(vehicule);
+            location[0].setClient(client);
+            location[0].setDepart(date);
+            location[0].setTarif(vehicule.getPrix());
 
-            vehicule.setLoue(true);
-            vehiculeDao.update(vehicule);
-            PhotoDao photoDao = new PhotoDao(this);
-            for(int i = 0; i<photos.size();i++){
-                photos.get(i).setEdl(edl);
-                photoDao.createPhoto(photos.get(i));
-            }                Log.wtf("WTF","LA PHOTO =========>>>>> ");
+            AlertDialog.Builder builder = new AlertDialog.Builder(EtatDesLieux.this);
+            builder.setMessage("Êtes vous sur de vouloir comfirmer la location?");
+            // Add the buttons
+            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    locationDao.open();
+                    location[0] = locationDao.insertLocation(location[0]);
+                    edl = new EDL();
+                    edl.setDate(date);
+                    edl.setLocation(location[0]);
+                    EDLDao edlDao = new EDLDao(context);
+                    edlDao.open();
+                    edl = edlDao.insertEDL(edl);
+                    SmsManager.getDefault().sendTextMessage("0" + client.getTelephone(), null, message, null, null);
+                    Toast.makeText(context, "Sms de confirmation envoyé !", Toast.LENGTH_LONG).show();
 
-            Intent intent = new Intent(EtatDesLieux.this, SearchVehicule.class);
-            startActivity(intent);
+                    vehicule.setLoue(true);
+                    vehiculeDao.update(vehicule);
+                    PhotoDao photoDao = new PhotoDao(context);
+                    for (int i = 0; i < photos.size(); i++) {
+                        photos.get(i).setEdl(edl);
+                        photoDao.createPhoto(photos.get(i));
+                    }
+                    Log.wtf("WTF", "LA PHOTO =========>>>>> ");
 
-//            AlertDialog.Builder builder = new AlertDialog.Builder(EtatDesLieux.this);
-//            builder.setMessage("Êtes vous sur de vouloir comfirmer la location?");
-//            // Add the buttons
-//            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-//                public void onClick(DialogInterface dialog, int id) {
-//
-//                }
-//            });
-//            builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-//                public void onClick(DialogInterface dialog, int id) {
-//                    // User cancelled the dialog
-//                }
-//            });
-//            AlertDialog dialog = builder.create();
-//            dialog.show();
+                    Intent intent = new Intent(EtatDesLieux.this, SearchVehicule.class);
+                    startActivity(intent);
+                }
+            });
+            builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User cancelled the dialog
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
     }
 
