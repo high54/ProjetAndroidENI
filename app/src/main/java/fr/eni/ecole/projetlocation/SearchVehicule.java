@@ -75,13 +75,13 @@ public class SearchVehicule extends AppCompatActivity {
         spMarque = (Spinner) findViewById(R.id.sp_marque);
         cbType = (CheckBox) findViewById(R.id.cb_type);
 
-        ArrayAdapter<String> adapterDisponibilite =  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item ,dispo);
+        ArrayAdapter<String> adapterDisponibilite = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, dispo);
         spDiponibilite.setAdapter(adapterDisponibilite);
 
-        ArrayAdapter<String> adapterCarburant =  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item ,carburants);
+        ArrayAdapter<String> adapterCarburant = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, carburants);
         spCarburant.setAdapter(adapterCarburant);
 
-        ArrayAdapter<String> adapterMarque =  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item ,marques);
+        ArrayAdapter<String> adapterMarque = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, marques);
         spMarque.setAdapter(adapterMarque);
     }
 
@@ -89,24 +89,24 @@ public class SearchVehicule extends AppCompatActivity {
         String dispo = spDiponibilite.getSelectedItem().toString();
         String marque = spMarque.getSelectedItem().toString();
         String carburant = spCarburant.getSelectedItem().toString();
-        int type = 0;
+        int type = Vehicule.TYPE_HORS_VILLE;
         int disponibilite = 1;
-        if(cbType.isChecked()){
-            type=1;
+        if (cbType.isChecked()) {
+            type = Vehicule.TYPE_VILLE;
         }
-        if(dispo =="Disponible"){
+        if (dispo == "Disponible") {
             disponibilite = 0;
         }
 
-        Log.wtf("WTF","DATA ::=> "+marque+" "+dispo+ " "+carburant+" "+type+" "+txtPrix.getText().toString());
+        Log.wtf("WTF", "DATA ::=> " + marque + " " + dispo + " " + carburant + " " + type + " " + txtPrix.getText().toString());
         List<Vehicule> vehicules = new ArrayList<>();
-        vehicules = daoVehicule.selectSearchVehicule(marque,carburant,Integer.parseInt(txtPrix.getText().toString()),type,disponibilite);
+        vehicules = daoVehicule.selectSearchVehicule(marque, carburant, Integer.parseInt(txtPrix.getText().toString()), type, disponibilite);
 
-        for(int i =0; i<vehicules.size();i++){
-            Log.wtf("WTF","LISTE DES VEHICULE RECHERCHE ==> "+vehicules.get(i).toString());
+        for (int i = 0; i < vehicules.size(); i++) {
+            Log.wtf("WTF", "LISTE DES VEHICULE RECHERCHE ==> " + vehicules.get(i).toString());
         }
 
-        VehiculeAdapter vehiculeAdapter = new VehiculeAdapter(this,R.layout.list_vehicule,vehicules);
+        VehiculeAdapter vehiculeAdapter = new VehiculeAdapter(this, R.layout.list_vehicule, vehicules);
         final ListView listView = (ListView) findViewById(R.id.lv_liste_vehicule);
         listView.setAdapter(vehiculeAdapter);
 
@@ -115,8 +115,8 @@ public class SearchVehicule extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Vehicule vehicule = (Vehicule) adapterView.getItemAtPosition(i);
 
-                Intent intent = new Intent(SearchVehicule.this,SearchClient.class);
-                intent.putExtra("vehicule",vehicule);
+                Intent intent = new Intent(SearchVehicule.this, SearchClient.class);
+                intent.putExtra("vehicule", vehicule);
                 startActivity(intent);
             }
         });
@@ -132,6 +132,7 @@ public class SearchVehicule extends AppCompatActivity {
         Intent intent = new Intent(SearchVehicule.this, ManageVehicule.class);
         startActivity(intent);
     }
+
     public void showCarsList(MenuItem item) {
         Intent intent = new Intent(SearchVehicule.this, ListeVehiculeActivity.class);
         startActivity(intent);

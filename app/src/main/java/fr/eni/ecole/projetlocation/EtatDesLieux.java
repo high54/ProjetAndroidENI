@@ -70,16 +70,17 @@ public class EtatDesLieux extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         date = dateFormat.format(dateDuJour);
         txtDateJour.setText(date);
-        if (intent.hasExtra("action")) {
+        if(intent.hasExtra("vehicule")){
+            vehicule = intent.getExtras().getParcelable("vehicule");
+        }
+        if (intent.hasExtra("action") && intent.hasExtra("vehicule")) {
             action = intent.getExtras().getString("action");
         }
         if (intent.hasExtra("client") && intent.hasExtra("vehicule")) {
-            vehicule = intent.getExtras().getParcelable("vehicule");
             client = intent.getExtras().getParcelable("client");
+            message = "Confirmation de la location le " + date + " du véhicule : " + vehicule.getMarque() + " " + vehicule.getModel();
         }
         mImageView = (ImageView) findViewById(R.id.iv_edl);
-
-        message = "Confirmation de la location le " + date + " du véhicule : " + vehicule.getMarque() + " " + vehicule.getModel();
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.SEND_SMS)
@@ -118,15 +119,22 @@ public class EtatDesLieux extends AppCompatActivity {
 
     public void onClickSaveLocation(View view) {
         final VehiculeDao vehiculeDao = new VehiculeDao(this);
-        Log.wtf("WTF", "" + client.getTelephone());
         final LocationDao locationDao = new LocationDao(this);
+        locationDao.open();
         final LocationVehicule[] location = {new LocationVehicule()};
 
-        if (action == "rendre") {
+        if (action.equals("rendre")) {
+
             location[0].setRetour(date);
             vehicule.setLoue(false);
             vehiculeDao.update(vehicule);
+
+            Toast.makeText(context, "Le véhicule a bien été rendu", Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(EtatDesLieux.this, SearchVehicule.class);
+            startActivity(intent);
         } else {
+            Log.wtf("WTF", "" + client.getTelephone());
             location[0].setVehicule(vehicule);
             location[0].setClient(client);
             location[0].setDepart(date);
@@ -137,7 +145,6 @@ public class EtatDesLieux extends AppCompatActivity {
             // Add the buttons
             builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    locationDao.open();
                     location[0] = locationDao.insertLocation(location[0]);
                     edl = new EDL();
                     edl.setDate(date);
