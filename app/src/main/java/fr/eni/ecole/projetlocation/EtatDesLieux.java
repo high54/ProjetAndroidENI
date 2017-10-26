@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,7 @@ public class EtatDesLieux extends AppCompatActivity {
     private EDLDao edlDao;
     private PhotoDao photoDao;
     private LocationVehicule location;
+    private RelativeLayout relativeLayout;
 
     private static final int TAKE_PHOTO_REQUEST = 1;
     private File photoFile;
@@ -70,10 +72,7 @@ public class EtatDesLieux extends AppCompatActivity {
         RequestPermision();
         Intent intent = getIntent();
         txtDateJour = (TextView) findViewById(R.id.txt_date_jour);
-        Date dateDuJour = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        date = dateFormat.format(dateDuJour);
-        txtDateJour.setText(date);
+        GetDate();
         if(intent.hasExtra("vehicule")){
             vehicule = intent.getExtras().getParcelable("vehicule");
         }
@@ -119,7 +118,7 @@ public class EtatDesLieux extends AppCompatActivity {
                     edl.setLocation(locationVehicule);
                     edlDao = new EDLDao(context);
                     edl = edlDao.insertEDL(edl);
-                    SmsManager.getDefault().sendTextMessage(String.valueOf(client.getTelephone()), null, message, null, null);
+                    SmsManager.getDefault().sendTextMessage("0"+client.getTelephone(), null, message, null, null);
                     Toast.makeText(context, "Sms de confirmation envoyé !", Toast.LENGTH_LONG).show();
 
                     vehicule.setLoue(true);
@@ -164,24 +163,43 @@ public class EtatDesLieux extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TAKE_PHOTO_REQUEST && resultCode == RESULT_OK) {
-            int targetW = 100;
-            int targetH = 100;
-            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            bmOptions.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(photoFile.getAbsolutePath(), bmOptions);
-            int photoW = bmOptions.outWidth;
-            int photoH = bmOptions.outHeight;
-            int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
-            bmOptions.inJustDecodeBounds = false;
-            bmOptions.inSampleSize = scaleFactor;
-            bmOptions.inPurgeable = true;
+
             Photo photo = new Photo();
             photo.setDate(date);
             photo.setUri(photoFile.getAbsolutePath());
             photo.setEdl(edl);
             photos.add(photo);
-            Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath(), bmOptions);
-            mImageView.setImageBitmap(bitmap);
+
+
+
+            relativeLayout = (RelativeLayout) findViewById(R.id.rl_liste_edl);
+
+            for(int x=0;x<photos.size();x++) {
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+                bmOptions.inSampleSize = 1;
+                ImageView image = new ImageView(this);
+                image.setId(x);
+                relativeLayout.addView(image);
+                Bitmap bitmap = BitmapFactory.decodeFile(photos.get(x).getUri(),bmOptions);
+                image.setImageBitmap(bitmap);
+                layoutParams.width = 250;
+                layoutParams.height = 250;
+                if(x==1){
+                    layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, (x));
+                    layoutParams.addRule(RelativeLayout.BELOW, R.id.txt_date_retour);
+
+                }else if(x==2){
+                    layoutParams.addRule(RelativeLayout.BELOW, R.id.txt_date_retour);
+                    layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, (x-1));
+                }
+                else{
+                    layoutParams.addRule(RelativeLayout.BELOW, R.id.txt_date_retour);
+
+                }
+                image.setLayoutParams(layoutParams);
+            }
         }
     }
 
@@ -275,5 +293,11 @@ public class EtatDesLieux extends AppCompatActivity {
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_ID_MULTIPLE_PERMISSIONS);
             }
         }
+    }
+    public void GetDate(){
+        Date dateDuJour = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        date = dateFormat.format(dateDuJour);
+        txtDateJour.setText(date);
     }
 }
