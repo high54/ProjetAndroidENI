@@ -30,15 +30,13 @@ public class Vehicule implements Parcelable {
     public Vehicule() {
     }
 
-    public Vehicule(int id, int prix, String immatriculation, int type, String marque, String model, String carburant, Boolean loue) {
-        this.id = id;
+    public Vehicule(int prix, String immatriculation, int type, String marque, String model, String carburant) {
         this.prix = prix;
         this.immatriculation = immatriculation;
         this.type = type;
         this.marque = marque;
         this.model = model;
         this.carburant = carburant;
-        this.loue = loue;
     }
 
     protected Vehicule(Parcel in) {

@@ -10,8 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.List;
+
 import fr.eni.ecole.projetlocation.dao.agence.AgenceDao;
+import fr.eni.ecole.projetlocation.dao.client.ClientDao;
+import fr.eni.ecole.projetlocation.dao.vehicule.VehiculeDao;
 import fr.eni.ecole.projetlocation.models.Agence;
+import fr.eni.ecole.projetlocation.models.Client;
+import fr.eni.ecole.projetlocation.models.Vehicule;
 
 public class MainActivity extends AppCompatActivity {
     private AgenceDao agenceDao;
@@ -19,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText edNomAgence;
     private Button btSaveAgence;
     private Agence agence;
+    Vehicule vehicule;
+    Vehicule vehicule2;
+    Client client;
+    Client client2;
 
     EditText login;
     EditText motDePasse;
@@ -28,10 +38,39 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        VehiculeDao vehiculeDao = new VehiculeDao(this);
+        List<Vehicule> vehicules = vehiculeDao.selectAll();
+        if(vehicules.size()==0){
+            vehicule = new Vehicule(20, "KI123KI", Vehicule.TYPE_VILLE, "Fiat", "Punto", Vehicule.ESSENCE);
+            vehiculeDao.createVehicule(vehicule);
+            vehicule2 = new Vehicule(25, "LO123VF", Vehicule.TYPE_VILLE, "Peaugeot", "305", Vehicule.ESSENCE);
+            vehiculeDao.createVehicule(vehicule2);
+            Vehicule vehicule3 = new Vehicule(25, "GF456LO", Vehicule.TYPE_HORS_VILLE, "Citroën", "Picasso", Vehicule.DIESEL);
+            vehiculeDao.createVehicule(vehicule3);
+            Vehicule vehicule4 = new Vehicule(30, "JU123JU", Vehicule.TYPE_HORS_VILLE, "Wolkswagen", "Golf", Vehicule.DIESEL);
+            vehiculeDao.createVehicule(vehicule4);
+            Vehicule vehicule5 = new Vehicule(40, "BG852HY", Vehicule.TYPE_VILLE, "Mercedes", "Autre", Vehicule.ESSENCE);
+            vehiculeDao.createVehicule(vehicule5);
+        }
+
+        ClientDao clientDao = new ClientDao(this);
+        List<Client> clients = clientDao.getClients();
+        if(clients.size()==0){
+            client = new Client("Bonsoir", "Luc", 258412365, "1 rue de la Voiture", 25842, "Rennes", "12/12/2012");
+            clientDao.insertClient(client);
+            client2 = new Client("Madame", "Sylvie", 258412365, "1 rue de la Voiture", 25842, "Rennes", "12/12/2012");
+            clientDao.insertClient(client2);
+            Client client3 = new Client("Monsieur", "Heureux", 258412365, "1 rue de la Voiture", 25842, "Rennes", "12/12/2012");
+            clientDao.insertClient(client3);
+            Client client4 = new Client("Madame", "Calin", 258412365, "1 rue de la Voiture", 25842, "Rennes", "12/12/2012");
+            clientDao.insertClient(client4);
+        }
+
+
         agenceDao = new AgenceDao(this);
         agence = agenceDao.getAgence();
 
-        if(agence.getNom().equals("Agence Bonjour")){
+        if(null != agence && agence.getNom().equals("Agence Bonjour")){
             login = (EditText) findViewById(R.id.et_identifiant);
             motDePasse = (EditText) findViewById(R.id.et_mot_de_passe);
 

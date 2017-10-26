@@ -3,8 +3,6 @@ package fr.eni.ecole.projetlocation.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Date;
-
 /**
  * Created by Administrateur on 20/10/2017.
  */
@@ -22,8 +20,7 @@ public class Client implements Parcelable{
     public Client() {
     }
 
-    public Client(int id, String nom, String prenom, int telephone, String adresse, int codePostal, String ville, String dateNaissance) {
-        this.id = id;
+    public Client(String nom, String prenom, int telephone, String adresse, int codePostal, String ville, String dateNaissance) {
         this.nom = nom;
         this.prenom = prenom;
         this.telephone = telephone;
