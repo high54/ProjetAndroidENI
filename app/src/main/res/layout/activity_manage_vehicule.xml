@@ -147,6 +147,7 @@
             android:onClick="onClickTakePhoto"
             android:src="@android:drawable/ic_menu_camera"
             android:layout_alignParentEnd="true"
+            android:background="@drawable/buttonradius"
             style="@style/ButtonStyle"/>
 
         <ImageView
@@ -176,6 +177,8 @@
             android:text="@string/enregistrer"
             android:onClick="onClickSaveVehicule"
             android:layout_below="@id/img_1"
+            android:background="@drawable/buttonradius"
+
             style="@style/ButtonStyle"/>
 
     </RelativeLayout>

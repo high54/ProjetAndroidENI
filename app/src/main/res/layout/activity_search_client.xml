@@ -16,6 +16,7 @@
             android:text="@string/ajouter"
             android:onClick="onClickAddClient"
             style="@style/ButtonStyle"
+            android:background="@drawable/buttonradius"
             android:layout_marginTop="@dimen/width_10_dp"
             />
         <TextView
@@ -49,6 +50,7 @@
             android:layout_height="wrap_content"
             android:text="@string/bt_rechercher"
             android:onClick="onClickSearchClient"
+            android:background="@drawable/buttonradius"
             style="@style/ButtonStyle"/>
     </RelativeLayout>
 

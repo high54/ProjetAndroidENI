@@ -30,6 +30,8 @@
         android:layout_marginBottom="@dimen/width_40_dp"
         android:onClick="onClickTakePhoto"
         android:src="@android:drawable/ic_menu_camera"
+        android:background="@drawable/buttonradius"
+
         style="@style/ButtonStyle"/>
     <ImageView
         android:id="@+id/iv_edl"
@@ -43,6 +45,7 @@
     android:layout_height="wrap_content"
     android:text="@string/enregistrer"
     android:onClick="onClickSaveLocation"
+    android:background="@drawable/buttonradius"
     style="@style/ButtonStyle"/>
 
 

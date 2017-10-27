@@ -53,5 +53,7 @@
         android:layout_below="@id/ed_nom_agence"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enregistrer"/>
+        android:text="Enregistrer"
+        android:background="@drawable/buttonradius"
+        style="@style/ButtonStyle"/>
 </RelativeLayout>

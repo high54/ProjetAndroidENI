@@ -94,6 +94,7 @@
         android:layout_height="wrap_content"
         android:text="@string/enregistrer"
         android:onClick="onClickSaveClient"
+        android:background="@drawable/buttonradius"
         style="@style/ButtonStyle"/>
 
 
