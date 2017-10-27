@@ -1,3 +1,3 @@
 ProjetLocation
 
-En collaboration avec [@kBarbara]@kBarbara
+En collaboration avec [kBarbara]@kBarbara
