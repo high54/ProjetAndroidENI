@@ -1,4 +1,10 @@
-ProjetLocation
+Réalisation en 4 jours d'une application Android natif de gestion de location de véhicules.<br />
+-Gestion de véhicules<br />
+-Gestion de clients<br />
+-Gestion de locations<br />
+-Gestion d'états des lieux<br />
+-Prise de photos<br />
+-Envoie de sms<br />
 
 En collaboration avec [Barbara Krafft](https://github.com/kBarbara/ProjetLocation)
 <p align="center">
